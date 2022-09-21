@@ -31,7 +31,8 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("assets/img/team-1-800x800.jpg").default}
+              src="https://scontent.fsgn5-12.fna.fbcdn.net/v/t1.6435-1/87366220_2632406657036743_7256932959872090112_n.jpg?stp=dst-jpg_p320x320&_nc_cat=103&ccb=1-7&_nc_sid=7206a8&_nc_ohc=UCb9HKKaxm8AX8FkhUc&_nc_ht=scontent.fsgn5-12.fna&oh=00_AT8ihkWhXLFM6M7VhTSLuPwi8ey14ADr4Es5LUyyjzpMHg&oe=634FB2DB"
+              // src={require("assets/img/team-1-800x800.jpg").default}
             />
           </span>
         </div>

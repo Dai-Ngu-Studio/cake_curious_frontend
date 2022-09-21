@@ -14,7 +14,10 @@ import Dashboard from "views/admin/Dashboard.js";
 import Maps from "views/admin/Maps.js";
 import Settings from "views/admin/Settings.js";
 import Tables from "views/admin/Tables.js";
-
+import StoreDashboard from "views/store/Dashboard.js";
+import Products from "views/store/Products.js";
+import StaffDashboard from "views/staff/Dashboard.js";
+import StaffReports from "views/staff/Reports.js";
 export default function Admin() {
   return (
     <>
@@ -29,6 +32,12 @@ export default function Admin() {
             <Route path="/admin/maps" exact component={Maps} />
             <Route path="/admin/settings" exact component={Settings} />
             <Route path="/admin/tables" exact component={Tables} />
+            {/* If isStore */}
+            {/* <Route path="/staff/dashboard" exact component={StoreDashboard} />
+            <Route path="/staff/tables" exact component={Products} /> */}
+            {/* If isStore */}
+            {/* <Route path="/staff/dashboard" exact component={StoreDashboard} />
+            <Route path="/staff/tables" exact component={StaffReports} /> */}
             <Redirect from="/admin" to="/admin/dashboard" />
           </Switch>
           <FooterAdmin />
