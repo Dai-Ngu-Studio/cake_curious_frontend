@@ -19,12 +19,12 @@ function App() {
       <Routes>
         {/* add routes with layouts */}
         <Route index element={<Admin />} />
-        <Route path="/admin" element={<Admin />}>
-          <Route path="/admin/dashboard" element={<Dashboard />} />
-          <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/admin/tables" element={<Tables />} />
+        <Route path="/" element={<Admin />}>
+          <Route path="admin/dashboard" element={<Dashboard />} />
+          <Route path="admin/settings" element={<Settings />} />
+          <Route path="admin/tables" element={<Tables />} />
         </Route>
-        <Route path="/auth" element={<Auth />}>
+        <Route path="/auth/" element={<Auth />}>
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
         </Route>

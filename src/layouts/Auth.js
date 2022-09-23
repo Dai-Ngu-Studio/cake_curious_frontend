@@ -1,5 +1,6 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import backgroundImage from "../assets/img/register_bg_2.png";
 // components
 
 import AuthNavbar from "../components/Navbars/AuthNavbar";
@@ -13,23 +14,17 @@ import Register from "../views/auth/Register";
 export default function Auth() {
   return (
     <>
-      <AuthNavbar transparent />
+      {/* <AuthNavbar transparent /> */}
       <main>
         <section className="relative w-full h-full py-40 min-h-screen">
           <div
             className="absolute top-0 w-full h-full bg-blueGray-800 bg-no-repeat bg-full"
             style={{
-              backgroundImage:
-                "url(" +
-                require("../assets/img/register_bg_2.png").default +
-                ")",
+              backgroundImage: "url(" + backgroundImage + ")",
             }}
           ></div>
-          <Routes>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-          </Routes>
-          <FooterSmall absolute />
+          <Outlet />
+          {/* <FooterSmall absolute /> */}
         </section>
       </main>
     </>

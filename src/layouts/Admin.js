@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 // components
 
@@ -23,12 +23,7 @@ export default function Admin() {
         {/* Header */}
         <HeaderStats />
         <div className="px-4 md:px-10 mx-auto w-full -m-24">
-          <Routes>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="tables" element={<Tables />} />
-          </Routes>
-          {/* <Navigate to="/admin/dashboard" /> */}
+          <Outlet />
           <FooterAdmin />
         </div>
       </div>
