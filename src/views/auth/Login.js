@@ -15,7 +15,7 @@ export default function Login() {
                   </h6>
                 </div>
                 <div className="btn-wrapper text-center">
-                  <button
+                  {/* <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center text-xs ease-linear transition-all duration-150"
                     type="button"
                   >
@@ -25,7 +25,7 @@ export default function Login() {
                       src={require("../../assets/img/github.svg").default}
                     />
                     Github
-                  </button>
+                  </button> */}
                   <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center text-xs ease-linear transition-all duration-150"
                     type="button"
@@ -72,7 +72,7 @@ export default function Login() {
                       placeholder="Password"
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label className="inline-flex items-center cursor-pointer">
                       <input
                         id="customCheckLogin"
@@ -83,7 +83,7 @@ export default function Login() {
                         Remember me
                       </span>
                     </label>
-                  </div>
+                  </div> */}
 
                   <div className="text-center mt-6">
                     <button
@@ -96,7 +96,7 @@ export default function Login() {
                 </form>
               </div>
             </div>
-            <div className="flex flex-wrap mt-6 relative">
+            {/* <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2">
                 <a
                   href="#pablo"
@@ -111,7 +111,7 @@ export default function Login() {
                   <small>Create new account</small>
                 </Link>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
