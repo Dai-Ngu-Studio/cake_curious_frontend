@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 // components
 
-import AuthNavbar from "../components/Navbars/AuthNavbar";
+import LandingNavbar from "../components/Navbars/LandingNavbar";
 import Footer from "../components/Footers/Footer";
 
 export default function Landing() {
   return (
     <>
-      <AuthNavbar transparent />
+      <LandingNavbar />
       <main>
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
           <div
