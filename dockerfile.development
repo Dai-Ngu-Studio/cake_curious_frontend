@@ -13,4 +13,4 @@ RUN npm install
 # Fix permission issues
 RUN mkdir node_modules/.cache && chmod -R 777 node_modules/.cache
 # Deploy app for local development
-CMD npm run build 
+CMD npm start
