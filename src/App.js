@@ -29,7 +29,8 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index path="admin/dashboard" element={<Dashboard />} />
+          <Route index element={<Dashboard />} />
+          <Route path="admin/dashboard" element={<Dashboard />} />
           <Route path="admin/settings" element={<Settings />} />
           <Route path="admin/tables" element={<Tables />} />
         </Route>
