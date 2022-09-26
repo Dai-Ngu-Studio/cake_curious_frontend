@@ -2,7 +2,7 @@ import axios from "axios";
 import { getTokenFromLocalStorage } from "./localStorage";
 
 const customFetch = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: process.env.REACT_APP_DEPLOYMENT_URL,
 });
 customFetch.interceptors.request.use((config) => {
   const token = getTokenFromLocalStorage();
