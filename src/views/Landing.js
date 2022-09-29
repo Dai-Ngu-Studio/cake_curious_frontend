@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 import LandingNavbar from "../components/Navbars/LandingNavbar";
 import Footer from "../components/Footers/Footer";
-import landing1 from "../assets/img/landing-1.jpg";
+import landing1 from "../assets/img/landing-1.jpeg";
+import landing2 from "../assets/img/landing-2.png";
 export default function Landing() {
   return (
     <>
@@ -17,27 +18,32 @@ export default function Landing() {
           >
             <span
               id="blackOverlay"
-              className="w-full h-full absolute opacity-75 bg-black"
+              className="w-full h-full absolute opacity-80 bg-white"
             ></span>
           </div>
-          <div className="container relative mx-auto">
-            <div className="items-center flex flex-wrap">
-              <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-                <div className="pr-12">
-                  <h1 className="text-white font-semibold text-5xl">
-                    Your story starts with us.
-                  </h1>
-                  <p className="mt-4 text-lg text-blueGray-200">
-                    This is a simple example of a Landing Page you can build
-                    using Notus React. It features multiple CSS components based
-                    on the Tailwind CSS design system.
-                  </p>
+          <div className="relative grid grid-cols-2 p-10 w-2/3 gap-32">
+            <div className="flex justify-center items-center">
+              <div className="">
+                <h1 className="text-6xl font-amz font-bold leading-snug text-slate-800">
+                  Giải pháp kinh doanh nguyên liệu
+                </h1>
+                <p className="mt-4 text-lg">
+                  Tăng khả năng tiếp cận khách hàng và doanh số cho shop nguyên
+                  liệu làm bánh hiệu quả hơn trên CakeCurious với CakeCurious -
+                  Kênh Người Bán
+                </p>
+                <div className=" text-xl rounded-full w-fit px-7 py-5 mt-5  bg-orange-300 font-bold cursor-pointer hover:bg-orange-400">
+                  Đăng ký ngay
                 </div>
               </div>
             </div>
+
+            <div>
+              <img src={landing2}></img>
+            </div>
           </div>
           <div
-            className="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
+            className="top-auto bottom-0 left-0 right-0 w-full h-10 absolute pointer-events-none overflow-hidden h-70-px"
             style={{ transform: "translateZ(0)" }}
           >
             <svg
@@ -50,57 +56,59 @@ export default function Landing() {
               y="0"
             >
               <polygon
-                className="text-blueGray-200 fill-current"
+                className="text-slate-100 fill-current"
                 points="2560 0 2560 100 0 100"
               ></polygon>
             </svg>
           </div>
         </div>
 
-        <section className="pb-20 bg-blueGray-200 -mt-24">
+        <section className="pb-20 bg-slate-100 -mt-24">
           <div className="container mx-auto px-4">
-            <div className="flex flex-wrap">
-              <div className="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
-                <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-                  <div className="px-4 py-5 flex-auto">
-                    <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
-                      <i className="fas fa-award"></i>
+            <div className="flex justify-center">
+              <div className="flex flex-wrap w-2/3">
+                <div className="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
+                  <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
+                    <div className="px-4 py-5 flex-auto">
+                      <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
+                        <i className="fas fa-award"></i>
+                      </div>
+                      <h6 className="text-xl font-semibold">Nhanh chóng</h6>
+                      <p className="mt-2 mb-4 text-blueGray-500">
+                        Tiết kiệm chi phí và thời gian với thủ tục đăng ký nhanh
+                        chóng làm bên bán hàng ở CakeCurious
+                      </p>
                     </div>
-                    <h6 className="text-xl font-semibold">Awarded Agency</h6>
-                    <p className="mt-2 mb-4 text-blueGray-500">
-                      Divide details about your product or agency work into
-                      parts. A paragraph describing a feature will be enough.
-                    </p>
                   </div>
                 </div>
-              </div>
 
-              <div className="w-full md:w-4/12 px-4 text-center">
-                <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-                  <div className="px-4 py-5 flex-auto">
-                    <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-lightBlue-400">
-                      <i className="fas fa-retweet"></i>
+                <div className="w-full md:w-4/12 px-4 text-center">
+                  <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
+                    <div className="px-4 py-5 flex-auto">
+                      <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-lightBlue-400">
+                        <i className="fas fa-retweet"></i>
+                      </div>
+                      <h6 className="text-xl font-semibold">Tiện lợi</h6>
+                      <p className="mt-2 mb-4 text-blueGray-500">
+                        Hệ thống quản lý kho hàng chi tiết và hiệu quả
+                      </p>
                     </div>
-                    <h6 className="text-xl font-semibold">Free Revisions</h6>
-                    <p className="mt-2 mb-4 text-blueGray-500">
-                      Keep you user engaged by providing meaningful information.
-                      Remember that by this time, the user is curious.
-                    </p>
                   </div>
                 </div>
-              </div>
 
-              <div className="pt-6 w-full md:w-4/12 px-4 text-center">
-                <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
-                  <div className="px-4 py-5 flex-auto">
-                    <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400">
-                      <i className="fas fa-fingerprint"></i>
+                <div className="pt-6 w-full md:w-4/12 px-4 text-center">
+                  <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
+                    <div className="px-4 py-5 flex-auto">
+                      <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400">
+                        <i className="fas fa-fingerprint"></i>
+                      </div>
+                      <h6 className="text-xl font-semibold">Hiệu quả</h6>
+                      <p className="mt-2 mb-4 text-blueGray-500">
+                        Nền tảng tự động quảng bá và tạo điều kiện bán hàng
+                        nguyên vật liệu cho người làm bánh thông qua nền tảng
+                        mua sắm trực tuyến khi chia sẽ công thức.
+                      </p>
                     </div>
-                    <h6 className="text-xl font-semibold">Verified Company</h6>
-                    <p className="mt-2 mb-4 text-blueGray-500">
-                      Write a few lines about each one. A paragraph describing a
-                      feature will be enough. Keep you user engaged!
-                    </p>
                   </div>
                 </div>
               </div>
@@ -146,7 +154,7 @@ export default function Landing() {
                     >
                       <polygon
                         points="-30,95 583,95 583,65"
-                        className="text-lightBlue-500 fill-current"
+                        className="text-slate-200 fill-current"
                       ></polygon>
                     </svg>
                     <h4 className="text-xl font-bold text-white">
@@ -358,7 +366,7 @@ export default function Landing() {
                         <i className="fab fa-twitter"></i>
                       </button>
                       <button
-                        className="bg-blueGray-700 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
+                        className="bg-slate-100 text-white w-8 h-8 rounded-full outline-none focus:outline-none mr-1 mb-1"
                         type="button"
                       >
                         <i className="fab fa-instagram"></i>
@@ -412,7 +420,7 @@ export default function Landing() {
           </div>
         </section>
 
-        <section className="pb-20 relative block bg-blueGray-800">
+        <section className="pb-20 relative block bg-slate-100">
           <div
             className="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20 h-20"
             style={{ transform: "translateZ(0)" }}
@@ -427,7 +435,7 @@ export default function Landing() {
               y="0"
             >
               <polygon
-                className="text-blueGray-800 fill-current"
+                className="text-slate-100 fill-current"
                 points="2560 0 2560 100 0 100"
               ></polygon>
             </svg>
@@ -486,7 +494,7 @@ export default function Landing() {
             </div>
           </div>
         </section>
-        <section className="relative block py-24 lg:pt-0 bg-blueGray-800">
+        <section className="relative block py-24 lg:pt-0 bg-slate-100">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center lg:-mt-64 -mt-48">
               <div className="w-full lg:w-6/12 px-4">
