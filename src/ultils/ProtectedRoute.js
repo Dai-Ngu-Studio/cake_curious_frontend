@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
   const { token } = useSelector((store) => store.user);
 
   if (!token) {
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/" />;
   }
   return children;
 };

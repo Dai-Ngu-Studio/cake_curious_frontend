@@ -41,9 +41,12 @@ export default function LandingNavbar() {
           <ul className="flex flex-col lg:flex-row list-none lg:ml-auto font-bold leading-relaxed mr-4 whitespace-nowrap gap-10">
             <li className="flex items-center">Trang chủ</li>
             <li className="flex items-center">Giải pháp</li>
-            <li className="flex items-center border-2 px-3 py-2 m-1 rounded-lg border-green-500 bg-green-400 cursor-pointer hover:bg-green-500">
+            <Link
+              to="/auth/login"
+              className="flex items-center border-2 px-3 py-2 m-1 rounded-lg border-green-500 bg-green-400 cursor-pointer hover:bg-green-500"
+            >
               Đăng nhập
-            </li>
+            </Link>
           </ul>
         </div>
       </div>
