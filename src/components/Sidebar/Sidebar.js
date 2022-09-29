@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import NotificationDropdown from "../Dropdowns/NotificationDropdown";
 import UserDropdown from "../Dropdowns/UserDropdown";
 
-export default function Sidebar() {
+export default function Sidebar({ props }) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>
@@ -22,7 +22,7 @@ export default function Sidebar() {
           {/* Brand */}
           <Link
             className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-            to="/admin/dashboard"
+            to={props.dashboardLink}
           >
             Cake Curious
           </Link>
@@ -48,7 +48,7 @@ export default function Sidebar() {
                 <div className="w-6/12">
                   <Link
                     className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-                    to="/admin/dashboard"
+                    to={props.dashboardLink}
                   >
                     Cake Curios
                   </Link>
@@ -79,55 +79,26 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Admin Pages
+              {props.title}
             </h6>
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <NavLink
-                  className={({ isActive }) =>
-                    "text-xs uppercase py-3 font-bold block " +
-                    (isActive
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="admin/dashboard"
-                >
-                  <i className={"fas fa-tv mr-2 text-sm opacity-75"}></i>{" "}
-                  Dashboard
-                </NavLink>
-              </li>
-
-              <li className="items-center">
-                <NavLink
-                  className={({ isActive }) =>
-                    "text-xs uppercase py-3 font-bold block " +
-                    (isActive
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="admin/settings"
-                >
-                  <i className={"fas fa-tools mr-2 text-sm opacity-75"}></i>{" "}
-                  Settings
-                </NavLink>
-              </li>
-
-              <li className="items-center">
-                <NavLink
-                  className={({ isActive }) =>
-                    "text-xs uppercase py-3 font-bold block " +
-                    (isActive
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="admin/tables"
-                >
-                  <i className={"fas fa-table mr-2 text-sm opacity-75"}></i>{" "}
-                  Tables
-                </NavLink>
-              </li>
+              {props.links.map((item) => (
+                <li className="items-center" key={item.name}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      "text-xs uppercase py-3 font-bold block " +
+                      (isActive
+                        ? "text-lightBlue-500 hover:text-lightBlue-600"
+                        : "text-blueGray-700 hover:text-blueGray-500")
+                    }
+                    to={item.linkTo}
+                  >
+                    <i className={item.style}></i> {item.name}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
             {/* Divider */}
             <hr className="my-4 md:min-w-full" />
