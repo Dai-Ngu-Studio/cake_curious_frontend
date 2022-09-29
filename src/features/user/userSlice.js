@@ -83,9 +83,6 @@ const userSlice = createSlice({
       state.isUserLoading = false;
       state.user = payload;
       addUserToLocalStorage(payload);
-      if (payload.isAdmin === 1) {
-        toast.success("Welcome to dashboard!");
-      }
     },
     [getUser.rejected]: (state, { payload }) => {
       state.isUserLoading = false;
