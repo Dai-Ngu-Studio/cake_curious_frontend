@@ -5,14 +5,14 @@ import logo from "../../assets/img/cake_curious_logo.png";
 
 // components
 
-export default function LandingNavbar(props) {
+export default function LandingNavbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
-    <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-1 bg-black/50">
+    <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-1 bg-white shadow-md shadow-white">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <Link
-            className="flex flex-row text-white text-sm font-bold leading-relaxed mr-4 whitespace-nowrap uppercase"
+            className="flex flex-row text-sm font-bold leading-relaxed mr-4 whitespace-nowrap uppercase"
             to="/"
           >
             <img src={logo} className="h-12" />
@@ -28,7 +28,7 @@ export default function LandingNavbar(props) {
             type="button"
             onClick={() => setNavbarOpen(!navbarOpen)}
           >
-            <i className="text-white fas fa-bars"></i>
+            <i className="fas fa-bars"></i>
           </button>
         </div>
         <div
@@ -38,11 +38,10 @@ export default function LandingNavbar(props) {
           }
           id="example-navbar-warning"
         >
-          <ul className="flex flex-col lg:flex-row list-none lg:ml-auto text-white font-bold leading-relaxed mr-4 whitespace-nowrap gap-10">
+          <ul className="flex flex-col lg:flex-row list-none lg:ml-auto font-bold leading-relaxed mr-4 whitespace-nowrap gap-10">
             <li className="flex items-center">Trang chủ</li>
             <li className="flex items-center">Giải pháp</li>
-            <li className="flex items-center">Đăng ký</li>
-            <li className="flex items-center border-2 px-3 py-2 m-1 rounded-lg border-green-500 bg-green-500">
+            <li className="flex items-center border-2 px-3 py-2 m-1 rounded-lg border-green-500 bg-green-400 cursor-pointer hover:bg-green-500">
               Đăng nhập
             </li>
           </ul>
