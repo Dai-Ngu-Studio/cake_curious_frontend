@@ -38,11 +38,24 @@ export default function Login() {
   useEffect(() => {
     if (token) {
       dispatch(getUser());
-      setTimeout(() => {
-        navigate("/admin/dashboard");
-      }, 1000);
     }
   }, [token]);
+  useEffect(() => {
+    setTimeout(() => {
+      if (user) {
+        user.hasRoles.map((item) => {
+          console.log(item.roleId);
+          if (item.roleId === 0) {
+            navigate("/admin/admin-dashboard");
+          } else if (item.roleId === 1) {
+            navigate("/staff/staff-dashboard");
+          } else if (item.roleId === 2) {
+            navigate("/store/store-dashboard");
+          }
+        });
+      }
+    }, 1000);
+  }, [user]);
 
   return (
     <>
