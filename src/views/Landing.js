@@ -21,7 +21,7 @@ export default function Landing() {
               className="w-full h-full absolute opacity-80 bg-white"
             ></span>
           </div>
-          <div className="relative grid grid-cols-2 p-10 w-2/3 gap-32">
+          <div className="relative grid grid-cols-2 p-10 w-4/5 gap-16">
             <div className="flex justify-center items-center">
               <div className="">
                 <h1 className="text-6xl font-amz font-bold leading-snug text-slate-800">
@@ -33,12 +33,12 @@ export default function Landing() {
                   Kênh Người Bán
                 </p>
                 <div className=" text-xl rounded-full w-fit px-7 py-5 mt-5  bg-orange-300 font-bold cursor-pointer hover:bg-orange-400">
-                  Đăng ký ngay
+                  <Link to="/auth/login">Đăng ký ngay</Link>
                 </div>
               </div>
             </div>
 
-            <div>
+            <div className="flex items-center justify-center">
               <img src={landing2}></img>
             </div>
           </div>
