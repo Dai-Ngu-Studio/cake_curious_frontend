@@ -5,16 +5,18 @@ import Admin from "./layouts/Admin";
 import Auth from "./layouts/Auth";
 import Landing from "./views/Landing";
 import Profile from "./views/Profile";
-import Dashboard from "./views/admin/Dashboard";
-import Settings from "./views/admin/Settings";
-import Tables from "./views/admin/Tables";
+import AdminDashboard from "./views/admin/AdminDashboard";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 // import "./assets/styles/tailwind.css";
 import Login from "./views/auth/Login";
-import Register from "./views/auth/Register";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./ultils/ProtectedRoute";
+import StoreTables from "./views/admin/StoreTables";
+import AccountTables from "./views/admin/AccountTables";
+import StaffDashboard from "./views/staff/StaffDashboard";
+import ReportTables from "./views/staff/ReportTables";
+import Staff from "./layouts/Staff";
 
 function App() {
   return (
@@ -22,24 +24,36 @@ function App() {
       <Routes>
         {/* add routes with layouts */}
         <Route
-          path="/"
+          path="/admin/"
           element={
             <ProtectedRoute>
               <Admin />
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
-          <Route path="admin/dashboard" element={<Dashboard />} />
-          <Route path="admin/settings" element={<Settings />} />
-          <Route path="admin/tables" element={<Tables />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="admin-dashboard" element={<AdminDashboard />} />
+          <Route path="store-tables" element={<StoreTables />} />
+          <Route path="account-tables" element={<AccountTables />} />
+        </Route>
+        <Route
+          path="/staff/"
+          element={
+            <ProtectedRoute>
+              <Staff />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<StaffDashboard />} />
+          <Route path="staff-dashboard" element={<StaffDashboard />} />
+          <Route path="report-tables" element={<ReportTables />} />
         </Route>
 
         <Route element={<Auth />}>
           <Route path="/auth/login" element={<Login />} />
         </Route>
         {/* add routes without layouts */}
-        <Route path="/landing" element={<Landing />} />
+        <Route index path="/" element={<Landing />} />
         <Route path="/profile" element={<Profile />} />
 
         {/* add redirect for first page */}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import UserDropdown from "../Dropdowns/UserDropdown";
 
-export default function AdminNavbar() {
+export default function Navbar({ link }) {
   return (
     <>
       {/* Navbar */}
@@ -12,7 +12,7 @@ export default function AdminNavbar() {
           {/* Brand */}
           <Link
             className="text-white text-sm uppercase hidden lg:inline-block font-semibold"
-            to="/admin/dashboard"
+            to={link}
           >
             Dashboard
           </Link>
