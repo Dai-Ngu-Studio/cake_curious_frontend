@@ -24,6 +24,9 @@ module.exports = {
       ...colors,
     },
     extend: {
+      fontFamily: {
+        signika: ["Signika Negative", "sans-serif"],
+      },
       minHeight: {
         "screen-75": "75vh",
       },
