@@ -1,14 +1,14 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/img/cake_curious_logo.png";
+import logo from "../../assets/img/cake_curious_logo_text.png";
 
 // components
 
 export default function LandingNavbar() {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
-    <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-1 bg-white shadow-md shadow-white">
+    <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-1 bg-transparent shadow-md text-white">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <Link
@@ -44,7 +44,7 @@ export default function LandingNavbar() {
             <li>
               <Link
                 to="/auth/login"
-                className="flex items-center border-2 px-3 py-2 m-1 rounded-lg border-green-500 bg-green-400 cursor-pointer hover:bg-green-500"
+                className="flex items-center px-5 py-3 m-1 rounded-full bg-white cursor-pointer hover:shadow-xl hover:bg-slate-100 text-pink-600"
               >
                 Đăng nhập
               </Link>
