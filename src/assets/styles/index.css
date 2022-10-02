@@ -1,8 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-  font-family: amz-font;
-  src: url("../fonts/AmazonEmberDisplay_Rg._TTW_.woff");
-}
+@import url("https://fonts.googleapis.com/css2?family=Signika+Negative:wght@700&display=swap");
