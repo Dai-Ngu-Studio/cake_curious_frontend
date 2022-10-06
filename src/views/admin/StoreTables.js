@@ -1,26 +1,47 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import CardPaging from "../../components/Cards/CardPaging";
+import CardSearch from "../../components/Cards/CardSearch";
+import StoreCardTable from "../../components/Cards/StoreCardTable";
+import {
+  changeStorePage,
+  handleStoreChange,
+} from "../../features/stores/storeSlice";
+import { StoreSortingOptions } from "../../ultils/SortingOptions";
 
 // components
 
-import CardSettings from "../../components/Cards/CardSettings";
-import CardProfile from "../../components/Cards/CardProfile";
-import CardTable from "../../components/Cards/CardTable";
-
 export default function StoreTables() {
+  const {
+    totalStorePages,
+    page,
+    search,
+    filter,
+    isStoreLoading,
+    sort,
+    filterOptions,
+  } = useSelector((selector) => selector.store);
   return (
     <>
-      {/* <div className="flex flex-wrap">
-        <div className="w-full lg:w-8/12 px-4">
-          <CardSettings />
-        </div>
-        <div className="w-full lg:w-4/12 px-4">
-          <CardProfile />
-        </div>
-      </div>
-     */}
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <CardTable />
+          <CardSearch
+            sort={sort}
+            filter={filter}
+            search={search}
+            loading={isStoreLoading}
+            filterOptions={filterOptions}
+            sortOptions={StoreSortingOptions}
+            handleChange={handleStoreChange}
+          />
+          <StoreCardTable />
+          {totalStorePages > 1 && (
+            <CardPaging
+              totalPages={totalStorePages}
+              page={page}
+              handleChangePage={changeStorePage}
+            />
+          )}
         </div>
       </div>
     </>

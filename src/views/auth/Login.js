@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import GoogleImage from "../../assets/img/google.svg";
 import {
@@ -8,7 +8,7 @@ import {
   handleUserChange,
   loginGoogle,
   loginUser,
-} from "../../features/user/userSlice";
+} from "../../features/users/userSlice";
 
 export default function Login() {
   const { token, email, password, isUserLoading, user } = useSelector(
