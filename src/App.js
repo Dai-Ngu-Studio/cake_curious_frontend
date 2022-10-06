@@ -17,6 +17,9 @@ import AccountTables from "./views/admin/AccountTables";
 import StaffDashboard from "./views/staff/StaffDashboard";
 import ReportTables from "./views/staff/ReportTables";
 import Staff from "./layouts/Staff";
+import StoreDashboard from "./views/store/StoreDashboard";
+import ProductTables from "./views/store/ProductTables";
+import Store from "./layouts/Store";
 
 function App() {
   return (
@@ -32,6 +35,7 @@ function App() {
           }
         >
           <Route index element={<AdminDashboard />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="admin-dashboard" element={<AdminDashboard />} />
           <Route path="store-tables" element={<StoreTables />} />
           <Route path="account-tables" element={<AccountTables />} />
@@ -45,16 +49,29 @@ function App() {
           }
         >
           <Route index element={<StaffDashboard />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="staff-dashboard" element={<StaffDashboard />} />
           <Route path="report-tables" element={<ReportTables />} />
+        </Route>
+        <Route
+          path="/store/"
+          element={
+            <ProtectedRoute>
+              <Store />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<StoreDashboard />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="store-dashboard" element={<StoreDashboard />} />
+          <Route path="product-tables" element={<ProductTables />} />
         </Route>
 
         <Route element={<Auth />}>
           <Route path="/auth/login" element={<Login />} />
         </Route>
         {/* add routes without layouts */}
-        <Route index path="/" element={<Landing />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route index element={<Landing />} />
 
         {/* add redirect for first page */}
         {/* <Route path="*" element={<Admin />} /> */}
