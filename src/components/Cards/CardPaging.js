@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 const CardPaging = ({ totalPages, page, handleChangePage }) => {
@@ -6,11 +6,18 @@ const CardPaging = ({ totalPages, page, handleChangePage }) => {
   const pages = Array.from({ length: totalPages }, (_, index) => {
     return index + 1;
   });
+  const [pageNumberLimit, setpageNumberLimit] = useState(5);
+  const [maxPageNumberLimit, setmaxPageNumberLimit] = useState(5);
+  const [minPageNumberLimit, setminPageNumberLimit] = useState(0);
 
   const nextPage = () => {
     let newPage = page + 1;
     if (newPage > totalPages) {
       newPage = 1;
+    }
+    if (newPage > maxPageNumberLimit) {
+      setmaxPageNumberLimit(maxPageNumberLimit + pageNumberLimit);
+      setminPageNumberLimit(minPageNumberLimit + pageNumberLimit);
     }
     dispatch(handleChangePage(newPage));
   };
@@ -19,8 +26,34 @@ const CardPaging = ({ totalPages, page, handleChangePage }) => {
     if (newPage < 1) {
       newPage = totalPages;
     }
+    if (newPage % pageNumberLimit === 0) {
+      setmaxPageNumberLimit(maxPageNumberLimit - pageNumberLimit);
+      setminPageNumberLimit(minPageNumberLimit - pageNumberLimit);
+    }
     dispatch(handleChangePage(newPage));
   };
+  let pageIncrementBtn = null;
+  if (pages.length > maxPageNumberLimit) {
+    pageIncrementBtn = (
+      <li
+        onClick={nextPage}
+        className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+      >
+        &hellip;
+      </li>
+    );
+  }
+  let pageDecrementBtn = null;
+  if (minPageNumberLimit >= 1) {
+    pageDecrementBtn = (
+      <li
+        onClick={prevPage}
+        className="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+      >
+        &hellip;
+      </li>
+    );
+  }
 
   return (
     <nav aria-label="Page navigation example">
@@ -46,24 +79,30 @@ const CardPaging = ({ totalPages, page, handleChangePage }) => {
             </svg>
           </button>
         </li>
+        {pageDecrementBtn}
         {pages.map((pageNumber) => {
-          return (
-            <li key={pageNumber}>
-              <button
-                type="button"
-                onClick={() => dispatch(handleChangePage(pageNumber))}
-                className={
-                  pageNumber === page
-                    ? "z-10 py-2 px-3 leading-tight text-blue-600 bg-blue-50 border border-blue-300 hover:bg-blue-100 hover:text-blue-700 "
-                    : "py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
-                }
-              >
-                {pageNumber}
-              </button>
-            </li>
-          );
+          if (
+            pageNumber < maxPageNumberLimit + 1 &&
+            pageNumber > minPageNumberLimit
+          ) {
+            return (
+              <li key={pageNumber}>
+                <button
+                  type="button"
+                  onClick={() => dispatch(handleChangePage(pageNumber))}
+                  className={
+                    pageNumber === page
+                      ? "z-10 py-2 px-3 leading-tight text-blue-600 bg-blue-50 border border-blue-300 hover:bg-blue-100 hover:text-blue-700 "
+                      : "py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 "
+                  }
+                >
+                  {pageNumber}
+                </button>
+              </li>
+            );
+          }
         })}
-
+        {pageIncrementBtn}
         <li>
           <button
             type="button"

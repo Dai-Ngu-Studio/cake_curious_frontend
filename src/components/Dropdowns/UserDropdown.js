@@ -1,30 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createPopper } from "@popperjs/core";
 import ProfileImage from "../../assets/img/team-1-800x800.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { clearStore } from "../../features/users/userSlice";
+import { Link } from "react-router-dom";
 
 const UserDropdown = () => {
   // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
-  const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
-    });
-    setDropdownPopoverShow(true);
-  };
-  const closeDropdownPopover = () => {
-    setDropdownPopoverShow(false);
-  };
+  // const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
+  // const btnDropdownRef = React.createRef();
+  // const popoverDropdownRef = React.createRef();
+  // const openDropdownPopover = () => {
+  //   createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
+  //     placement: "bottom-start",
+  //   });
+  //   setDropdownPopoverShow(true);
+  // };
+  // const closeDropdownPopover = () => {
+  //   setDropdownPopoverShow(false);
+  // };
+  const [toggleDropDown, setToggleDropDown] = useState(false);
+  const dispatch = useDispatch();
+  const [routing, setRouting] = useState("");
+  const { user } = useSelector((store) => store.user);
+
+  useEffect(() => {
+    if (user) {
+      let priorityRole = 99;
+      for (let i = 0; i < user.hasRoles.length; i++) {
+        var roleId = user.hasRoles[i].roleId;
+        if (roleId < priorityRole) {
+          priorityRole = roleId;
+        }
+      }
+      if (priorityRole === 0) {
+        setRouting("/admin/profile");
+      } else if (priorityRole === 1) {
+        setRouting("/staff/profile");
+      } else if (priorityRole === 2) {
+        setRouting("/store/profile");
+      }
+    }
+  }, []);
+
   return (
     <>
-      <a
+      <button
         className="text-blueGray-500 block"
-        href="#pablo"
-        ref={btnDropdownRef}
+        type="button"
         onClick={(e) => {
           e.preventDefault();
-          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+          !toggleDropDown ? setToggleDropDown(true) : setToggleDropDown(false);
         }}
       >
         <div className="items-center flex">
@@ -32,28 +58,27 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={ProfileImage}
+              src={user.photoUrl || ProfileImage}
             />
           </span>
         </div>
-      </a>
+      </button>
       <div
-        ref={popoverDropdownRef}
         className={
-          (dropdownPopoverShow ? "block " : "hidden ") +
+          (toggleDropDown ? "block " : "hidden ") +
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
-          href="#pablo"
+        <Link
+          to={routing}
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={() => setToggleDropDown(false)}
         >
-          Action
-        </a>
-        <a
+          Profile
+        </Link>
+        {/* <a
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
@@ -70,17 +95,17 @@ const UserDropdown = () => {
           onClick={(e) => e.preventDefault()}
         >
           Something else here
-        </a>
+        </a> */}
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
-        <a
-          href="#pablo"
+        <button
+          type="button"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={() => dispatch(clearStore("Logging out..."))}
         >
-          Seprated link
-        </a>
+          Logout
+        </button>
       </div>
     </>
   );
