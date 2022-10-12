@@ -65,3 +65,18 @@ export const ReportSortingOptions = [
     value: "DescTitle",
   },
 ];
+
+export const OrderSortingOptions = [
+  {
+    name: "All",
+    value: "All",
+  },
+  {
+    name: "newest",
+    value: "DescOrderDate",
+  },
+  {
+    name: "oldest",
+    value: "AscOrderDate",
+  },
+];

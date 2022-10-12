@@ -17,6 +17,11 @@ export const AdminLinks = {
       style: "fa fa-user mr-2 text-sm opacity-75",
       linkTo: "/admin/account-tables",
     },
+    {
+      name: "Reports",
+      style: "fa fa-flag mr-2 text-sm opacity-75",
+      linkTo: "/admin/report-tables",
+    },
   ],
 };
 
@@ -42,7 +47,7 @@ export const StoreLinks = {
     {
       name: "Orders",
       style: "fa fa-shopping-cart mr-2 text-sm opacity-75",
-      linkTo: "/store/orders",
+      linkTo: "/store/order-tables",
     },
   ],
 };

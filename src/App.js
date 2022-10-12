@@ -20,16 +20,17 @@ import Staff from "./layouts/Staff";
 import StoreDashboard from "./views/store/StoreDashboard";
 import ProductTables from "./views/store/ProductTables";
 import Store from "./layouts/Store";
+import Error from "./views/Error";
+import OrderTables from "./views/store/OrderTables";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* add routes with layouts */}
         <Route
           path="/admin/"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role={0}>
               <Admin />
             </ProtectedRoute>
           }
@@ -39,11 +40,12 @@ function App() {
           <Route path="admin-dashboard" element={<AdminDashboard />} />
           <Route path="store-tables" element={<StoreTables />} />
           <Route path="account-tables" element={<AccountTables />} />
+          <Route path="report-tables" element={<ReportTables />} />
         </Route>
         <Route
           path="/staff/"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role={1}>
               <Staff />
             </ProtectedRoute>
           }
@@ -56,7 +58,7 @@ function App() {
         <Route
           path="/store/"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute role={2}>
               <Store />
             </ProtectedRoute>
           }
@@ -65,16 +67,14 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="store-dashboard" element={<StoreDashboard />} />
           <Route path="product-tables" element={<ProductTables />} />
+          <Route path="order-tables" element={<OrderTables />} />
         </Route>
 
-        <Route element={<Auth />}>
-          <Route path="/auth/login" element={<Login />} />
+        <Route path="/auth/" element={<Auth />}>
+          <Route path="login" element={<Login />} />
         </Route>
-        {/* add routes without layouts */}
         <Route index element={<Landing />} />
-
-        {/* add redirect for first page */}
-        {/* <Route path="*" element={<Admin />} /> */}
+        <Route path="/unauthorized" element={<Error />} />
       </Routes>
       <ToastContainer position="top-center" />
     </BrowserRouter>

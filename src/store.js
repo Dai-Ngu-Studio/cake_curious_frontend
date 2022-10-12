@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import accountSlice from "./features/accounts/accountSlice";
+import orderSlice from "./features/orders/orderSlice";
 import productSlice from "./features/products/productSlice";
 import reportSlice from "./features/reports/reportSlice";
 import storeSlice from "./features/stores/storeSlice";
@@ -12,5 +13,6 @@ export const store = configureStore({
     account: accountSlice,
     store: storeSlice,
     report: reportSlice,
+    order: orderSlice,
   },
 });
