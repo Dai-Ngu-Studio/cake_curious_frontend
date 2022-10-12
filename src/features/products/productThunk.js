@@ -1,4 +1,4 @@
-import customFetch from "../../ultils/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../ultils/axios";
 
 export const getAllProductsThunk = async (_, thunkAPI) => {
   const { search, page, size, sort, filter } = thunkAPI.getState().product;
@@ -10,7 +10,7 @@ export const getAllProductsThunk = async (_, thunkAPI) => {
     const resp = await customFetch.get(url);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -19,7 +19,7 @@ export const addProductThunk = async (product, thunkAPI) => {
     const resp = await customFetch.post("/api/products", product);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -28,7 +28,7 @@ export const updateProductThunk = async ({ productId, product }, thunkAPI) => {
     const resp = await customFetch.put(`/api/products/${productId}`, product);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -37,6 +37,6 @@ export const deleteProductThunk = async ({ productId }, thunkAPI) => {
     const resp = await customFetch.delete(`/api/products/${productId}`);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };

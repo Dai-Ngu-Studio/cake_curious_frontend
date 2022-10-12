@@ -1,4 +1,4 @@
-import customFetch from "../../ultils/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../ultils/axios";
 
 export const getAllReportsThunk = async (_, thunkAPI) => {
   const { search, page, size, sort, filter } = thunkAPI.getState().report;
@@ -10,7 +10,7 @@ export const getAllReportsThunk = async (_, thunkAPI) => {
     const resp = await customFetch.get(url);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -19,6 +19,6 @@ export const updateReportThunk = async ({ reportId, report }, thunkAPI) => {
     const resp = await customFetch.put(`/api/reports/${reportId}`, report);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };

@@ -44,6 +44,7 @@ const storeSlice = createSlice({
     changeStorePage: (state, { payload }) => {
       state.page = payload;
     },
+    clearAllStoresState: (state) => initialState,
   },
   extraReducers: {
     [getAllStores.pending]: (state) => {
@@ -94,5 +95,6 @@ const storeSlice = createSlice({
   },
 });
 
-export const { handleStoreChange, changeStorePage } = storeSlice.actions;
+export const { handleStoreChange, changeStorePage, clearAllStoresState } =
+  storeSlice.actions;
 export default storeSlice.reducer;

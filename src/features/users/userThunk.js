@@ -6,6 +6,10 @@ import {
 import customFetch from "../../ultils/axios";
 import { auth } from "../../ultils/firebase";
 import { firebaseAuthError } from "../../ultils/firebaseError";
+import { clearAllAccountsState } from "../accounts/accountSlice";
+import { clearAllProductsState } from "../products/productSlice";
+import { clearAllReportsState } from "../reports/reportSlice";
+import { clearAllStoresState } from "../stores/storeSlice";
 import { clearUserLoginValues, logoutUser } from "./userSlice";
 
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
@@ -41,6 +45,10 @@ export const getUserThunk = async (_, thunkAPI) => {
 export const clearStoreThunk = async (message, thunkAPI) => {
   try {
     thunkAPI.dispatch(logoutUser(message));
+    thunkAPI.dispatch(clearAllReportsState());
+    thunkAPI.dispatch(clearAllAccountsState());
+    thunkAPI.dispatch(clearAllProductsState());
+    thunkAPI.dispatch(clearAllStoresState());
     return Promise.resolve();
   } catch (error) {
     return Promise.reject();

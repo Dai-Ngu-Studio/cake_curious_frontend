@@ -35,6 +35,7 @@ const reportSlice = createSlice({
     changeReportPage: (state, { payload }) => {
       state.page = payload;
     },
+    clearAllReportsState: (state) => initialState,
   },
   extraReducers: {
     [getAllReports.pending]: (state) => {
@@ -63,5 +64,6 @@ const reportSlice = createSlice({
   },
 });
 
-export const { handleReportChange, changeReportPage } = reportSlice.actions;
+export const { handleReportChange, changeReportPage, clearAllReportsState } =
+  reportSlice.actions;
 export default reportSlice.reducer;

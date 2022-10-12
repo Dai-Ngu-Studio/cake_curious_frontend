@@ -1,4 +1,4 @@
-import customFetch from "../../ultils/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../ultils/axios";
 
 export const getAllStoresThunk = async (_, thunkAPI) => {
   const { search, page, size, sort, filter } = thunkAPI.getState().store;
@@ -10,7 +10,7 @@ export const getAllStoresThunk = async (_, thunkAPI) => {
     const resp = await customFetch.get(url);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -19,7 +19,7 @@ export const addStoreThunk = async (product, thunkAPI) => {
     const resp = await customFetch.post("/api/stores", product);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -28,7 +28,7 @@ export const updateStoreThunk = async ({ storeId, store }, thunkAPI) => {
     const resp = await customFetch.put(`/api/stores/${storeId}`, store);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
 
@@ -37,6 +37,6 @@ export const deleteStoreThunk = async ({ storeId }, thunkAPI) => {
     const resp = await customFetch.delete(`/api/stores/${storeId}`);
     return resp.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
