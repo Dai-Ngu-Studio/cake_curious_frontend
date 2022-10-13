@@ -8,9 +8,13 @@ const CardSearch = ({
   loading,
   search,
   filter,
+  type,
+  status,
   handleChange,
   sortOptions,
   filterOptions,
+  statusOptions,
+  typeOptions,
   sort,
 }) => {
   const dispatch = useDispatch();
@@ -22,15 +26,38 @@ const CardSearch = ({
 
   return (
     <div className="flex justify-between items-center pb-2">
-      <div className="relative">
-        <FormRowSelect
-          labelText="Filter"
-          name="filter"
-          value={filter}
-          list={["All", ...filterOptions]}
-          handleChange={handleInputChange}
-        />
-      </div>
+      {statusOptions && typeOptions ? (
+        <>
+          <div className="relative">
+            <FormRowSelect
+              labelText="Status"
+              name="status"
+              value={status}
+              list={["All", ...statusOptions]}
+              handleChange={handleInputChange}
+            />
+          </div>
+          <div className="relative">
+            <FormRowSelect
+              labelText="Type"
+              name="type"
+              value={type}
+              list={["All", ...typeOptions]}
+              handleChange={handleInputChange}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="relative">
+          <FormRowSelect
+            labelText="Filter"
+            name="filter"
+            value={filter}
+            list={["All", ...filterOptions]}
+            handleChange={handleInputChange}
+          />
+        </div>
+      )}
       <div className="relative">
         <FormRowSelect
           labelText="Sort"

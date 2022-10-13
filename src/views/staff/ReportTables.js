@@ -17,10 +17,12 @@ export default function ReportTables() {
     totalReportPages,
     page,
     search,
-    filter,
+    type,
+    status,
     isReportLoading,
     sort,
-    filterOptions,
+    statusOptions,
+    typeOptions,
   } = useSelector((store) => store.report);
   return (
     <>
@@ -28,10 +30,12 @@ export default function ReportTables() {
         <div className="w-full mb-12 px-4">
           <CardSearch
             sort={sort}
-            filter={filter}
+            type={type}
+            status={status}
             search={search}
             loading={isReportLoading}
-            filterOptions={filterOptions}
+            statusOptions={statusOptions}
+            typeOptions={typeOptions}
             sortOptions={ReportSortingOptions}
             handleChange={handleReportChange}
           />

@@ -10,14 +10,13 @@ import Loading from "../../ultils/Loading";
 import { getAllReports } from "../../features/reports/reportSlice";
 
 export default function ReportCardTable() {
-  const { reports, isReportLoading, page, search, filter, sort } = useSelector(
-    (store) => store.report
-  );
+  const { reports, isReportLoading, page, search, type, status, sort } =
+    useSelector((store) => store.report);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllReports());
-  }, [page, search, filter, sort]);
+  }, [page, search, type, status, sort]);
 
   if (isReportLoading) {
     return <Loading />;

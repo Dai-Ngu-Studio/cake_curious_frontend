@@ -10,8 +10,10 @@ const initialState = {
   size: 10,
   search: "",
   sort: "All",
-  filter: "All",
-  filterOptions: ["Comment", "Recipe"],
+  type: "All",
+  status: "All",
+  statusOptions: ["Censored", "Pending"],
+  typeOptions: ["Comment", "Recipe"],
 };
 
 export const getAllReports = createAsyncThunk(
