@@ -1,7 +1,9 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-const TableDropdown = () => {
+const TableDropdown = ({ link, setUpdate }) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
@@ -15,6 +17,8 @@ const TableDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+  const dispatch = useDispatch();
+
   return (
     <>
       <a
@@ -35,16 +39,16 @@ const TableDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
-          href="#pablo"
+        <Link
+          to={link}
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={() => dispatch(setUpdate)}
         >
-          Action
-        </a>
-        <a
+          Update
+        </Link>
+        {/* <a
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
@@ -61,7 +65,7 @@ const TableDropdown = () => {
           onClick={(e) => e.preventDefault()}
         >
           Something else here
-        </a>
+        </a> */}
       </div>
     </>
   );

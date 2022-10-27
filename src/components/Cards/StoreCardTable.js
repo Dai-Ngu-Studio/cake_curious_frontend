@@ -7,7 +7,7 @@ import Shop from "../../assets/img/shop.png";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../ultils/Loading";
-import { getAllStores } from "../../features/stores/storeSlice";
+import { getAllStores, setUpdateStore } from "../../features/stores/storeSlice";
 
 export default function StoreCardTable() {
   const { stores, isStoreLoading, page, search, filter, sort } = useSelector(
@@ -118,7 +118,19 @@ export default function StoreCardTable() {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown />
+                        <TableDropdown
+                          link="/admin/store-form"
+                          setUpdate={setUpdateStore({
+                            editStoreId: store.id,
+                            description: store.description,
+                            name: store.name,
+                            photoUrl: store.photoUrl,
+                            address: store.address,
+                            user: store.user,
+                            rating: store.rating,
+                            status: store.status,
+                          })}
+                        />
                       </td>
                     </tr>
                   );

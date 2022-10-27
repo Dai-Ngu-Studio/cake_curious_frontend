@@ -11,7 +11,7 @@ const FormRow = ({
 }) => {
   return (
     <div>
-      {/* <label htmlFor={name}>{labelText || name}</label> */}
+      {labelText ? <label htmlFor={labelText}>{labelText}</label> : null}
       <input
         id={name}
         type={type}

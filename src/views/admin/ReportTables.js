@@ -21,6 +21,8 @@ export default function ReportTables() {
     isReportLoading,
     sort,
     filterOptions,
+    statusOptions,
+    typeOptions,
   } = useSelector((store) => store.report);
   return (
     <>
@@ -31,6 +33,8 @@ export default function ReportTables() {
             filter={filter}
             search={search}
             loading={isReportLoading}
+            statusOptions={statusOptions}
+            typeOptions={typeOptions}
             filterOptions={filterOptions}
             sortOptions={ReportSortingOptions}
             handleChange={handleReportChange}

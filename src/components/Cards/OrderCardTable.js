@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrders } from "../../features/orders/orderSlice";
+import { getAllOrders, setUpdateOrder } from "../../features/orders/orderSlice";
 import Loading from "../../ultils/Loading";
 import User from "../../assets/img/user.png";
 import moment from "moment/moment";
@@ -126,7 +126,19 @@ export const OrderCardTable = () => {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown />
+                        <TableDropdown
+                          link="/store/order-form"
+                          setUpdate={setUpdateOrder({
+                            editOrderId: order.id,
+                            user: order.user,
+                            address: order.address,
+                            discountedTotal: order.discountedTotal,
+                            status: order.status,
+                            orderDate: order.orderDate,
+                            processedDate: order.processedDate,
+                            completedDate: order.completedDate,
+                          })}
+                        />
                       </td>
                     </tr>
                   );

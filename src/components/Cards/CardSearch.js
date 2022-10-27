@@ -30,7 +30,6 @@ const CardSearch = ({
         <>
           <div className="relative">
             <FormRowSelect
-              labelText="Status"
               name="status"
               value={status}
               list={["All", ...statusOptions]}
@@ -39,7 +38,6 @@ const CardSearch = ({
           </div>
           <div className="relative">
             <FormRowSelect
-              labelText="Type"
               name="type"
               value={type}
               list={["All", ...typeOptions]}
@@ -50,7 +48,6 @@ const CardSearch = ({
       ) : (
         <div className="relative">
           <FormRowSelect
-            labelText="Filter"
             name="filter"
             value={filter}
             list={["All", ...filterOptions]}
@@ -60,7 +57,6 @@ const CardSearch = ({
       )}
       <div className="relative">
         <FormRowSelect
-          labelText="Sort"
           name="sort"
           value={sort}
           list={sortOptions}

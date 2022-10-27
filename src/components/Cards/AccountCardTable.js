@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAccounts } from "../../features/accounts/accountSlice";
+import {
+  getAllAccounts,
+  getSingleAccount,
+  setUpdateAccount,
+} from "../../features/accounts/accountSlice";
 import Loading from "../../ultils/Loading";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import User from "../../assets/img/user.png";
@@ -113,7 +117,18 @@ export const AccountCardTable = () => {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown />
+                        <TableDropdown
+                          link="/admin/account-form"
+                          setUpdate={setUpdateAccount({
+                            editAccountId: account.id,
+                            email: account.email,
+                            displayName: account.displayName,
+                            photoUrl: account.photoUrl,
+                            gender: account.gender,
+                            roles: account.roles,
+                            status: account.status,
+                          })}
+                        />
                       </td>
                     </tr>
                   );

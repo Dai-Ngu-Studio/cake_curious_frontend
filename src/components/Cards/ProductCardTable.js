@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
-import Shop from "../../assets/img/shop.png";
+import Product from "../../assets/img/product.png";
 // components
 
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../features/products/productSlice";
+import {
+  getAllProducts,
+  setUpdateProduct,
+} from "../../features/products/productSlice";
 import Loading from "../../ultils/Loading";
+import { Link } from "react-router-dom";
 
 export default function ProductCardTable() {
   const { products, isProductLoading, page, search, filter, sort } =
@@ -29,6 +33,18 @@ export default function ProductCardTable() {
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
         }
       >
+        <div className="rounded-t mb-0 px-4 py-3 border-0">
+          <div className="flex flex-wrap items-center">
+            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+              <Link
+                className="font-semibold text-lg text-blueGray-700"
+                to="/store/product-form"
+              >
+                Create
+              </Link>
+            </div>
+          </div>
+        </div>
         {products.length === 0 ? (
           <div className="block w-full overflow-x-auto">
             <h2 className="text-center pb-3">No products to display...</h2>
@@ -87,7 +103,7 @@ export default function ProductCardTable() {
                     <tr key={product.id}>
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
-                          src={product.photoUrl || Shop}
+                          src={product.photoUrl || Product}
                           className="h-12 w-12 bg-white rounded-full border"
                           alt="..."
                         ></img>
@@ -117,7 +133,21 @@ export default function ProductCardTable() {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown />
+                        <TableDropdown
+                          link="/store/product-form"
+                          setUpdate={setUpdateProduct({
+                            editProductId: product.id || "",
+                            productType: product.productType,
+                            productCategoryId: product.productCategoryId,
+                            name: product.name,
+                            description: product.description,
+                            quantity: product.quantity,
+                            price: product.price,
+                            discount: product.discount,
+                            photoUrl: product.photoUrl,
+                            status: product.status,
+                          })}
+                        />
                       </td>
                     </tr>
                   );

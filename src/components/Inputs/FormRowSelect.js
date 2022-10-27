@@ -7,22 +7,26 @@ const FormRowSelect = ({
   handleChange,
   list,
   style,
+  disabledSelection,
+  disabledOption,
 }) => {
   return (
     <div>
-      {/* <label htmlFor={name}>{labelText || name}</label> */}
+      {labelText ? <label htmlFor={labelText}>{labelText}: </label> : null}
       <select
         name={name}
         id={name}
+        disabled={disabledSelection}
         value={value}
         onChange={handleChange}
         className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 w-28"
       >
-        {list.map((item, index) => {
+        {list?.map((item, index) => {
           return (
             <option
+              disabled={disabledOption === (item.id || index) ? true : false}
               key={index}
-              value={item.value || item}
+              value={item.value || item.id}
               className="block py-2 px-4 hover:bg-gray-100"
             >
               {item.name || item}

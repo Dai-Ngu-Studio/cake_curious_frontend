@@ -7,9 +7,21 @@ import Shop from "../../assets/img/shop.png";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../ultils/Loading";
-import { getAllReports } from "../../features/reports/reportSlice";
+import {
+  getAllReports,
+  setUpdateReport,
+} from "../../features/reports/reportSlice";
+import { ReportStatus } from "../../ultils/StatusOptions";
 
 export default function ReportCardTable() {
+  const { user } = useSelector((store) => store.user);
+  let priorityRole = 99;
+  for (let i = 0; i < user.hasRoles.length; i++) {
+    var roleId = user.hasRoles[i].roleId;
+    if (roleId < priorityRole) {
+      priorityRole = roleId;
+    }
+  }
   const { reports, isReportLoading, page, search, type, status, sort } =
     useSelector((store) => store.report);
   const dispatch = useDispatch();
@@ -102,7 +114,15 @@ export default function ReportCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {report.status === 0 ? "Pending" : "Checked"}
+                            {ReportStatus.map((status) => {
+                              return (
+                                <div key={status.id}>
+                                  {report.status === status.id
+                                    ? status.name
+                                    : ""}
+                                </div>
+                              );
+                            })}
                           </span>
                           {/* <div className="relative w-full">
                           <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
@@ -115,7 +135,26 @@ export default function ReportCardTable() {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown />
+                        <TableDropdown
+                          link={
+                            priorityRole === 0
+                              ? "/admin/report-form"
+                              : "/staff/report-form"
+                          }
+                          setUpdate={setUpdateReport({
+                            editReportId: report.id,
+                            submittedDate: report.submittedDate,
+                            itemType: report.itemType,
+                            comment: report.commet,
+                            recipe: report.recipe,
+                            reporter: report.reporter,
+                            title: report.title,
+                            itemId: report.itemId,
+                            staff: report.staff,
+                            reportedUser: report.reportedUser,
+                            status: report.status,
+                          })}
+                        />
                       </td>
                     </tr>
                   );
