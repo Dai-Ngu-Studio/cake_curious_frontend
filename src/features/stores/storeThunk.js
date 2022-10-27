@@ -14,6 +14,15 @@ export const getAllStoresThunk = async (_, thunkAPI) => {
   }
 };
 
+export const userStoreThunk = async (_, thunkAPI) => {
+  try {
+    const resp = await customFetch.get("/api/stores/of-a-user");
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
 export const addStoreThunk = async (product, thunkAPI) => {
   try {
     const resp = await customFetch.post("/api/stores", product);

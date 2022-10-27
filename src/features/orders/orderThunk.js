@@ -14,6 +14,15 @@ export const getAllOrdersThunk = async (_, thunkAPI) => {
   }
 };
 
+export const GetOrderThunk = async ({ orderId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(`/api/orders/${orderId}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
 export const updateOrderThunk = async ({ orderId, order }, thunkAPI) => {
   try {
     const resp = await customFetch.put(`/api/orders/${orderId}`, order);

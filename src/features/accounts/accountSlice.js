@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   deleteAccountThunk,
+  getAccountThunk,
   getAllAccountsThunk,
   updateAccountThunk,
 } from "./accountThunk";
@@ -16,6 +17,14 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Inactive", "Active"],
+  isAccountEditing: false,
+  editAccountId: null,
+  email: "",
+  displayName: "",
+  photoUrl: null,
+  gender: "",
+  roles: [],
+  status: 0,
 };
 
 export const getAllAccounts = createAsyncThunk(
@@ -41,6 +50,13 @@ const accountSlice = createSlice({
     },
     changeAccountPage: (state, { payload }) => {
       state.page = payload;
+    },
+    setUpdateAccount: (state, { payload }) => {
+      return {
+        ...state,
+        isAccountEditing: true,
+        ...payload,
+      };
     },
     clearAllAccountsState: (state) => initialState,
   },
@@ -82,6 +98,10 @@ const accountSlice = createSlice({
   },
 });
 
-export const { handleAccountChange, changeAccountPage, clearAllAccountsState } =
-  accountSlice.actions;
+export const {
+  handleAccountChange,
+  setUpdateAccount,
+  changeAccountPage,
+  clearAllAccountsState,
+} = accountSlice.actions;
 export default accountSlice.reducer;

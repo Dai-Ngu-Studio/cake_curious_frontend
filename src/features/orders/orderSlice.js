@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {
   deleteOrderThunk,
   getAllOrdersThunk,
+  GetOrderThunk,
   updateOrderThunk,
 } from "./orderThunk";
 
@@ -16,11 +17,27 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Pending", "Completed", "Cancelled", "Processing"],
+  isOrderEditting: false,
+  isDoneUpdating: false,
+  isOrderDetailsReady: false,
+  editOrderId: null,
+  status: 0,
+  orderDate: null,
+  processedDate: null,
+  completedDate: null,
+  discountedTotal: 0,
+  address: "",
+  user: {},
+  orderDetails: [],
 };
 
 export const getAllOrders = createAsyncThunk(
   "order/getOrders",
   getAllOrdersThunk
+);
+export const getSingleOrder = createAsyncThunk(
+  "order/getSingleOrder",
+  GetOrderThunk
 );
 export const updateOrder = createAsyncThunk(
   "order/updateOrders",
@@ -38,6 +55,14 @@ const orderSlice = createSlice({
     handleOrderChange: (state, { payload: { name, value } }) => {
       state.page = 1;
       state[name] = value;
+    },
+    setUpdateOrder: (state, { payload }) => {
+      return {
+        ...state,
+        isOrderEditting: true,
+        isOrderDetailsReady: true,
+        ...payload,
+      };
     },
     changeOrderPage: (state, { payload }) => {
       state.page = payload;
@@ -57,11 +82,27 @@ const orderSlice = createSlice({
       state.isOrderLoading = false;
       toast.error(payload);
     },
+    [getSingleOrder.pending]: (state) => {
+      state.isOrderLoading = true;
+    },
+    [getSingleOrder.fulfilled]: (state, { payload }) => {
+      state.isOrderLoading = false;
+      state.status = payload.status;
+      state.processedDate = payload.processedDate;
+      state.completedDate = payload.completedDate;
+    },
+    [getSingleOrder.rejected]: (state, { payload }) => {
+      state.isOrderLoading = false;
+      toast.error(payload);
+    },
     [updateOrder.pending]: (state) => {
       state.isOrderLoading = true;
+      state.isDoneUpdating = false;
+      state.isOrderDetailsReady = false;
     },
     [updateOrder.fulfilled]: (state, { payload }) => {
       state.isOrderLoading = false;
+      state.isDoneUpdating = true;
       toast.success("Order Updated...");
     },
     [updateOrder.rejected]: (state, { payload }) => {
@@ -82,6 +123,10 @@ const orderSlice = createSlice({
   },
 });
 
-export const { handleOrderChange, changeOrderPage, clearAllOrdersState } =
-  orderSlice.actions;
+export const {
+  handleOrderChange,
+  setUpdateOrder,
+  changeOrderPage,
+  clearAllOrdersState,
+} = orderSlice.actions;
 export default orderSlice.reducer;

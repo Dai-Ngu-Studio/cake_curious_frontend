@@ -14,6 +14,15 @@ export const getAllReportsThunk = async (_, thunkAPI) => {
   }
 };
 
+export const getReportThunk = async ({ reportId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(`/api/reports/${reportId}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
 export const updateReportThunk = async ({ reportId, report }, thunkAPI) => {
   try {
     const resp = await customFetch.put(`/api/reports/${reportId}`, report);

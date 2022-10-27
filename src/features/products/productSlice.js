@@ -10,6 +10,7 @@ import {
 const initialState = {
   isProductLoading: false,
   products: [],
+  product: {},
   totalProductPages: 1,
   page: 1,
   size: 10,
@@ -17,6 +18,17 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Ingredient", "Tool"],
+  isProductEditing: false,
+  editProductId: "",
+  productType: 0,
+  productCategoryId: 0,
+  name: "",
+  description: "",
+  quantity: 0,
+  price: 0,
+  discount: 0,
+  photoUrl: null,
+  status: 0,
 };
 
 export const getAllProducts = createAsyncThunk(
@@ -46,6 +58,18 @@ const productSlice = createSlice({
     },
     changeProductPage: (state, { payload }) => {
       state.page = payload;
+    },
+    setUpdateProduct: (state, { payload }) => {
+      return {
+        ...state,
+        isProductEditing: true,
+        ...payload,
+      };
+    },
+    clearProductValues: () => {
+      return {
+        ...initialState,
+      };
     },
     clearAllProductsState: (state) => initialState,
   },
@@ -98,6 +122,11 @@ const productSlice = createSlice({
   },
 });
 
-export const { handleProductChange, changeProductPage, clearAllProductsState } =
-  productSlice.actions;
+export const {
+  handleProductChange,
+  setUpdateProduct,
+  changeProductPage,
+  clearAllProductsState,
+  clearProductValues,
+} = productSlice.actions;
 export default productSlice.reducer;
