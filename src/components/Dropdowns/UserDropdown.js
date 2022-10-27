@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { createPopper } from "@popperjs/core";
+// import { usePopper } from "@popperjs/core";
 import ProfileImage from "../../assets/img/team-1-800x800.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearStore } from "../../features/users/userSlice";
 import { Link } from "react-router-dom";
-
+import { FaSignOutAlt, FaUser } from "react-icons/fa";
 const UserDropdown = () => {
   // dropdown props
   // const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
@@ -19,7 +19,7 @@ const UserDropdown = () => {
   // const closeDropdownPopover = () => {
   //   setDropdownPopoverShow(false);
   // };
-  const [toggleDropDown, setToggleDropDown] = useState(false);
+  const [isDropDownExpanded, setToggleDropDown] = useState(false);
   const dispatch = useDispatch();
   const [routing, setRouting] = useState("");
   const { user } = useSelector((store) => store.user);
@@ -48,9 +48,8 @@ const UserDropdown = () => {
       <button
         className="text-blueGray-500 block"
         type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          !toggleDropDown ? setToggleDropDown(true) : setToggleDropDown(false);
+        onClick={() => {
+          setToggleDropDown(!isDropDownExpanded);
         }}
       >
         <div className="items-center flex">
@@ -65,45 +64,27 @@ const UserDropdown = () => {
       </button>
       <div
         className={
-          (toggleDropDown ? "block " : "hidden ") +
-          "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
+          (isDropDownExpanded ? "absolute " : "hidden ") +
+          "right-14 top-16 z-10 w-fit mt-4 bg-white border border-gray-100 rounded-md shadow-slate-900/25 shadow-xl"
         }
       >
         <Link
           to={routing}
           className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+            "text-sm m-1 p-2  flex text-blueGray-700 justify-center items-center gap-2 hover:bg-sky-300 rounded-md"
           }
-          onClick={() => setToggleDropDown(false)}
+          // onClick={() => setToggleDropDown(false)}
         >
-          Profile
+          <FaUser className="flex justify-center items-center" />
+          <p>Profile</p>
         </Link>
-        {/* <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Something else here
-        </a> */}
-        <div className="h-0 my-2 border border-solid border-blueGray-100" />
+        <div className="h-0 my-1 border border-solid border-blueGray-100" />
         <button
           type="button"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
+          className="text-sm m-1 p-2 text-blueGray-700 flex gap-2 justify-center items-center hover:bg-sky-300 rounded-md"
           onClick={() => dispatch(clearStore("Logging out..."))}
         >
+          <FaSignOutAlt className="flex justify-center items-center" />
           Logout
         </button>
       </div>
