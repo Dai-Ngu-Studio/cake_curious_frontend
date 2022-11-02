@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { usePopper } from "@popperjs/core";
 import ProfileImage from "../../assets/img/team-1-800x800.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { clearStore } from "../../features/users/userSlice";
