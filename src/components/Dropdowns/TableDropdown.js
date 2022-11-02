@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { FaEdit } from "react-icons/fa";
 
 const TableDropdown = ({ link, setUpdate }) => {
   // dropdown props
@@ -12,9 +13,12 @@ const TableDropdown = ({ link, setUpdate }) => {
   return (
     <>
       <div
-        className="text-blueGray-500 py-1 px-3 hover:cursor-pointer"
-        onClick={() => {
-          setToggleTableDropDown(!isDropDownTableExpanded);
+        className=" text-blueGray-500 py-1 px-3 hover:cursor-pointer"
+        onMouseOver={() => {
+          setToggleTableDropDown(true);
+        }}
+        onMouseOut={() => {
+          setToggleTableDropDown(false);
         }}
       >
         <i className="fas fa-ellipsis-v"></i>
@@ -22,14 +26,21 @@ const TableDropdown = ({ link, setUpdate }) => {
       <div
         className={
           (isDropDownTableExpanded ? "absolute " : "hidden ") +
-          "right-14 top-16 z-10 list-none rounded shadow-2xl"
+          "bg-white z-10 rounded shadow-2xl"
         }
+        onMouseOver={() => {
+          setToggleTableDropDown(true);
+        }}
+        onMouseOut={() => {
+          setToggleTableDropDown(false);
+        }}
       >
         <Link
           to={link}
-          className="bg-white text-base z-50 rounded shadow-lg hover:bg-sky-100"
+          className="m-1 p-2  flex text-blueGray-700 justify-center items-center gap-2 rounded hover:bg-sky-100"
           onClick={() => dispatch(setUpdate)}
         >
+          <FaEdit className="flex justify-center items-center" />
           Update
         </Link>
         {/* <a
