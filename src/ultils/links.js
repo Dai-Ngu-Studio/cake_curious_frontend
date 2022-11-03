@@ -1,24 +1,24 @@
 export const AdminLinks = {
-  title: "Admin Pages",
+  title: "Quản trị viên",
   dashboardLink: "/admin/admin-dashboard",
   links: [
     {
-      name: "Dashboard",
+      name: "Thông tin chung",
       style: "fas fa-tv mr-2 text-sm opacity-75",
       linkTo: "/admin/admin-dashboard",
     },
     {
-      name: "Stores",
+      name: "Danh sách cửa hàng",
       style: "fa fa-home mr-2 text-sm opacity-75",
       linkTo: "/admin/store-tables",
     },
     {
-      name: "Accounts",
+      name: "Quản lý người dùng",
       style: "fa fa-user mr-2 text-sm opacity-75",
       linkTo: "/admin/account-tables",
     },
     {
-      name: "Reports",
+      name: "Trung tâm hỗ trợ",
       style: "fa fa-flag mr-2 text-sm opacity-75",
       linkTo: "/admin/report-tables",
     },
@@ -30,22 +30,22 @@ export const StoreLinks = {
   dashboardLink: "/store/store-dashboard",
   links: [
     {
-      name: "Dashboard",
+      name: "Thông tin chung",
       style: "fas fa-tv mr-2 text-sm opacity-75",
       linkTo: "/store/store-dashboard",
     },
     {
-      name: "Store Detail",
+      name: "Thông tin cửa hàng",
       style: "fa fa-home mr-2 text-sm opacity-75",
       linkTo: "/store/store-detail",
     },
     {
-      name: "Products",
+      name: "Sản phẩm của bạn",
       style: "fab fa-product-hunt mr-2 text-sm opacity-75",
       linkTo: "/store/product-tables",
     },
     {
-      name: "Orders",
+      name: "Danh sách đơn đặt",
       style: "fa fa-shopping-cart mr-2 text-sm opacity-75",
       linkTo: "/store/order-tables",
     },
@@ -57,12 +57,12 @@ export const StaffLinks = {
   dashboardLink: "/staff/staff-dashboard",
   links: [
     {
-      name: "Dashboard",
+      name: "Thông tin chung",
       style: "fas fa-tv mr-2 text-sm opacity-75",
       linkTo: "/staff/staff-dashboard",
     },
     {
-      name: "Reports",
+      name: "Trung tâm hỗ trợ",
       style: "fa fa-flag mr-2 text-sm opacity-75",
       linkTo: "/staff/report-tables",
     },
