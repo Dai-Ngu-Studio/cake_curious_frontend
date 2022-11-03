@@ -83,7 +83,7 @@ export const OrderCardTable = () => {
               <tbody>
                 {orders.map((order) => {
                   return (
-                    <tr key={order.id}>
+                    <tr key={order.id} className="bg-white hover:bg-sky-50">
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
                           src={order.user.photoUrl || User}
