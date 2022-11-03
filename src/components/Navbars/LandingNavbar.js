@@ -44,7 +44,7 @@ export default function LandingNavbar() {
             <li>
               <Link
                 to="/auth/login"
-                className="flex items-center px-5 py-3 m-1 rounded-full bg-white cursor-pointer hover:shadow-xl hover:bg-slate-100 text-pink-600"
+                className="flex items-center px-5 py-3 m-1 rounded-full bg-white cursor-pointer hover:shadow-xl hover:bg-slate-100 text-emerald-600"
               >
                 Đăng nhập
               </Link>

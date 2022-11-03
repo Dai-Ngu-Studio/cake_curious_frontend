@@ -12,7 +12,7 @@ export default function Landing() {
       <LandingNavbar />
 
       <main>
-        <div className="pt-16 pb-32 flex content-center items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+        <div className="pt-16 pb-32 flex content-center items-center justify-center bg-gradient-to-r from-blue-400 to-emerald-400">
           {/* <div className="absolute top-0 w-full h-full bg-center bg-cover">
             <span
               id="blackOverlay"
@@ -30,7 +30,7 @@ export default function Landing() {
                   liệu làm bánh hiệu quả hơn trên CakeCurious với CakeCurious -
                   Kênh Người Bán
                 </p>
-                <div className=" text-xl rounded-full w-fit px-7 py-5 mt-5  bg-white font-bold cursor-pointer hover:shadow-2xl text-indigo-800">
+                <div className=" text-xl rounded-full w-fit px-7 py-5 mt-5  bg-white font-bold cursor-pointer hover:shadow-2xl text-blue-500">
                   <Link to="/auth/login">Đăng ký ngay</Link>
                 </div>
               </div>
