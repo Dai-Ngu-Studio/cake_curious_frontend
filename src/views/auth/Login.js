@@ -52,15 +52,14 @@ export default function Login() {
           priorityRole = roleId;
         }
       }
-      setTimeout(() => {
-        if (priorityRole === 0) {
-          navigate("/admin/admin-dashboard");
-        } else if (priorityRole === 1) {
-          navigate("/staff/staff-dashboard");
-        } else if (priorityRole === 2) {
-          navigate("/store/store-dashboard");
-        }
-      }, 1000);
+
+      if (priorityRole === 0) {
+        navigate("/admin/admin-dashboard");
+      } else if (priorityRole === 1) {
+        navigate("/staff/staff-dashboard");
+      } else if (priorityRole === 2) {
+        navigate("/store/store-dashboard");
+      }
     }
   }, [user]);
   return (
