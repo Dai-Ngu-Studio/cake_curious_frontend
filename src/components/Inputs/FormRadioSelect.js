@@ -1,15 +1,6 @@
 import React from "react";
 
-const FormRadioSelect = ({
-  labelText,
-  name,
-  value,
-  handleChange,
-  list,
-  style,
-  disabledSelection,
-  disabledOption,
-}) => {
+const FormRadioSelect = ({ labelText, name, handleChange, list }) => {
   return (
     <div>
       {labelText ? <label htmlFor={labelText}>{labelText}: </label> : null}
