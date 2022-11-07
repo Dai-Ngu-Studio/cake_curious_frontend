@@ -80,3 +80,18 @@ export const OrderSortingOptions = [
     value: "AscOrderDate",
   },
 ];
+//["Inactive", "Active"];
+export const StoreFilterOptions = [
+  {
+    name: "All",
+    value: "All",
+  },
+  {
+    name: "Inactive",
+    value: "Inactive",
+  },
+  {
+    name: "Active",
+    value: "Active",
+  },
+];
