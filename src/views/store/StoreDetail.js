@@ -11,6 +11,7 @@ import {
   handleStoreChange,
   updateStore,
 } from "../../features/stores/storeSlice";
+import Loading from "../../ultils/Loading";
 
 export default function StoreDetail() {
   const {
@@ -29,6 +30,10 @@ export default function StoreDetail() {
   useEffect(() => {
     dispatch(getUserStore());
   }, []);
+
+  if (isStoreLoading) {
+    return <Loading />;
+  }
 
   const handleStoreDetailInput = (e) => {
     const name = e.target.name;
@@ -98,7 +103,7 @@ export default function StoreDetail() {
               />
               <div>
                 <label>Full Name: </label>
-                {user.fullName}
+                {user.fullName === null ? "Annoymous" : user.fullName}
               </div>
               <div>
                 <label>Email: </label>

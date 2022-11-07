@@ -1,25 +1,31 @@
 import React from "react";
 import { Chart } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
+import moment from "moment/moment";
 
-export default function CardBarChart() {
+export default function CardBarChart({ barChart, role }) {
   const config = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
       {
-        label: new Date().getFullYear(),
+        label: moment().month(new Date().getMonth()).format("MMMM"),
         backgroundColor: "#ed64a6",
         borderColor: "#ed64a6",
-        data: [30, 78, 56, 34, 100, 45, 13],
+        data: role === 0 ? barChart?.lastMonthReport : barChart?.lastMonthSales,
         fill: false,
         barThickness: 8,
       },
       {
-        label: new Date().getFullYear() - 1,
+        label: moment()
+          .month(new Date().getMonth() - 1)
+          .format("MMMM"),
         fill: false,
         backgroundColor: "#4c51bf",
         borderColor: "#4c51bf",
-        data: [27, 68, 86, 74, 10, 4, 87],
+        data:
+          role === 0
+            ? barChart?.currentMonthReport
+            : barChart?.currentMonthSales,
         barThickness: 8,
       },
     ],
@@ -93,7 +99,7 @@ export default function CardBarChart() {
                 Performance
               </h6>
               <h2 className="text-blueGray-700 text-xl font-semibold">
-                Total orders
+                {role === 0 ? "User report" : "Week sales"}
               </h2>
             </div>
           </div>

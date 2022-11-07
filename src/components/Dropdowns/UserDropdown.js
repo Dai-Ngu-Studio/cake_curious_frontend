@@ -44,6 +44,7 @@ const UserDropdown = () => {
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
               src={user.photoUrl || ProfileImage}
+              referrerPolicy="no-referrer"
             />
           </span>
         </div>

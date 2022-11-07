@@ -4,13 +4,15 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import customFetch from "../../ultils/axios";
-import { auth } from "../../ultils/firebase";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../ultils/firebase";
 import { firebaseAuthError } from "../../ultils/firebaseError";
 import { clearAllAccountsState } from "../accounts/accountSlice";
 import { clearAllProductsState } from "../products/productSlice";
 import { clearAllReportsState } from "../reports/reportSlice";
 import { clearAllStoresState } from "../stores/storeSlice";
 import { clearUserLoginValues, logoutUser } from "./userSlice";
+import { clearAllDashboardsState } from "../dashboards/dashboardSlice";
 
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   try {
@@ -25,9 +27,18 @@ export const loginGoogleThunk = async (thunkAPI) => {
   try {
     const googleAuth = new GoogleAuthProvider();
     const authGoogle = await signInWithPopup(auth, googleAuth);
+    /* Comment the code below if you added the needed user to firestore */
+    await setDoc(doc(db, "users", authGoogle.user.uid), {
+      uid: authGoogle.user.uid,
+      displayName: authGoogle.user.displayName,
+      email: authGoogle.user.email,
+      photoUrl: authGoogle.user.photoURL,
+    });
+    await setDoc(doc(db, "userChats", authGoogle.user.uid), {});
+    /* ------------------------------------------------------------------------ */
     return authGoogle.user.toJSON();
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return thunkAPI.rejectWithValue(error);
   }
 };
 
@@ -49,6 +60,7 @@ export const clearStoreThunk = async (message, thunkAPI) => {
     thunkAPI.dispatch(clearAllAccountsState());
     thunkAPI.dispatch(clearAllProductsState());
     thunkAPI.dispatch(clearAllStoresState());
+    thunkAPI.dispatch(clearAllDashboardsState());
     return Promise.resolve();
   } catch (error) {
     return Promise.reject();

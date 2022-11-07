@@ -2,15 +2,31 @@ import React from "react";
 import { Chart } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
-export default function CardLineChart() {
+export default function CardLineChart({ lineChart, role }) {
   const config = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
     datasets: [
       {
         label: new Date().getFullYear(),
         backgroundColor: "#4c51bf",
         borderColor: "#4c51bf",
-        data: [65, 78, 66, 44, 56, 67, 75],
+        data:
+          role === 0
+            ? lineChart?.lastYearActiveUser
+            : lineChart?.lastYearStoreVisit,
         fill: false,
       },
       {
@@ -18,7 +34,10 @@ export default function CardLineChart() {
         fill: false,
         backgroundColor: "#fff",
         borderColor: "#fff",
-        data: [40, 68, 86, 74, 56, 60, 87],
+        data:
+          role === 0
+            ? lineChart?.currentYearActiveUser
+            : lineChart?.currentYearStoreVisit,
       },
     ],
   };
@@ -102,7 +121,9 @@ export default function CardLineChart() {
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
                 Overview
               </h6>
-              <h2 className="text-white text-xl font-semibold">Sales value</h2>
+              <h2 className="text-white text-xl font-semibold">
+                {role === 0 ? "Active user" : "Store visit"}
+              </h2>
             </div>
           </div>
         </div>

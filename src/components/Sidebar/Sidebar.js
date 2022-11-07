@@ -6,7 +6,9 @@ import NotificationDropdown from "../Dropdowns/NotificationDropdown";
 import UserDropdown from "../Dropdowns/UserDropdown";
 import logoText from "../../assets/img/cake-curious-logo-text-line.png";
 import userTemp from "../../assets/img/user-sidebar-temp.png";
+import { useSelector } from "react-redux";
 export default function Sidebar({ props }) {
+  const { user } = useSelector((store) => store.user);
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <div className="">
@@ -67,11 +69,14 @@ export default function Sidebar({ props }) {
             </div>
             <div className="flex items-center justify-center">
               <div className="bg-slate-300 rounded-full w-32 h-32 overflow-hidden">
-                <img src={userTemp}></img>
+                <img
+                  src={user?.photoUrl || userTemp}
+                  referrerPolicy="no-referrer"
+                />
               </div>
             </div>
             <div className="text-center text-white font-bold py-10">
-              Chào mừng trở lại, Đạt
+              Chào mừng trở lại, {user?.displayName}
             </div>
             <h6 className="md:min-w-full text-slate-300 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               {props.title}

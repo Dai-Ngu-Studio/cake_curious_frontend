@@ -93,10 +93,10 @@ export const AccountCardTable = () => {
                         ></img>
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        {account.fullName}
+                        {account.fullName || "Annoymous"}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        {account.displayName}
+                        {account.displayName || "Annoymous"}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex">{account.email}</div>
