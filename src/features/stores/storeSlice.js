@@ -16,8 +16,6 @@ const initialState = {
   size: 10,
   search: "",
   sort: "All",
-  filter: "All",
-  filterOptions: ["Inactive", "Active"],
   isStoreEditing: false,
   editStoreId: null,
   user: {},
