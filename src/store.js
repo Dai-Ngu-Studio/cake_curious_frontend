@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import accountSlice from "./features/accounts/accountSlice";
+import chatSlice from "./features/chats/chatSlice";
+import dashboardSlice from "./features/dashboards/dashboardSlice";
 import imageSlice from "./features/images/imageSlice";
 import orderDetailSlice from "./features/order-details/orderDetailSlice";
 import orderSlice from "./features/orders/orderSlice";
@@ -20,5 +22,7 @@ export const store = configureStore({
     productCategory: productCategorySlice,
     image: imageSlice,
     orderDetail: orderDetailSlice,
+    chat: chatSlice,
+    dashboard: dashboardSlice,
   },
 });

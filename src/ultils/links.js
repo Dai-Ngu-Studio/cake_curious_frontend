@@ -49,6 +49,11 @@ export const StoreLinks = {
       style: "fa fa-shopping-cart mr-2 text-sm opacity-75",
       linkTo: "/store/order-tables",
     },
+    {
+      name: "Chat",
+      style: "fas fa-comment-alt mr-2 text-sm opacity-75",
+      linkTo: "/store/chat",
+    },
   ],
 };
 

@@ -18,6 +18,6 @@ export const checkForUnauthorizedResponse = (error, thunkAPI) => {
     thunkAPI.dispatch(clearStore());
     return thunkAPI.rejectWithValue("Unauthorized! Logging Out...");
   }
-  return thunkAPI.rejectWithValue(error.response.data.msg);
+  return thunkAPI.rejectWithValue(error);
 };
 export default customFetch;
