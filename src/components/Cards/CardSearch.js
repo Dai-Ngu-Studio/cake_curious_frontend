@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { AccountSortingOptions } from "../../ultils/SortingOptions";
 import FormRow from "../Inputs/FormRow";
-import FormRowSelect from "../Inputs/FormRowSelect";
+import FormRadioSelect from "../Inputs/FormRadioSelect";
 
 const CardSearch = ({
   loading,
@@ -25,38 +25,18 @@ const CardSearch = ({
   };
 
   return (
-    <div className="flex justify-between items-center pb-2">
-      {statusOptions && typeOptions ? (
-        <>
-          <div className="relative">
-            <FormRowSelect
-              name="status"
-              value={status}
-              list={["All", ...statusOptions]}
-              handleChange={handleInputChange}
-            />
-          </div>
-          <div className="relative">
-            <FormRowSelect
-              name="type"
-              value={type}
-              list={["All", ...typeOptions]}
-              handleChange={handleInputChange}
-            />
-          </div>
-        </>
-      ) : (
-        <div className="relative">
-          <FormRowSelect
-            name="filter"
-            value={filter}
-            list={["All", ...filterOptions]}
-            handleChange={handleInputChange}
-          />
-        </div>
-      )}
+    <div className="bg-red-600 flex justify-between items-center mt-24">
       <div className="relative">
-        <FormRowSelect
+        <FormRadioSelect
+          name="filter"
+          value={filter}
+          list={filterOptions}
+          handleChange={handleInputChange}
+        />
+      </div>
+
+      <div className="relative">
+        <FormRadioSelect
           name="sort"
           value={sort}
           list={sortOptions}
