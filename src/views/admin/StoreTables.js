@@ -7,7 +7,10 @@ import {
   changeStorePage,
   handleStoreChange,
 } from "../../features/stores/storeSlice";
-import { StoreSortingOptions } from "../../ultils/SortingOptions";
+import {
+  StoreSortingOptions,
+  StoreFilterOptions,
+} from "../../ultils/SortingOptions";
 
 // components
 
@@ -30,7 +33,7 @@ export default function StoreTables() {
             filter={filter}
             search={search}
             loading={isStoreLoading}
-            filterOptions={filterOptions}
+            filterOptions={StoreFilterOptions}
             sortOptions={StoreSortingOptions}
             handleChange={handleStoreChange}
           />
