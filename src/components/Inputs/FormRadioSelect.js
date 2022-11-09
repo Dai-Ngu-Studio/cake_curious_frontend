@@ -16,19 +16,18 @@ const FormRadioSelect = ({ labelText, name, handleChange, list }) => {
     <div>
       {labelText ? <label htmlFor={labelText}>{labelText}: </label> : null}
       {list?.map((item, index) => {
-        console.log(index);
         return (
           <div key={index} className="inline-flex pr-4">
             <input
               type="radio"
               name={name}
               value={item.value}
-              id={item.value}
+              id={name + item.value}
               onClick={handleChange}
               className="hidden peer"
             ></input>
             <label
-              htmlFor={item.value}
+              htmlFor={name + item.value}
               className={
                 "inline-flex justify-between items-center p-2 w-full bg-white rounded-lg cursor-pointer " +
                 // (item.value == "All" ? blueBtn : greenBtn)
