@@ -53,31 +53,27 @@ const CardChatSidebar = () => {
         : userChatting.uid + user.id;
 
     try {
-      const res = await getDoc(doc(db, "chats", combinedId));
+      // update doc for current user and the person chatting with
+      await updateDoc(doc(db, "rooms", user.id), {
+        [combinedId + ".userInfo"]: {
+          uid: userChatting.uid,
+          displayName: userChatting.displayName,
+          photoUrl: userChatting.photoUrl,
+        },
+        [combinedId + ".messages"]: [],
+        [combinedId + ".date"]: serverTimestamp(),
+      });
 
-      if (!res.exists()) {
-        await setDoc(doc(db, "chats", combinedId), { messages: [] });
-
-        // update doc for current user and the person chatting with
-        await updateDoc(doc(db, "userChats", user.id), {
-          [combinedId + ".userInfo"]: {
-            uid: userChatting.uid,
-            displayName: userChatting.displayName,
-            photoUrl: userChatting.photoUrl,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-
-        // update doc for user that being chat with
-        await updateDoc(doc(db, "userChats", userChatting.uid), {
-          [combinedId + ".userInfo"]: {
-            uid: user.id,
-            displayName: user.displayName,
-            photoUrl: user.photoUrl,
-          },
-          [combinedId + ".date"]: serverTimestamp(),
-        });
-      }
+      // update doc for user that being chat with
+      await updateDoc(doc(db, "rooms", userChatting.uid), {
+        [combinedId + ".userInfo"]: {
+          uid: user.id,
+          displayName: user.displayName,
+          photoUrl: user.photoUrl,
+        },
+        [combinedId + ".messages"]: [],
+        [combinedId + ".date"]: serverTimestamp(),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +82,7 @@ const CardChatSidebar = () => {
   };
 
   useEffect(() => {
-    onSnapshot(doc(db, "userChats", user.id), (doc) => {
+    onSnapshot(doc(db, "rooms", user.id), (doc) => {
       setChats(doc.data());
     });
   }, [user.id]);

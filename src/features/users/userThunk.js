@@ -4,7 +4,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import customFetch from "../../ultils/axios";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../ultils/firebase";
 import { firebaseAuthError } from "../../ultils/firebaseError";
 import { clearAllAccountsState } from "../accounts/accountSlice";
@@ -27,15 +27,17 @@ export const loginGoogleThunk = async (thunkAPI) => {
   try {
     const googleAuth = new GoogleAuthProvider();
     const authGoogle = await signInWithPopup(auth, googleAuth);
-    /* Comment the code below if you added the needed user to firestore */
-    await setDoc(doc(db, "users", authGoogle.user.uid), {
-      uid: authGoogle.user.uid,
-      displayName: authGoogle.user.displayName,
-      email: authGoogle.user.email,
-      photoUrl: authGoogle.user.photoURL,
-    });
-    await setDoc(doc(db, "userChats", authGoogle.user.uid), {});
-    /* ------------------------------------------------------------------------ */
+
+    const res = await getDoc(doc(db, "users", authGoogle.user.uid));
+    if (!res.exists()) {
+      await setDoc(doc(db, "users", authGoogle.user.uid), {
+        uid: authGoogle.user.uid,
+        displayName: authGoogle.user.displayName,
+        email: authGoogle.user.email,
+        photoUrl: authGoogle.user.photoURL,
+      });
+      await setDoc(doc(db, "rooms", authGoogle.user.uid), {});
+    }
     return authGoogle.user.toJSON();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
