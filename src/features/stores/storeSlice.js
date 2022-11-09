@@ -16,6 +16,7 @@ const initialState = {
   size: 10,
   search: "",
   sort: "All",
+  filter: "All",
   isStoreEditing: false,
   editStoreId: null,
   user: {},
