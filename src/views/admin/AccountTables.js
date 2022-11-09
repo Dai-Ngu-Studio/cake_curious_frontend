@@ -7,19 +7,15 @@ import {
   changeAccountPage,
   handleAccountChange,
 } from "../../features/accounts/accountSlice";
-import { AccountSortingOptions } from "../../ultils/ViewOptions";
+import {
+  AccountSortingOptions,
+  AccountFilterOptions,
+} from "../../ultils/ViewOptions";
 // components
 
 export default function AccountTables() {
-  const {
-    totalAccountPages,
-    page,
-    search,
-    filter,
-    isAccountLoading,
-    sort,
-    filterOptions,
-  } = useSelector((store) => store.account);
+  const { totalAccountPages, page, search, filter, isAccountLoading, sort } =
+    useSelector((store) => store.account);
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -29,7 +25,7 @@ export default function AccountTables() {
             filter={filter}
             search={search}
             loading={isAccountLoading}
-            filterOptions={filterOptions}
+            filterOptions={AccountFilterOptions}
             sortOptions={AccountSortingOptions}
             handleChange={handleAccountChange}
           />
