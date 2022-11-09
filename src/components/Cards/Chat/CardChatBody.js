@@ -19,25 +19,28 @@ const CardChatBody = () => {
   const [text, setText] = useState([]);
 
   const handleSend = async () => {
-    await updateDoc(doc(db, "chats", chatId), {
-      messages: arrayUnion({
+    await updateDoc(doc(db, "rooms", user.id), {
+      [chatId + ".lastMessage"]: {
+        text,
+      },
+      [chatId + ".messages"]: arrayUnion({
         id: uuidv4(),
         text,
         senderId: user.id,
         date: Timestamp.now(),
       }),
-    });
-
-    await updateDoc(doc(db, "userChats", user.id), {
-      [chatId + ".lastMessage"]: {
-        text,
-      },
       [chatId + ".date"]: serverTimestamp(),
     });
-    await updateDoc(doc(db, "userChats", userData.uid), {
+    await updateDoc(doc(db, "rooms", userData.uid), {
       [chatId + ".lastMessage"]: {
         text,
       },
+      [chatId + ".messages"]: arrayUnion({
+        id: uuidv4(),
+        text,
+        senderId: user.id,
+        date: Timestamp.now(),
+      }),
       [chatId + ".date"]: serverTimestamp(),
     });
     setText("");
@@ -48,8 +51,8 @@ const CardChatBody = () => {
 
   useEffect(() => {
     if (chatId) {
-      onSnapshot(doc(db, "chats", chatId), (doc) => {
-        doc.exists() && setMessages(doc.data().messages);
+      onSnapshot(doc(db, "rooms", user.id), (doc) => {
+        doc.exists() && setMessages(doc.data()[`${chatId}`].messages);
       });
     }
   }, [chatId]);

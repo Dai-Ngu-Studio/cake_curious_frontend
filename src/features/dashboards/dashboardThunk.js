@@ -5,7 +5,6 @@ export const getAdminDashboardThunk = async (_, thunkAPI) => {
     const resp = await customFetch.get("/api/dashboard-reports/admin");
     return resp.data;
   } catch (error) {
-    console.log(error.response.status === 401);
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
