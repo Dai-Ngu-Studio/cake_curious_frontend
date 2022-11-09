@@ -10,7 +10,7 @@ import {
   changeReportPage,
   handleReportChange,
 } from "../../features/reports/reportSlice";
-import { ReportSortingOptions } from "../../ultils/SortingOptions";
+import { ReportSortingOptions } from "../../ultils/ViewOptions";
 
 export default function ReportTables() {
   const {

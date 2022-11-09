@@ -9,7 +9,7 @@ import {
   changeProductPage,
   handleProductChange,
 } from "../../features/products/productSlice";
-import { ProductSortingOptions } from "../../ultils/SortingOptions";
+import { ProductSortingOptions } from "../../ultils/ViewOptions";
 
 export default function ProductTables() {
   const {

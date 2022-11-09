@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { AccountSortingOptions } from "../../ultils/SortingOptions";
+import { AccountSortingOptions } from "../../ultils/ViewOptions";
 import FormRow from "../Inputs/FormRow";
 import FormRadioSelect from "../Inputs/FormRadioSelect";
 
@@ -25,7 +25,7 @@ const CardSearch = ({
   };
 
   return (
-    <div className="flex justify-between items-center mt-24">
+    <div className="flex justify-between items-center mt-40">
       <div className="relative">
         <FormRadioSelect
           name="filter"

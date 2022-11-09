@@ -75,3 +75,17 @@ export const StoreFilterOptions = [
     value: "Active",
   },
 ];
+export const AccountFilterOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Đã dừng hoạt động",
+    value: "Inactive",
+  },
+  {
+    name: "Đang hoạt động",
+    value: "Active",
+  },
+];

@@ -7,7 +7,7 @@ import {
   changeAccountPage,
   handleAccountChange,
 } from "../../features/accounts/accountSlice";
-import { AccountSortingOptions } from "../../ultils/SortingOptions";
+import { AccountSortingOptions } from "../../ultils/ViewOptions";
 // components
 
 export default function AccountTables() {
