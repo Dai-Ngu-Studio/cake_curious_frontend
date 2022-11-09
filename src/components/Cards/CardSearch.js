@@ -25,7 +25,7 @@ const CardSearch = ({
   };
 
   return (
-    <div className="bg-red-600 flex justify-between items-center mt-24">
+    <div className="flex justify-between items-center mt-24">
       <div className="relative">
         <FormRadioSelect
           name="filter"
@@ -45,9 +45,9 @@ const CardSearch = ({
       </div>
 
       <div className="relative">
-        <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+        <div className="bg-green-200 flex absolute inset-y-0 left-0 items-center px-2 pointer-events-none rounded-lg">
           <svg
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-green-500"
             aria-hidden="true"
             fill="currentColor"
             viewBox="0 0 20 20"
@@ -65,7 +65,7 @@ const CardSearch = ({
           name="search"
           value={search}
           handleChange={handleInputChange}
-          style="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          style="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 bg-green-100/25"
           placeholder="Search here..."
         />
       </div>
