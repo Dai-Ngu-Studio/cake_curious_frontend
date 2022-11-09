@@ -10,7 +10,11 @@ import {
   changeReportPage,
   handleReportChange,
 } from "../../features/reports/reportSlice";
-import { ReportSortingOptions } from "../../ultils/ViewOptions";
+import {
+  ReportSortingOptions,
+  ReportFilterStatusOptions,
+  ReportFilterTypeOptions,
+} from "../../ultils/ViewOptions";
 
 export default function ReportTables() {
   const {
@@ -21,8 +25,6 @@ export default function ReportTables() {
     status,
     isReportLoading,
     sort,
-    statusOptions,
-    typeOptions,
   } = useSelector((store) => store.report);
   return (
     <>
@@ -34,8 +36,8 @@ export default function ReportTables() {
             status={status}
             search={search}
             loading={isReportLoading}
-            statusOptions={statusOptions}
-            typeOptions={typeOptions}
+            statusOptions={ReportFilterStatusOptions}
+            typeOptions={ReportFilterTypeOptions}
             sortOptions={ReportSortingOptions}
             handleChange={handleReportChange}
           />
