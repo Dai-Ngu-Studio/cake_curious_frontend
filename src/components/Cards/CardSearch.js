@@ -38,7 +38,7 @@ const CardSearch = ({
           </div>
           <div className="relative">
             <FormRadioSelect
-              name="filter"
+              name="type"
               value={type}
               list={typeOptions}
               handleChange={handleInputChange}
