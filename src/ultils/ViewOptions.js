@@ -89,3 +89,35 @@ export const AccountFilterOptions = [
     value: "Active",
   },
 ];
+export const ReportFilterStatusOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Đang chờ xử lý",
+    value: "Pending",
+  },
+  {
+    name: "Đã xử lý",
+    value: "Censored",
+  },
+  {
+    name: "Không vấn đề",
+    value: "Rejected",
+  },
+];
+export const ReportFilterTypeOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Bình luận",
+    value: "Comment",
+  },
+  {
+    name: "Công thức bánh",
+    value: "Recipe",
+  },
+];
