@@ -16,7 +16,6 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  filterOptions: ["Inactive", "Active"],
   isAccountEditing: false,
   editAccountId: null,
   email: "",
