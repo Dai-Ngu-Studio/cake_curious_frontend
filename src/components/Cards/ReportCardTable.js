@@ -96,7 +96,7 @@ export default function ReportCardTable() {
               <tbody>
                 {reports.map((report) => {
                   return (
-                    <tr key={report.id} className="bg-white hover:bg-sky-50">
+                    <tr key={report.id} className="bg-white hover:bg-green-50">
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         {report.title}
                       </td>

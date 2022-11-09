@@ -84,7 +84,7 @@ export const AccountCardTable = () => {
               <tbody>
                 {accounts.map((account) => {
                   return (
-                    <tr key={account.id} className="bg-white hover:bg-sky-50">
+                    <tr key={account.id} className="bg-white hover:bg-green-50">
                       <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
                         <img
                           src={account.photoUrl || User}
