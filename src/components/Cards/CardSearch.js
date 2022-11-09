@@ -8,14 +8,14 @@ const CardSearch = ({
   loading,
   search,
   filter,
-  type,
-  status,
   handleChange,
   sortOptions,
   filterOptions,
   statusOptions,
   typeOptions,
   sort,
+  status,
+  type,
 }) => {
   const dispatch = useDispatch();
 
@@ -26,16 +26,38 @@ const CardSearch = ({
 
   return (
     <div className="flex justify-between items-center mt-40">
-      <div className="relative">
-        <FormRadioSelect
-          name="filter"
-          value={filter}
-          list={filterOptions}
-          handleChange={handleInputChange}
-        />
-      </div>
+      {statusOptions && typeOptions ? (
+        <>
+          <div className="relative">
+            <FormRadioSelect
+              name="status"
+              value={status}
+              list={statusOptions}
+              handleChange={handleInputChange}
+            />
+          </div>
+          <div className="relative">
+            <FormRadioSelect
+              name="filter"
+              value={type}
+              list={typeOptions}
+              handleChange={handleInputChange}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="relative">
+          <FormRadioSelect
+            name="filter"
+            value={filter}
+            list={filterOptions}
+            handleChange={handleInputChange}
+          />
+        </div>
+      )}
 
-      <div className="relative">
+      <div className="inline-flex justify-center items-center">
+        <p className="pr-2">Sắp xếp theo</p>
         <FormRadioSelect
           name="sort"
           value={sort}
