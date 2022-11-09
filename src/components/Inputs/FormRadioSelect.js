@@ -28,10 +28,10 @@ const FormRadioSelect = ({ labelText, name, handleChange, list }) => {
                 "inline-flex justify-between items-center p-2 w-full bg-white rounded-lg cursor-pointer " +
                 // (item.value == "All" ? blueBtn : greenBtn)
                 (() => {
-                  if (item.value == "All") {
+                  if (item.value === "All") {
                     return blueBtn;
-                  } else if (item.value == "Inactive") return grayBtn;
-                  else if (item.value == "Active") return greenBtn;
+                  } else if (item.value === "Inactive") return grayBtn;
+                  else if (item.value === "Active") return greenBtn;
                 })()
               }
             >
@@ -40,10 +40,10 @@ const FormRadioSelect = ({ labelText, name, handleChange, list }) => {
                 className={
                   "w-6 h-6 " +
                   (() => {
-                    if (item.value == "All") {
+                    if (item.value === "All") {
                       return "bg-blue-500";
-                    } else if (item.value == "Inactive") return "bg-gray-500";
-                    else if (item.value == "Active") return "bg-green-500";
+                    } else if (item.value === "Inactive") return "bg-gray-500";
+                    else if (item.value === "Active") return "bg-green-500";
                   })()
                 }
               ></div>
