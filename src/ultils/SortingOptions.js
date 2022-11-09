@@ -1,9 +1,5 @@
 export const ProductSortingOptions = [
   {
-    name: "All",
-    value: "All",
-  },
-  {
     name: "a-z",
     value: "AscName",
   },
@@ -23,10 +19,6 @@ export const ProductSortingOptions = [
 
 export const AccountSortingOptions = [
   {
-    name: "All",
-    value: "All",
-  },
-  {
     name: "a-z",
     value: "AscDisplayName",
   },
@@ -37,10 +29,6 @@ export const AccountSortingOptions = [
 ];
 
 export const StoreSortingOptions = [
-  {
-    name: "All",
-    value: "All",
-  },
   {
     name: "a-z",
     value: "AscName",
@@ -53,10 +41,6 @@ export const StoreSortingOptions = [
 
 export const ReportSortingOptions = [
   {
-    name: "All",
-    value: "All",
-  },
-  {
     name: "a-z",
     value: "AscTitle",
   },
@@ -67,10 +51,6 @@ export const ReportSortingOptions = [
 ];
 
 export const OrderSortingOptions = [
-  {
-    name: "All",
-    value: "All",
-  },
   {
     name: "newest",
     value: "DescOrderDate",
@@ -83,15 +63,15 @@ export const OrderSortingOptions = [
 //["Inactive", "Active"];
 export const StoreFilterOptions = [
   {
-    name: "All",
+    name: "Tất cả",
     value: "All",
   },
   {
-    name: "Inactive",
+    name: "Đã dừng hoạt động",
     value: "Inactive",
   },
   {
-    name: "Active",
+    name: "Đang hoạt động",
     value: "Active",
   },
 ];
