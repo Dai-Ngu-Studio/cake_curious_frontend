@@ -36,7 +36,7 @@ export default function StoreCardTable() {
       ) : (
         <div className="block w-full overflow-x-auto">
           {/* Projects table */}
-          <table className="items-center w-full bg-transparent border-collapse border-b-2">
+          <table className="items-center w-full bg-transparent border-collapse">
             <thead className="bg-white border-b-2">
               <tr>
                 <th className="px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32">
