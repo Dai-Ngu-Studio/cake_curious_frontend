@@ -54,11 +54,7 @@ export default function StoreCardTable() {
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                   Status
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle text-xs uppercase font-semibold text-left "
-                  }
-                ></th>
+                <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
               </tr>
             </thead>
             <tbody>

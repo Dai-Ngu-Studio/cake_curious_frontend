@@ -36,48 +36,54 @@ export const AccountCardTable = () => {
         ) : (
           <div className="block w-full overflow-x-auto">
             {/* Projects table */}
-            <table className="items-center w-full bg-transparent border-collapse border-b-2">
-              <thead>
+            <table className="items-center w-full bg-transparent border-collapse">
+              <thead className="bg-white border-b-2">
                 <tr>
                   <th className="px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32">
                     Photo
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     FullName
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     DisplayName
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Email
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Status
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
               </thead>
               <tbody>
-                {accounts.map((account) => {
+                {accounts.map((account, index) => {
                   return (
-                    <tr key={account.id} className="bg-white hover:bg-green-50">
-                      <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                    <tr
+                      key={account.id}
+                      className={
+                        "hover:bg-green-50 " +
+                        (index % 2 === 1 ? "bg-gray-50" : "bg-white")
+                      }
+                    >
+                      <th className="pl-6 align-middle p-2 text-left flex justify-center">
                         <img
                           src={account.photoUrl || User}
-                          className="h-12 w-12 bg-white rounded-full border"
+                          className="w-24 bg-white rounded-full border"
                           alt="..."
                         ></img>
                       </th>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                      <td className="pl-6 align-middle p-4">
                         {account.fullName || "Annoymous"}
                       </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                      <td className="pl-6 align-middle p-4">
                         {account.displayName || "Annoymous"}
                       </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                      <td className="pl-6 align-middle p-4">
                         <div className="flex">{account.email}</div>
                       </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                      <td className="pl-6 align-middle p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
                             {account.status === 0 ? "Active" : "Inactive"}
