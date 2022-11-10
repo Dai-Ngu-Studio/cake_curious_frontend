@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import StoreImg from "../../assets/img/no-store.png";
 // components
-
+import StatusCard from "./StatusCard";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../ultils/Loading";
@@ -74,8 +74,16 @@ export default function StoreCardTable() {
                       ></img>
                     </th>
                     <td className="pl-6 align-middle p-4">{store.name}</td>
-                    <td className="pl-6 align-middle p-4">
-                      {store.user.displayName}
+                    <td className="pl-6 p-4">
+                      <div className="flex items-center">
+                        {store.user.photoUrl && (
+                          <img
+                            src={store.user.photoUrl}
+                            className="mr-2 h-12 w-12 rounded-full border"
+                          ></img>
+                        )}
+                        <div>{store.user.displayName}</div>
+                      </div>
                     </td>
                     <td className="pl-6 align-middle p-4">
                       <div className="flex">{store.rating}</div>
@@ -83,16 +91,20 @@ export default function StoreCardTable() {
                     <td className="pl-6 align-middle p-4">
                       <div className="flex items-center">
                         <span className="mr-2">
-                          {store.status === 0 ? "Active" : "Inactive"}
+                          {store.status === 0 ? (
+                            <StatusCard
+                              text="Hoạt động"
+                              backgroundColor="bg-green-200"
+                              dotColor="bg-green-600"
+                            />
+                          ) : (
+                            <StatusCard
+                              text="Dừng hoạt động"
+                              backgroundColor="bg-gray-200"
+                              dotColor="bg-gray-600"
+                            />
+                          )}
                         </span>
-                        {/* <div className="relative w-full">
-                          <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                            <div
-                              style={{ width: "60%" }}
-                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                            ></div>
-                          </div>
-                        </div> */}
                       </div>
                     </td>
                     <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
