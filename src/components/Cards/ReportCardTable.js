@@ -7,6 +7,7 @@ import Shop from "../../assets/img/shop.png";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../ultils/Loading";
+import StatusCard from "./StatusCard";
 import {
   getAllReports,
   setUpdateReport,
@@ -116,22 +117,25 @@ export default function ReportCardTable() {
                           <span className="mr-2">
                             {ReportStatus.map((status) => {
                               return (
+                                // <StatusCard
+                                //   text={status.name}
+                                //   backgroundColor="bg-gray-200"
+                                //   dotColor="bg-gray-600"
+                                // />
                                 <div key={status.id}>
-                                  {report.status === status.id
-                                    ? status.name
-                                    : ""}
+                                  {report.status === status.id ? (
+                                    <StatusCard
+                                      text={status.name}
+                                      backgroundColor={status.backgroundColor}
+                                      dotColor={status.dotColor}
+                                    />
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
                               );
                             })}
                           </span>
-                          {/* <div className="relative w-full">
-                          <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                            <div
-                              style={{ width: "60%" }}
-                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                            ></div>
-                          </div>
-                        </div> */}
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
