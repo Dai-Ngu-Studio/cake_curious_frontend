@@ -40,19 +40,19 @@ export const AccountCardTable = () => {
               <thead className="bg-white border-b-2">
                 <tr>
                   <th className="px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32">
-                    Photo
+                    Ảnh đại diện
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                    FullName
+                    Tên đầy đủ
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                    DisplayName
+                    Tên hiển thị
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Email
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                    Status
+                    Trạng thái tài khoản
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
