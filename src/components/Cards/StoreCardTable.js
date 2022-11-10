@@ -31,7 +31,9 @@ export default function StoreCardTable() {
     >
       {stores.length === 0 ? (
         <div className="block w-full overflow-x-auto">
-          <h2 className="text-center pb-3">No stores to display...</h2>
+          <h2 className="text-center pb-3">
+            Không có dữ liệu cửa hàng để hiển thị ...
+          </h2>
         </div>
       ) : (
         <div className="block w-full overflow-x-auto">
@@ -40,19 +42,19 @@ export default function StoreCardTable() {
             <thead className="bg-white border-b-2">
               <tr>
                 <th className="px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32">
-                  Photo
+                  Ảnh
                 </th>
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                  Name
+                  Tên
                 </th>
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                  Owner
+                  Chủ cửa hàng
                 </th>
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                  Rating
+                  Đánh giá
                 </th>
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                  Status
+                  Trạng thái
                 </th>
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
               </tr>
