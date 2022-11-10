@@ -25,7 +25,7 @@ const CardSearch = ({
   };
 
   return (
-    <div className="flex justify-between items-center mt-40">
+    <div className="flex justify-between items-center mt-40 bg-white p-3">
       {statusOptions && typeOptions ? (
         <>
           <div className="relative">
