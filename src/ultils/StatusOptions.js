@@ -64,14 +64,20 @@ export const StoreStatusOptions = [
 export const ReportStatus = [
   {
     id: 0,
-    name: "Pending",
+    name: "Chờ xử lý",
+    backgroundColor: "bg-yellow-100",
+    dotColor: "bg-yellow-400",
   },
   {
     id: 1,
-    name: "Rejected",
+    name: "Không vấn đề",
+    backgroundColor: "bg-gray-200",
+    dotColor: "bg-gray-600",
   },
   {
     id: 2,
-    name: "Censored",
+    name: "Đã xử lý",
+    backgroundColor: "bg-red-200",
+    dotColor: "bg-red-600",
   },
 ];
