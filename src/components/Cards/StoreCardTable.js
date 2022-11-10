@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
-import Shop from "../../assets/img/shop.png";
+import StoreImg from "../../assets/img/no-store.png";
 // components
 
 import TableDropdown from "../Dropdowns/TableDropdown";
@@ -41,42 +41,42 @@ export default function StoreCardTable() {
               <tr>
                 <th
                   className={
-                    "px-6 align-middle py-3 text-xs uppercase font-semibold text-left "
+                    "px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32"
                   }
                 >
                   Photo
                 </th>
                 <th
                   className={
-                    "px-6 align-middle  text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left "
+                    "px-6 align-middle text-xs uppercase font-semibold text-left "
                   }
                 >
                   Name
                 </th>
                 <th
                   className={
-                    "px-6 align-middle  text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left "
+                    "px-6 align-middle text-xs uppercase backdrop:font-semibold text-left "
                   }
                 >
                   Owner
                 </th>
                 <th
                   className={
-                    "px-6 align-middle  text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left "
+                    "px-6 align-middle text-xs uppercase font-semibold text-left "
                   }
                 >
                   Rating
                 </th>
                 <th
                   className={
-                    "px-6 align-middle  text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left "
+                    "px-6 align-middle text-xs uppercase font-semibold text-left "
                   }
                 >
                   Status
                 </th>
                 <th
                   className={
-                    "px-6 align-middle  text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left "
+                    "px-6 align-middle text-xs uppercase font-semibold text-left "
                   }
                 ></th>
               </tr>
@@ -91,22 +91,20 @@ export default function StoreCardTable() {
                       (index % 2 === 1 ? "bg-gray-50" : "bg-white")
                     }
                   >
-                    <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                    <th className="pl-6 align-middle p-1 text-left flex justify-center">
                       <img
-                        src={store.photoUrl || Shop}
-                        className="h-12 w-12 bg-white rounded-full border"
+                        src={store.photoUrl || StoreImg}
+                        className="w-32"
                       ></img>
                     </th>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                      {store.name}
-                    </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                    <td className="pl-6 align-middle p-4">{store.name}</td>
+                    <td className="pl-6 align-middle p-4">
                       {store.user.displayName}
                     </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                    <td className="pl-6 align-middle p-4">
                       <div className="flex">{store.rating}</div>
                     </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                    <td className="pl-6 align-middle p-4">
                       <div className="flex items-center">
                         <span className="mr-2">
                           {store.status === 0 ? "Active" : "Inactive"}
@@ -121,7 +119,7 @@ export default function StoreCardTable() {
                         </div> */}
                       </div>
                     </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                    <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                       <TableDropdown
                         link="/admin/store-form"
                         setUpdate={setUpdateStore({
