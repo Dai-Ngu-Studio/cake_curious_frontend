@@ -46,11 +46,7 @@ export default function StoreCardTable() {
                 >
                   Photo
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle text-xs uppercase font-semibold text-left "
-                  }
-                >
+                <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                   Name
                 </th>
                 <th
