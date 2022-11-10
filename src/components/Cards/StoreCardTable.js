@@ -39,35 +39,19 @@ export default function StoreCardTable() {
           <table className="items-center w-full bg-transparent border-collapse border-b-2">
             <thead className="bg-white border-b-2">
               <tr>
-                <th
-                  className={
-                    "px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32"
-                  }
-                >
+                <th className="px-6 align-middle py-3 text-xs uppercase font-semibold text-center w-32">
                   Photo
                 </th>
                 <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                   Name
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle text-xs uppercase font-semibold text-left "
-                  }
-                >
+                <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                   Owner
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle text-xs uppercase font-semibold text-left "
-                  }
-                >
+                <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                   Rating
                 </th>
-                <th
-                  className={
-                    "px-6 align-middle text-xs uppercase font-semibold text-left "
-                  }
-                >
+                <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                   Status
                 </th>
                 <th
