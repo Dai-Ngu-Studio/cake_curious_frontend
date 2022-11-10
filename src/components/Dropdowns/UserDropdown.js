@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProfileImage from "../../assets/img/team-1-800x800.jpg";
+import ProfileImage from "../../assets/img/user.png";
 import { useDispatch, useSelector } from "react-redux";
 import { clearStore } from "../../features/users/userSlice";
 import { Link } from "react-router-dom";
