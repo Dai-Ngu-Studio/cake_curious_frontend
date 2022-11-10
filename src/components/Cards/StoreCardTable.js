@@ -55,7 +55,7 @@ export default function StoreCardTable() {
                 </th>
                 <th
                   className={
-                    "px-6 align-middle text-xs uppercase backdrop:font-semibold text-left "
+                    "px-6 align-middle text-xs uppercase font-semibold text-left "
                   }
                 >
                   Owner
