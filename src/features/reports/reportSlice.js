@@ -28,6 +28,7 @@ const initialState = {
   recipe: null,
   reporter: null,
   title: "",
+  content: "",
   staff: null,
   reportedUser: null,
   status: 0,
@@ -74,6 +75,7 @@ const reportSlice = createSlice({
     },
     [getAllReports.fulfilled]: (state, { payload }) => {
       state.isReportLoading = false;
+      console.log(payload.reports);
       state.reports = payload.reports;
       state.totalReportPages = payload.totalPage;
     },

@@ -21,6 +21,7 @@ const AdminReportForm = () => {
     recipe,
     reporter,
     title,
+    content,
     staff,
     reportedUser,
     status,
@@ -77,6 +78,10 @@ const AdminReportForm = () => {
           <div>
             <label>Reported: </label>
             {reportedUser?.displayName}
+          </div>
+          <div>
+            <label>Content: </label>
+            {content}
           </div>
           <div>
             <label>Submitted Date: </label>
