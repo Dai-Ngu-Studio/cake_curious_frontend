@@ -27,11 +27,13 @@ const CardChatSidebar = () => {
     try {
       const q = query(
         collection(db, "users"),
-        where("displayName", "==", userName)
+        where("displayName", ">=", userName),
+        where("displayName", "<=", userName + "\uf8ff")
       );
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
+          console.log(doc.data());
           setUserChatting(doc.data());
         });
       } else {
