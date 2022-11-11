@@ -103,11 +103,11 @@ export default function StoreDetail() {
               />
               <div>
                 <label>Full Name: </label>
-                {user.fullName === null ? "Annoymous" : user.fullName}
+                {user?.fullName === null ? "Annoymous" : user.fullName}
               </div>
               <div>
                 <label>Email: </label>
-                {user.email}
+                {user?.email}
               </div>
               <FormRowArea
                 name="description"
