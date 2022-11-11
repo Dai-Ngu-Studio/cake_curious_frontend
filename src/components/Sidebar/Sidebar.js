@@ -72,6 +72,7 @@ export default function Sidebar({ props }) {
                 <img
                   src={user?.photoUrl || userTemp}
                   referrerPolicy="no-referrer"
+                  className="w-full"
                 />
               </div>
             </div>
