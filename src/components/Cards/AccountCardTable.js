@@ -5,7 +5,7 @@ import {
   getSingleAccount,
   setUpdateAccount,
 } from "../../features/accounts/accountSlice";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import User from "../../assets/img/user.png";
 import StatusCard from "./StatusCard";

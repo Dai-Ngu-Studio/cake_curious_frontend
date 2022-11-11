@@ -10,7 +10,7 @@ import {
 import {
   AccountSortingOptions,
   AccountFilterOptions,
-} from "../../ultils/ViewOptions";
+} from "../../utils/ViewOptions";
 // components
 
 export default function AccountTables() {

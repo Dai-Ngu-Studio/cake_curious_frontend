@@ -7,13 +7,13 @@ import {
   updateProduct,
 } from "../../features/products/productSlice";
 import FormRowSelect from "../../components/Inputs/FormRowSelect";
-import { ProductStatus, ProductTypeOptions } from "../../ultils/StatusOptions";
+import { ProductStatus, ProductTypeOptions } from "../../utils/StatusOptions";
 import FormRowArea from "../../components/Inputs/FormRowArea";
 import FormRowFile from "../../components/Inputs/FormRowFile";
 import { getImage } from "../../features/images/imageSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import { getAllProductCategories } from "../../features/product-categories/productCategorySlice";
 
 export const ProductForm = () => {

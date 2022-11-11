@@ -11,7 +11,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Login from "./views/auth/Login";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import ProtectedRoute from "./ultils/ProtectedRoute";
+import ProtectedRoute from "./utils/ProtectedRoute";
 import StoreTables from "./views/admin/StoreTables";
 import AccountTables from "./views/admin/AccountTables";
 import StaffDashboard from "./views/staff/StaffDashboard";

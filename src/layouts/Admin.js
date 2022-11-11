@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import FooterAdmin from "../components/Footers/FooterAdmin";
-import { AdminLinks } from "../ultils/links";
+import { AdminLinks } from "../utils/links";
 import Navbar from "../components/Navbars/Navbar";
 import AdminHeaderStats from "../components/Headers/AdminHeaderStats";
 

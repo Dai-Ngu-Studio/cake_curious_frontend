@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar/Sidebar";
 import StoreHeaderStats from "../components/Headers/StoreHeaderStats";
 import FooterAdmin from "../components/Footers/FooterAdmin";
-import { StoreLinks } from "../ultils/links";
+import { StoreLinks } from "../utils/links";
 import Navbar from "../components/Navbars/Navbar";
 import { useSelector } from "react-redux";
 

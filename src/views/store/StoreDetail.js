@@ -11,7 +11,7 @@ import {
   handleStoreChange,
   updateStore,
 } from "../../features/stores/storeSlice";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 
 export default function StoreDetail() {
   const {

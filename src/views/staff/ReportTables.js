@@ -14,7 +14,7 @@ import {
   ReportSortingOptions,
   ReportFilterStatusOptions,
   ReportFilterTypeOptions,
-} from "../../ultils/ViewOptions";
+} from "../../utils/ViewOptions";
 
 export default function ReportTables() {
   const {

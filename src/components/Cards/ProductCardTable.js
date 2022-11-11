@@ -10,7 +10,7 @@ import {
   getAllProducts,
   setUpdateProduct,
 } from "../../features/products/productSlice";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import { Link } from "react-router-dom";
 
 export default function ProductCardTable() {

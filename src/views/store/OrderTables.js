@@ -7,7 +7,7 @@ import {
   changeOrderPage,
   handleOrderChange,
 } from "../../features/orders/orderSlice";
-import { OrderSortingOptions } from "../../ultils/ViewOptions";
+import { OrderSortingOptions } from "../../utils/ViewOptions";
 
 // components
 

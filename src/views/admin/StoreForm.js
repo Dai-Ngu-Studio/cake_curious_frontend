@@ -5,7 +5,7 @@ import {
   handleStoreChange,
   updateStore,
 } from "../../features/stores/storeSlice";
-import { StoreStatusOptions } from "../../ultils/StatusOptions";
+import { StoreStatusOptions } from "../../utils/StatusOptions";
 import Shop from "../../assets/img/shop.png";
 
 const StoreForm = () => {

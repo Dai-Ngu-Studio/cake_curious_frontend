@@ -10,7 +10,7 @@ import {
 import {
   StoreSortingOptions,
   StoreFilterOptions,
-} from "../../ultils/ViewOptions";
+} from "../../utils/ViewOptions";
 
 // components
 

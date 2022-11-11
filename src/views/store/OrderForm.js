@@ -10,7 +10,7 @@ import {
   handleOrderChange,
   updateOrder,
 } from "../../features/orders/orderSlice";
-import { OrderStatus } from "../../ultils/StatusOptions";
+import { OrderStatus } from "../../utils/StatusOptions";
 
 const OrderForm = () => {
   const {

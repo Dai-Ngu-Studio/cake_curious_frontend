@@ -5,7 +5,7 @@ import {
   handleAccountChange,
   updateAccount,
 } from "../../features/accounts/accountSlice";
-import { AccountStatus } from "../../ultils/StatusOptions";
+import { AccountStatus } from "../../utils/StatusOptions";
 import User from "../../assets/img/user.png";
 
 const AccountForm = () => {

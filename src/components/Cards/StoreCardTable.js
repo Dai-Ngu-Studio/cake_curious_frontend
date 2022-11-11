@@ -6,7 +6,7 @@ import StoreImg from "../../assets/img/no-store.png";
 import StatusCard from "./StatusCard";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import { getAllStores, setUpdateStore } from "../../features/stores/storeSlice";
 
 export default function StoreCardTable() {

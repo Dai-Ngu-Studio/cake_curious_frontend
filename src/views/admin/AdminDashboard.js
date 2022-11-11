@@ -7,7 +7,7 @@ import CardPageVisits from "../../components/Cards/CardPageVisits";
 import CardSocialTraffic from "../../components/Cards/CardSocialTraffic";
 import AdminHeaderStats from "../../components/Headers/AdminHeaderStats";
 import { getAdminDashboard } from "../../features/dashboards/dashboardSlice";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 
 export default function AdminDashboard() {
   const {

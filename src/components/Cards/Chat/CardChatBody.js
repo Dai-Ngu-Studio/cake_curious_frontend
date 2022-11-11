@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { db } from "../../../ultils/firebase";
+import { db } from "../../../utils/firebase";
 import CardChatMessage from "./CardChatMessage";
 
 const CardChatBody = () => {

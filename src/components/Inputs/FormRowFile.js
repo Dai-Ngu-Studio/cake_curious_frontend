@@ -1,5 +1,5 @@
 import React from "react";
-import { DefaultImage } from "../../ultils/DefaultImage";
+import { DefaultImage } from "../../utils/DefaultImage";
 
 const FormRowFile = ({ type, name, value, handleChange, keyword }) => {
   return (

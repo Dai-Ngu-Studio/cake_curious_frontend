@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllOrders, setUpdateOrder } from "../../features/orders/orderSlice";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import User from "../../assets/img/user.png";
 import moment from "moment/moment";
 import TableDropdown from "../Dropdowns/TableDropdown";
-import { OrderStatus } from "../../ultils/StatusOptions";
+import { OrderStatus } from "../../utils/StatusOptions";
 
 export const OrderCardTable = () => {
   const { orders, isOrderLoading, page, search, filter, sort } = useSelector(

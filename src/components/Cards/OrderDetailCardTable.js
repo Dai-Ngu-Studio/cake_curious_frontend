@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import { getAllOrderDetails } from "../../features/order-details/orderDetailSlice";
 
 export const OrderDetailCardTable = ({ orderId }) => {

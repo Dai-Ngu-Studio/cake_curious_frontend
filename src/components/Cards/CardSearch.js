@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { AccountSortingOptions } from "../../ultils/ViewOptions";
+import { AccountSortingOptions } from "../../utils/ViewOptions";
 import FormRow from "../Inputs/FormRow";
 import FormRadioSelect from "../Inputs/FormRadioSelect";
 

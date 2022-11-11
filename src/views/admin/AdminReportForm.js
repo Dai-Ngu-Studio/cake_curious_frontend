@@ -7,7 +7,7 @@ import {
   handleReportChange,
   updateReport,
 } from "../../features/reports/reportSlice";
-import { ReportStatus } from "../../ultils/StatusOptions";
+import { ReportStatus } from "../../utils/StatusOptions";
 
 const AdminReportForm = () => {
   const {
