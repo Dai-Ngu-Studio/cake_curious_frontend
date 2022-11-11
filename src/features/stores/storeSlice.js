@@ -84,7 +84,7 @@ const storeSlice = createSlice({
     },
     [getUserStore.fulfilled]: (state, { payload }) => {
       state.isStoreLoading = false;
-      state.id = payload.id;
+      state.editStoreId = payload.id;
       state.user = payload.user;
       state.name = payload.name;
       state.description = payload.description;
