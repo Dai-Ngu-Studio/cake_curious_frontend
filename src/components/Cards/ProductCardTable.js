@@ -120,7 +120,7 @@ export default function ProductCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {product.status === 1 ? "Active" : "Inactive"}
+                            {product.status === 0 ? "Active" : "Inactive"}
                           </span>
                           {/* <div className="relative w-full">
                           <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
