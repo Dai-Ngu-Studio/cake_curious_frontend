@@ -3,10 +3,10 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import customFetch from "../../ultils/axios";
+import customFetch from "../../utils/axios";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../ultils/firebase";
-import { firebaseAuthError } from "../../ultils/firebaseError";
+import { auth, db } from "../../utils/firebase";
+import { firebaseAuthError } from "../../utils/firebaseError";
 import { clearAllAccountsState } from "../accounts/accountSlice";
 import { clearAllProductsState } from "../products/productSlice";
 import { clearAllReportsState } from "../reports/reportSlice";

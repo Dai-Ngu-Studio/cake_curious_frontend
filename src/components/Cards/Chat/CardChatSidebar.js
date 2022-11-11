@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { db } from "../../../ultils/firebase";
+import { db } from "../../../utils/firebase";
 import User from "../../../assets/img/user.png";
 import { setChatting } from "../../../features/chats/chatSlice";
 import {

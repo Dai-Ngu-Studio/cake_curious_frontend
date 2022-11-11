@@ -7,7 +7,7 @@ import {
   getUserFromLocalStorage,
   removeTokenFromLocalStorage,
   removeUserFromLocalStorage,
-} from "../../ultils/localStorage";
+} from "../../utils/localStorage";
 import {
   clearStoreThunk,
   getUserThunk,

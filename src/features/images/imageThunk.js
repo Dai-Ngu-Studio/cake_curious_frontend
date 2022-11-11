@@ -1,4 +1,4 @@
-import customFetch from "../../ultils/axios";
+import customFetch from "../../utils/axios";
 
 export const getImageThunk = async ({ tmpImage }, thunkAPI) => {
   try {

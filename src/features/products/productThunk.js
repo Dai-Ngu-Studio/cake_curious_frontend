@@ -1,4 +1,4 @@
-import customFetch, { checkForUnauthorizedResponse } from "../../ultils/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../utils/axios";
 import { clearImageValues } from "../images/imageSlice";
 import { clearProductValues } from "./productSlice";
 

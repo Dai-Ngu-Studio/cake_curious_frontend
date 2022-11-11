@@ -5,7 +5,7 @@ import CardBarChart from "../../components/Cards/CardBarChart";
 import CardLineChart from "../../components/Cards/CardLineChart";
 import StoreHeaderStats from "../../components/Headers/StoreHeaderStats";
 import { getStoreDashboard } from "../../features/dashboards/dashboardSlice";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 
 export default function StoreDashboard() {
   const { isDashboardLoading, barChart, lineChart, cardStats } = useSelector(

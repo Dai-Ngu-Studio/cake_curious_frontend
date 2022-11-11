@@ -6,13 +6,13 @@ import Shop from "../../assets/img/shop.png";
 
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../ultils/Loading";
+import Loading from "../../utils/Loading";
 import StatusCard from "./StatusCard";
 import {
   getAllReports,
   setUpdateReport,
 } from "../../features/reports/reportSlice";
-import { ReportStatus } from "../../ultils/StatusOptions";
+import { ReportStatus } from "../../utils/StatusOptions";
 
 export default function ReportCardTable() {
   const { user } = useSelector((store) => store.user);

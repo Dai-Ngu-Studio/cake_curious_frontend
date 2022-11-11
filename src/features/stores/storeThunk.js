@@ -1,4 +1,4 @@
-import customFetch, { checkForUnauthorizedResponse } from "../../ultils/axios";
+import customFetch, { checkForUnauthorizedResponse } from "../../utils/axios";
 
 export const getAllStoresThunk = async (_, thunkAPI) => {
   const { search, page, size, sort, filter } = thunkAPI.getState().store;
