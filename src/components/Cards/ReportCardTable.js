@@ -102,14 +102,42 @@ export default function ReportCardTable() {
                         {report.title}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        {report.reporter.displayName}
+                        <div className="flex items-center">
+                          {report.reporter.photoUrl && (
+                            <img
+                              src={report.reporter.photoUrl}
+                              className="mr-2 h-12 w-12 rounded-full border"
+                            ></img>
+                          )}
+                          <div>{report.reporter.displayName}</div>
+                        </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        {report.reportedUser.displayName}
+                        <div className="flex items-center">
+                          {report.reportedUser.photoUrl && (
+                            <img
+                              src={report.reportedUser.photoUrl}
+                              className="mr-2 h-12 w-12 rounded-full border"
+                            ></img>
+                          )}
+                          <div>{report.reportedUser.displayName}</div>
+                        </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex">
-                          {report.itemType === 1 ? "Comment" : "Recipe"}
+                          {report.itemType === 1 ? (
+                            <StatusCard
+                              text="Bình luận"
+                              backgroundColor="bg-orange-200"
+                              dotColor="bg-orange-600"
+                            />
+                          ) : (
+                            <StatusCard
+                              text="Công thức"
+                              backgroundColor="bg-purple-200"
+                              dotColor="bg-purple-600"
+                            />
+                          )}
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
