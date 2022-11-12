@@ -20,7 +20,7 @@ export default function Staff() {
         <Navbar link={"/staff/staff-dashboard"} />
         {/* Header */}
         {/* <HeaderStats /> */}
-        <div className="px-4 md:px-10 mx-auto w-full -m-24">
+        <div className="px-4 md:px-10 mx-auto w-full">
           <Outlet />
           {!isDashboardLoading && <FooterAdmin />}
         </div>
