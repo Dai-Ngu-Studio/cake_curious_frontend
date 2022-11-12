@@ -11,7 +11,7 @@ export default function Navbar({ link }) {
         <div className="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
           {/* Brand */}
           <Link
-            className="text-white text-sm uppercase hidden lg:inline-block font-semibold"
+            className="text-sm uppercase hidden lg:inline-block font-semibold"
             to={link}
           >
             Dashboard
