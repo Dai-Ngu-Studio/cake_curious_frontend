@@ -75,7 +75,6 @@ const reportSlice = createSlice({
     },
     [getAllReports.fulfilled]: (state, { payload }) => {
       state.isReportLoading = false;
-      console.log(payload.reports);
       state.reports = payload.reports;
       state.totalReportPages = payload.totalPage;
     },
