@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import FormRow from "../../components/Inputs/FormRow";
 import {
   addProduct,
+  getSingleProduct,
   handleProductChange,
   updateProduct,
 } from "../../features/products/productSlice";
@@ -15,12 +16,13 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Loading from "../../utils/Loading";
 import { getAllProductCategories } from "../../features/product-categories/productCategorySlice";
+import { useParams } from "react-router-dom";
 
 export const ProductForm = () => {
   const {
     isProductLoading,
-    isProductEditing,
-    editProductId,
+    // isProductEditing,
+    // editProductId,
     productType,
     productCategoryId,
     name,
@@ -36,12 +38,18 @@ export const ProductForm = () => {
   );
   const { image } = useSelector((store) => store.image);
   const dispatch = useDispatch();
+  const { editProductId } = useParams();
+  const [isProductEditing, setIsProductEditing] = useState(false);
 
   useEffect(() => {
     dispatch(getAllProductCategories());
+    if (editProductId) {
+      dispatch(getSingleProduct({ productId: editProductId }));
+      setIsProductEditing(true);
+    }
   }, []);
 
-  if (isProductCategoryLoading) {
+  if (isProductCategoryLoading && isProductLoading) {
     return <Loading />;
   }
 

@@ -4,23 +4,57 @@ import {
   getAllAccounts,
   getSingleAccount,
   setUpdateAccount,
+  updateAccount,
 } from "../../features/accounts/accountSlice";
 import Loading from "../../utils/Loading";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import User from "../../assets/img/user.png";
 import StatusCard from "./StatusCard";
 export const AccountCardTable = () => {
-  const { accounts, isAccountLoading, page, search, filter, sort } =
-    useSelector((store) => store.account);
+  const {
+    accounts,
+    isAccountLoading,
+    page,
+    search,
+    filter,
+    sort,
+    isAccountDoneUpdating,
+  } = useSelector((store) => store.account);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllAccounts());
-  }, [page, search, filter, sort]);
+  }, [page, search, filter, sort, isAccountDoneUpdating]);
 
   if (isAccountLoading) {
     return <Loading />;
   }
+
+  const changeAccountStatus = (accountId, accountStatus) => {
+    if (accountId) {
+      if (accountStatus === 0) {
+        dispatch(
+          updateAccount({
+            userId: accountId,
+            user: {
+              id: accountId,
+              status: 1,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          updateAccount({
+            userId: accountId,
+            user: {
+              id: accountId,
+              status: 0,
+            },
+          })
+        );
+      }
+    }
+  };
 
   return (
     <>
@@ -54,7 +88,7 @@ export const AccountCardTable = () => {
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Trạng thái tài khoản
                   </th>
-                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
+                  {/* <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th> */}
                 </tr>
               </thead>
               <tbody>
@@ -84,7 +118,12 @@ export const AccountCardTable = () => {
                         <div className="flex">{account.email}</div>
                       </td>
                       <td className="pl-6 align-middle p-4">
-                        <div className="flex items-center">
+                        <div
+                          className="flex items-center"
+                          onClick={() =>
+                            changeAccountStatus(account.id, account.status)
+                          }
+                        >
                           <span className="mr-2">
                             {account.status === 0 ? (
                               <StatusCard
@@ -102,7 +141,7 @@ export const AccountCardTable = () => {
                           </span>
                         </div>
                       </td>
-                      <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                      {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <TableDropdown
                           link="/admin/account-form"
                           setUpdate={setUpdateAccount({
@@ -115,7 +154,7 @@ export const AccountCardTable = () => {
                             status: account.status,
                           })}
                         />
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 })}

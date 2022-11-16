@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-
-import Shop from "../../assets/img/shop.png";
 // components
 
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../utils/Loading";
 import StatusCard from "./StatusCard";
-import {
-  getAllReports,
-  setUpdateReport,
-} from "../../features/reports/reportSlice";
+import { getAllReports } from "../../features/reports/reportSlice";
 import { ReportStatus } from "../../utils/StatusOptions";
 
 export default function ReportCardTable() {
@@ -52,46 +47,22 @@ export default function ReportCardTable() {
             <table className="items-center w-full bg-transparent border-collapse">
               <thead>
                 <tr>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Title
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Reporter
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Baker
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Type
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Status
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  ></th>
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                 </tr>
               </thead>
               <tbody>
@@ -170,23 +141,9 @@ export default function ReportCardTable() {
                         <TableDropdown
                           link={
                             priorityRole === 0
-                              ? "/admin/report-form"
-                              : "/staff/report-form"
+                              ? `/admin/report-form/${report.id}`
+                              : `/staff/report-form/${report.id}`
                           }
-                          setUpdate={setUpdateReport({
-                            editReportId: report.id,
-                            submittedDate: report.submittedDate,
-                            itemType: report.itemType,
-                            comment: report.comment,
-                            recipe: report.recipe,
-                            reporter: report.reporter,
-                            title: report.title,
-                            content: report.content,
-                            itemId: report.itemId,
-                            staff: report.staff,
-                            reportedUser: report.reportedUser,
-                            status: report.status,
-                          })}
                         />
                       </td>
                     </tr>

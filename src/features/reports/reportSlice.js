@@ -18,12 +18,9 @@ const initialState = {
   status: "All",
   // statusOptions: ["Censored", "Pending", "Rejected"],
   // typeOptions: ["Comment", "Recipe"],
-  isReportEditing: false,
   isReportDoneUpdating: false,
-  editReportId: null,
   submittedDate: null,
   itemType: 0,
-  itemId: null,
   comment: null,
   recipe: null,
   reporter: null,
@@ -31,7 +28,7 @@ const initialState = {
   content: "",
   staff: null,
   reportedUser: null,
-  status: 0,
+  statusUpdate: 0,
 };
 
 export const getAllReports = createAsyncThunk(
@@ -57,13 +54,6 @@ const reportSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    setUpdateReport: (state, { payload }) => {
-      return {
-        ...state,
-        isReportEditing: true,
-        ...payload,
-      };
-    },
     changeReportPage: (state, { payload }) => {
       state.page = payload;
     },
@@ -87,31 +77,35 @@ const reportSlice = createSlice({
     },
     [getSingleReport.fulfilled]: (state, { payload }) => {
       state.isReportLoading = false;
+      state.submittedDate = payload.submittedDate;
+      state.itemType = payload.itemType;
+      state.comment = payload.comment;
+      state.recipe = payload.recipe;
+      state.reporter = payload.reporter;
+      state.title = payload.title;
+      state.content = payload.content;
+      state.staff = payload.staff;
+      state.reportedUser = payload.reportedUser;
+      state.statusUpdate = payload.status;
       state.staff = payload.staff;
     },
     [getSingleReport.rejected]: (state, { payload }) => {
       state.isReportLoading = false;
     },
     [updateReport.pending]: (state) => {
-      state.isReportLoading = true;
       state.isReportDoneUpdating = false;
     },
     [updateReport.fulfilled]: (state, { payload }) => {
-      state.isReportLoading = false;
       state.isReportDoneUpdating = true;
       toast.success("Report Updated...");
     },
     [updateReport.rejected]: (state, { payload }) => {
-      state.isReportLoading = false;
+      state.isReportDoneUpdating = false;
       toast.error(payload);
     },
   },
 });
 
-export const {
-  handleReportChange,
-  setUpdateReport,
-  changeReportPage,
-  clearAllReportsState,
-} = reportSlice.actions;
+export const { handleReportChange, changeReportPage, clearAllReportsState } =
+  reportSlice.actions;
 export default reportSlice.reducer;

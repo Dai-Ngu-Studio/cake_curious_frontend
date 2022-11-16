@@ -5,25 +5,61 @@ import StatusCard from "./StatusCard";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../utils/Loading";
-import { getAllStores, setUpdateStore } from "../../features/stores/storeSlice";
+import {
+  getAllStores,
+  setUpdateStore,
+  updateStore,
+} from "../../features/stores/storeSlice";
 import ModalWrapper from "./ModalWrapper";
 import { BsStarFill } from "react-icons/bs";
 export default function StoreCardTable() {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalStore, setModalStore] = useState(null);
 
-  const { stores, isStoreLoading, page, search, filter, sort } = useSelector(
-    (selector) => selector.store
-  );
+  const {
+    stores,
+    isStoreLoading,
+    page,
+    search,
+    filter,
+    sort,
+    isStoreDoneUpdating,
+  } = useSelector((selector) => selector.store);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllStores());
-  }, [page, search, filter, sort]);
+  }, [page, search, filter, sort, isStoreDoneUpdating]);
 
   if (isStoreLoading) {
     return <Loading />;
   }
+
+  const changeStoreStatus = (storeId, storeStatus) => {
+    if (storeId) {
+      if (storeStatus === 0) {
+        dispatch(
+          updateStore({
+            storeId: storeId,
+            store: {
+              id: storeId,
+              status: 1,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          updateStore({
+            storeId: storeId,
+            store: {
+              id: storeId,
+              status: 0,
+            },
+          })
+        );
+      }
+    }
+  };
 
   return (
     <>
@@ -62,7 +98,7 @@ export default function StoreCardTable() {
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Trạng thái
                   </th>
-                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
+                  {/* <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th> */}
                 </tr>
               </thead>
               <tbody>
@@ -92,6 +128,7 @@ export default function StoreCardTable() {
                             <img
                               src={store.user.photoUrl}
                               className="mr-2 h-12 w-12 rounded-full border"
+                              referrerPolicy="no-referrer"
                             ></img>
                           )}
                           <div>{store.user.displayName}</div>
@@ -101,7 +138,12 @@ export default function StoreCardTable() {
                         <div className="flex">{store.rating}</div>
                       </td>
                       <td className="pl-6 align-middle p-4">
-                        <div className="flex items-center">
+                        <div
+                          className="flex items-center"
+                          onClick={() =>
+                            changeStoreStatus(store.id, store.status)
+                          }
+                        >
                           <span className="mr-2">
                             {store.status === 0 ? (
                               <StatusCard
@@ -119,7 +161,7 @@ export default function StoreCardTable() {
                           </span>
                         </div>
                       </td>
-                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                      {/* <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <TableDropdown
                           link="/admin/store-form"
                           setUpdate={setUpdateStore({
@@ -133,7 +175,7 @@ export default function StoreCardTable() {
                             status: store.status,
                           })}
                         />
-                      </td>
+                      </td> */}
                     </tr>
                   );
                 })}

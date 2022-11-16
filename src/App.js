@@ -51,7 +51,10 @@ function App() {
           <Route path="account-tables" element={<AccountTables />} />
           <Route path="account-form" element={<AccountForm />} />
           <Route path="report-tables" element={<ReportTables />} />
-          <Route path="report-form" element={<AdminReportForm />} />
+          <Route
+            path="report-form/:editReportId"
+            element={<AdminReportForm />}
+          />
         </Route>
         <Route
           path="/staff/"
@@ -81,8 +84,9 @@ function App() {
           <Route path="store-detail" element={<StoreDetail />} />
           <Route path="product-tables" element={<ProductTables />} />
           <Route path="order-tables" element={<OrderTables />} />
-          <Route path="product-form" element={<ProductForm />} />
+          <Route path="product-form/:editProductId" element={<ProductForm />} />
           <Route path="order-form" element={<OrderForm />} />
+          <Route path="order-form/:editOrderId" element={<OrderForm />} />
           <Route path="chat" element={<Chat />} />
         </Route>
 

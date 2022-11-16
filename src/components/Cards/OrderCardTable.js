@@ -38,46 +38,22 @@ export const OrderCardTable = () => {
             <table className="items-center w-full bg-transparent border-collapse">
               <thead>
                 <tr>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Photo
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Name
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Address
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     OrderDate
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Status
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  ></th>
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                 </tr>
               </thead>
               <tbody>
@@ -126,19 +102,7 @@ export const OrderCardTable = () => {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown
-                          link="/store/order-form"
-                          setUpdate={setUpdateOrder({
-                            editOrderId: order.id,
-                            user: order.user,
-                            address: order.address,
-                            discountedTotal: order.discountedTotal,
-                            status: order.status,
-                            orderDate: order.orderDate,
-                            processedDate: order.processedDate,
-                            completedDate: order.completedDate,
-                          })}
-                        />
+                        <TableDropdown link={`/store/order-form/${order.id}`} />
                       </td>
                     </tr>
                   );

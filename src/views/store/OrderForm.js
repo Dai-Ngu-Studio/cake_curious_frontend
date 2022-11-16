@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import CardPaging from "../../components/Cards/CardPaging";
 import { OrderDetailCardTable } from "../../components/Cards/OrderDetailCardTable";
 import FormRowSelect from "../../components/Inputs/FormRowSelect";
@@ -10,13 +11,14 @@ import {
   handleOrderChange,
   updateOrder,
 } from "../../features/orders/orderSlice";
+import Loading from "../../utils/Loading";
 import { OrderStatus } from "../../utils/StatusOptions";
 
 const OrderForm = () => {
   const {
     isOrderLoading,
-    isOrderEditting,
-    editOrderId,
+    // isOrderEditting,
+    // editOrderId,
     status,
     orderDate,
     discountedTotal,
@@ -24,16 +26,23 @@ const OrderForm = () => {
     user,
     processedDate,
     completedDate,
-    // isOrderDetailsReady,
-    isDoneUpdating,
+    isOrderDoneUpdating,
   } = useSelector((store) => store.order);
   const dispatch = useDispatch();
   const { totalOrderDetailPages, page } = useSelector(
     (store) => store.orderDetail
   );
+  const { editOrderId } = useParams();
 
   const [disableSelectStatus, setDisableSelectStatus] = useState(false);
   const [disableOptionStatus, setDisableOptionStatus] = useState(null);
+  const [isOrderEditing, setIsOrderEditing] = useState(false);
+
+  useEffect(() => {
+    if (isOrderDoneUpdating) {
+      dispatch(getSingleOrder({ orderId: editOrderId }));
+    }
+  }, [isOrderDoneUpdating]);
 
   useEffect(() => {
     if (parseInt(status) === 1 || parseInt(status) === 2) {
@@ -41,11 +50,21 @@ const OrderForm = () => {
     }
     if (parseInt(status) === 3) {
       setDisableOptionStatus(0);
+    } else if (parseInt(status) === 0) {
+      setDisableOptionStatus(1);
     }
-    if (isDoneUpdating) {
-      dispatch(getSingleOrder({ orderId: editOrderId }));
+  }, [isOrderLoading]);
+
+  useEffect(() => {
+    if (editOrderId) {
+      setIsOrderEditing(true);
     }
-  }, [isDoneUpdating]);
+    dispatch(getSingleOrder({ orderId: editOrderId }));
+  }, []);
+
+  if (isOrderLoading) {
+    return <Loading />;
+  }
 
   const handleOrderInput = (e) => {
     const name = e.target.name;
@@ -55,7 +74,7 @@ const OrderForm = () => {
 
   const handleOrderSubmit = (e) => {
     e.preventDefault();
-    if (isOrderEditting) {
+    if (isOrderEditing) {
       dispatch(
         updateOrder({
           orderId: editOrderId,

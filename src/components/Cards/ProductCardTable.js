@@ -9,22 +9,56 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllProducts,
   setUpdateProduct,
+  updateProduct,
 } from "../../features/products/productSlice";
 import Loading from "../../utils/Loading";
 import { Link } from "react-router-dom";
 
 export default function ProductCardTable() {
-  const { products, isProductLoading, page, search, filter, sort } =
-    useSelector((store) => store.product);
+  const {
+    products,
+    isProductLoading,
+    page,
+    search,
+    filter,
+    sort,
+    isProductDoneUpdating,
+  } = useSelector((store) => store.product);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [page, search, filter, sort]);
+  }, [page, search, filter, sort, isProductDoneUpdating]);
 
   if (isProductLoading) {
     return <Loading />;
   }
+
+  const changeProductStatus = (productId, productStatus) => {
+    if (productId) {
+      if (productStatus === 0) {
+        dispatch(
+          updateProduct({
+            productId: productId,
+            product: {
+              id: productId,
+              status: 1,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          updateProduct({
+            productId: productId,
+            product: {
+              id: productId,
+              status: 0,
+            },
+          })
+        );
+      }
+    }
+  };
 
   return (
     <>
@@ -55,46 +89,22 @@ export default function ProductCardTable() {
             <table className="items-center w-full bg-transparent border-collapse">
               <thead>
                 <tr>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Photo
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Name
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Quantity
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Price
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  >
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Status
                   </th>
-                  <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
-                  ></th>
+                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                 </tr>
               </thead>
               <tbody>
@@ -118,7 +128,12 @@ export default function ProductCardTable() {
                         <div className="flex">{product.price}</div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        <div className="flex items-center">
+                        <div
+                          className="flex items-center"
+                          onClick={() =>
+                            changeProductStatus(product.id, product.status)
+                          }
+                        >
                           <span className="mr-2">
                             {product.status === 0 ? "Active" : "Inactive"}
                           </span>
@@ -134,19 +149,7 @@ export default function ProductCardTable() {
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <TableDropdown
-                          link="/store/product-form"
-                          setUpdate={setUpdateProduct({
-                            editProductId: product.id || "",
-                            productType: product.productType,
-                            productCategoryId: product.productCategoryId,
-                            name: product.name,
-                            description: product.description,
-                            quantity: product.quantity,
-                            price: product.price,
-                            discount: product.discount,
-                            photoUrl: product.photoUrl,
-                            status: product.status,
-                          })}
+                          link={`/store/product-form/${product.id}`}
                         />
                       </td>
                     </tr>

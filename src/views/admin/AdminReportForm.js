@@ -1,20 +1,20 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import FormRowSelect from "../../components/Inputs/FormRowSelect";
 import {
   getSingleReport,
   handleReportChange,
   updateReport,
 } from "../../features/reports/reportSlice";
+import Loading from "../../utils/Loading";
 import { ReportStatus } from "../../utils/StatusOptions";
 
 const AdminReportForm = () => {
   const {
-    isReportEditing,
     isReportLoading,
     isReportDoneUpdating,
-    editReportId,
     submittedDate,
     itemType,
     comment,
@@ -24,20 +24,36 @@ const AdminReportForm = () => {
     content,
     staff,
     reportedUser,
-    status,
+    statusUpdate,
   } = useSelector((store) => store.report);
   const dispatch = useDispatch();
+  const { editReportId } = useParams();
 
   const [disableSelectStatus, setDisableSelectStatus] = useState(false);
+  const [isReportEditing, setIsReportEditing] = useState(false);
 
   useEffect(() => {
-    if (parseInt(status) === 1 || parseInt(status) === 2) {
-      setDisableSelectStatus(true);
-    }
     if (isReportDoneUpdating) {
       dispatch(getSingleReport({ reportId: editReportId }));
     }
   }, [isReportDoneUpdating]);
+
+  useEffect(() => {
+    if (parseInt(statusUpdate) === 1 || parseInt(statusUpdate) === 2) {
+      setDisableSelectStatus(true);
+    }
+  }, [isReportLoading]);
+
+  useEffect(() => {
+    if (editReportId) {
+      setIsReportEditing(true);
+    }
+    dispatch(getSingleReport({ reportId: editReportId }));
+  }, []);
+
+  if (isReportLoading) {
+    return <Loading />;
+  }
 
   const handleReportInput = (e) => {
     const name = e.target.name;
@@ -53,11 +69,11 @@ const AdminReportForm = () => {
           reportId: editReportId,
           report: {
             id: editReportId,
-            status: parseInt(status),
+            status: parseInt(statusUpdate),
           },
         })
       );
-      if (status === 1 || status === 2) {
+      if (statusUpdate === 1 || statusUpdate === 2) {
         setDisableSelectStatus(true);
       }
       return;
@@ -99,10 +115,10 @@ const AdminReportForm = () => {
           </div>
           <form>
             <FormRowSelect
-              name="status"
+              name="statusUpdate"
               labelText="Status"
               disabledSelection={disableSelectStatus}
-              value={status}
+              value={statusUpdate}
               list={ReportStatus}
               handleChange={handleReportInput}
             />
