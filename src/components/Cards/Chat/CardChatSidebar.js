@@ -4,15 +4,15 @@ import { db } from "../../../utils/firebase";
 import User from "../../../assets/img/user.png";
 import { setChatting } from "../../../features/chats/chatSlice";
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
   onSnapshot,
+  orderBy,
   query,
   serverTimestamp,
-  setDoc,
-  updateDoc,
   where,
 } from "firebase/firestore";
 
@@ -33,7 +33,6 @@ const CardChatSidebar = () => {
       const querySnapshot = await getDocs(q);
       if (!querySnapshot.empty) {
         querySnapshot.forEach((doc) => {
-          console.log(doc.data());
           setUserChatting(doc.data());
         });
       } else {
@@ -49,33 +48,19 @@ const CardChatSidebar = () => {
   };
 
   const handleSelect = async () => {
-    let combinedId =
-      user.id > userChatting.uid
-        ? user.id + userChatting.uid
-        : userChatting.uid + user.id;
-
     try {
-      // update doc for current user and the person chatting with
-      await updateDoc(doc(db, "rooms", user.id), {
-        [combinedId + ".userInfo"]: {
-          uid: userChatting.uid,
-          displayName: userChatting.displayName,
-          photoUrl: userChatting.photoUrl,
-        },
-        [combinedId + ".messages"]: [],
-        [combinedId + ".date"]: serverTimestamp(),
-      });
-
-      // update doc for user that being chat with
-      await updateDoc(doc(db, "rooms", userChatting.uid), {
-        [combinedId + ".userInfo"]: {
-          uid: user.id,
-          displayName: user.displayName,
-          photoUrl: user.photoUrl,
-        },
-        [combinedId + ".messages"]: [],
-        [combinedId + ".date"]: serverTimestamp(),
-      });
+      const docSnap = await getDoc(doc(db, "users", user.id));
+      if (docSnap.exists()) {
+        await addDoc(collection(db, "rooms"), {
+          createdAt: serverTimestamp(),
+          userInfos: [docSnap.data(), userChatting],
+          lastMessageTime: serverTimestamp(),
+          users: [user.id, userChatting.uid],
+        });
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -84,9 +69,22 @@ const CardChatSidebar = () => {
   };
 
   useEffect(() => {
-    onSnapshot(doc(db, "rooms", user.id), (doc) => {
-      setChats(doc.data());
-    });
+    try {
+      const q = query(
+        collection(db, "rooms"),
+        where("users", "array-contains", user.id),
+        orderBy("lastMessageTime", "desc")
+      );
+      onSnapshot(q, (snapshot) => {
+        const documents = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        setChats(documents);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, [user.id]);
 
   return (
@@ -136,48 +134,55 @@ const CardChatSidebar = () => {
         )}
         <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
         <li>
+          {/* .sort((a, b) => b[1].date - a[1].date) */}
           {chats &&
-            Object.entries(chats)
-              ?.sort((a, b) => b[1].date - a[1].date)
-              .map((chat) => {
-                return (
-                  <a
-                    className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none"
-                    key={chat[0]}
-                    onClick={() =>
-                      dispatch(
-                        setChatting({
-                          chatId:
-                            user.id > chat[1].userInfo.uid
-                              ? user.id + chat[1].userInfo.uid
-                              : chat[1].userInfo.uid + user.id,
-                          userData: chat[1].userInfo,
-                        })
-                      )
+            chats.map((chat) => {
+              return (
+                <a
+                  className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none"
+                  key={chat.id}
+                  onClick={() =>
+                    dispatch(
+                      setChatting({
+                        chatId: chat.id,
+                        userData:
+                          user.id !== chat.userInfos[0].uid
+                            ? chat.userInfos[0]
+                            : chat.userInfos[1],
+                      })
+                    )
+                  }
+                >
+                  <img
+                    className="object-cover w-10 h-10 rounded-full"
+                    src={
+                      user.id !== chat.userInfos[0].uid
+                        ? chat.userInfos[0].photoUrl
+                        : chat.userInfos[1].photoUrl
                     }
-                  >
-                    <img
-                      className="object-cover w-10 h-10 rounded-full"
-                      src={chat[1].userInfo.photoUrl}
-                      alt="username"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="w-full pb-2">
-                      <div className="flex justify-between">
-                        <span className="block ml-2 font-semibold text-gray-600">
-                          {chat[1].userInfo.displayName}
-                        </span>
-                        {/* <span className="block ml-2 text-sm text-gray-600">
-                              25 minutes
-                            </span> */}
-                      </div>
-                      <span className="block ml-2 text-sm text-gray-600">
-                        {chat[1].lastMessage?.text}
+                    alt="username"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="w-full pb-2">
+                    <div className="flex justify-between">
+                      <span className="block ml-2 font-semibold text-gray-600">
+                        {user.id !== chat.userInfos[0].uid
+                          ? chat.userInfos[0].displayName
+                          : chat.userInfos[1].displayName}
                       </span>
+                      {/* <span className="block ml-2 text-sm text-gray-600">
+                        25 minutes
+                      </span> */}
                     </div>
-                  </a>
-                );
-              })}
+                    {chat.lastMessage && (
+                      <span className="block ml-2 text-sm text-gray-600">
+                        {chat.lastMessage}
+                      </span>
+                    )}
+                  </div>
+                </a>
+              );
+            })}
         </li>
       </ul>
     </>

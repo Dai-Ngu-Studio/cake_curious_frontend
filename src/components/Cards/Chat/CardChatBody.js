@@ -1,11 +1,17 @@
 import { uuidv4 } from "@firebase/util";
 import {
+  addDoc,
   arrayUnion,
+  collection,
   doc,
   onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
+  setDoc,
   Timestamp,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -19,29 +25,21 @@ const CardChatBody = () => {
   const [text, setText] = useState([]);
 
   const handleSend = async () => {
-    await updateDoc(doc(db, "rooms", user.id), {
-      [chatId + ".lastMessage"]: {
-        text,
+    await addDoc(collection(db, `rooms/${chatId}/messages`), {
+      author: {
+        firstName: user.displayName,
+        id: user.id,
+        imageUrl: user.photoUrl,
       },
-      [chatId + ".messages"]: arrayUnion({
-        id: uuidv4(),
-        text,
-        senderId: user.id,
-        date: Timestamp.now(),
-      }),
-      [chatId + ".date"]: serverTimestamp(),
+      roomId: chatId,
+      createdAt: serverTimestamp(),
+      text,
     });
-    await updateDoc(doc(db, "rooms", userData.uid), {
-      [chatId + ".lastMessage"]: {
-        text,
-      },
-      [chatId + ".messages"]: arrayUnion({
-        id: uuidv4(),
-        text,
-        senderId: user.id,
-        date: Timestamp.now(),
-      }),
-      [chatId + ".date"]: serverTimestamp(),
+    await updateDoc(doc(db, "rooms", chatId), {
+      lastMessage: text,
+      lastMessageTime: serverTimestamp(),
+      lastMessageName: user.displayName,
+      updatedAt: serverTimestamp(),
     });
     setText("");
   };
@@ -50,10 +48,23 @@ const CardChatBody = () => {
   };
 
   useEffect(() => {
-    if (chatId) {
-      onSnapshot(doc(db, "rooms", user.id), (doc) => {
-        doc.exists() && setMessages(doc.data()[`${chatId}`].messages);
-      });
+    try {
+      if (chatId) {
+        const q = query(
+          collection(db, `rooms/${chatId}/messages`),
+          where("roomId", "==", chatId),
+          orderBy("createdAt")
+        );
+        onSnapshot(q, (snapshot) => {
+          const documents = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setMessages(documents);
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [chatId]);
 
