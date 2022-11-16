@@ -16,6 +16,15 @@ export const getAllProductsThunk = async (_, thunkAPI) => {
   }
 };
 
+export const getProductThunk = async ({ productId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(`/api/products/${productId}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+
 export const addProductThunk = async (product, thunkAPI) => {
   try {
     const resp = await customFetch.post("/api/products", product);
@@ -30,8 +39,8 @@ export const addProductThunk = async (product, thunkAPI) => {
 export const updateProductThunk = async ({ productId, product }, thunkAPI) => {
   try {
     const resp = await customFetch.put(`/api/products/${productId}`, product);
-    thunkAPI.dispatch(clearProductValues());
-    thunkAPI.dispatch(clearImageValues());
+    // thunkAPI.dispatch(clearProductValues());
+    // thunkAPI.dispatch(clearImageValues());
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);

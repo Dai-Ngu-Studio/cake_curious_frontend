@@ -36,7 +36,6 @@ export const loginGoogleThunk = async (thunkAPI) => {
         email: authGoogle.user.email,
         photoUrl: authGoogle.user.photoURL,
       });
-      await setDoc(doc(db, "rooms", authGoogle.user.uid), {});
     }
     return authGoogle.user.toJSON();
   } catch (error) {
@@ -50,8 +49,7 @@ export const getUserThunk = async (_, thunkAPI) => {
     thunkAPI.dispatch(clearUserLoginValues());
     return user.data;
   } catch (error) {
-    // return checkForUnauthorizedResponse(error, thunkAPI);
-    return thunkAPI.rejectWithValue(error.response.data.msg);
+    return thunkAPI.rejectWithValue(error);
   }
 };
 

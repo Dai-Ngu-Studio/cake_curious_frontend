@@ -4,6 +4,7 @@ import {
   addProductThunk,
   deleteProductThunk,
   getAllProductsThunk,
+  getProductThunk,
   updateProductThunk,
 } from "./productThunk";
 
@@ -18,8 +19,9 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Ingredient", "Tool"],
-  isProductEditing: false,
-  editProductId: "",
+  // isProductEditing: false,
+  // editProductId: "",
+  isProductDoneUpdating: false,
   productType: 0,
   productCategoryId: 0,
   name: "",
@@ -34,6 +36,10 @@ const initialState = {
 export const getAllProducts = createAsyncThunk(
   "product/getProducts",
   getAllProductsThunk
+);
+export const getSingleProduct = createAsyncThunk(
+  "product/getSingleProduct",
+  getProductThunk
 );
 export const addProduct = createAsyncThunk(
   "product/addProduct",
@@ -59,13 +65,13 @@ const productSlice = createSlice({
     changeProductPage: (state, { payload }) => {
       state.page = payload;
     },
-    setUpdateProduct: (state, { payload }) => {
-      return {
-        ...state,
-        isProductEditing: true,
-        ...payload,
-      };
-    },
+    // setUpdateProduct: (state, { payload }) => {
+    //   return {
+    //     ...state,
+    //     isProductEditing: true,
+    //     ...payload,
+    //   };
+    // },
     clearProductValues: () => {
       return {
         ...initialState,
@@ -86,6 +92,25 @@ const productSlice = createSlice({
       state.isProductLoading = false;
       toast.error(payload);
     },
+    [getSingleProduct.pending]: (state) => {
+      state.isProductLoading = true;
+    },
+    [getSingleProduct.fulfilled]: (state, { payload }) => {
+      state.isProductLoading = false;
+      state.productType = payload.productType;
+      state.productCategoryId = payload.productCategoryId;
+      state.name = payload.name;
+      state.description = payload.description;
+      state.quantity = payload.quantity;
+      state.price = payload.price;
+      state.discount = payload.discount;
+      state.photoUrl = payload.photoUrl;
+      state.status = payload.status;
+    },
+    [getSingleProduct.rejected]: (state, { payload }) => {
+      state.isProductLoading = false;
+      toast.error(payload);
+    },
     [addProduct.pending]: (state) => {
       state.isProductLoading = true;
     },
@@ -99,9 +124,11 @@ const productSlice = createSlice({
     },
     [updateProduct.pending]: (state) => {
       state.isProductLoading = true;
+      state.isProductDoneUpdating = false;
     },
     [updateProduct.fulfilled]: (state, { payload }) => {
       state.isProductLoading = false;
+      state.isProductDoneUpdating = true;
       toast.success("Product Updated...");
     },
     [updateProduct.rejected]: (state, { payload }) => {
@@ -124,7 +151,7 @@ const productSlice = createSlice({
 
 export const {
   handleProductChange,
-  setUpdateProduct,
+  // setUpdateProduct,
   changeProductPage,
   clearAllProductsState,
   clearProductValues,

@@ -17,10 +17,9 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Pending", "Completed", "Cancelled", "Processing"],
-  isOrderEditting: false,
-  isDoneUpdating: false,
-  isOrderDetailsReady: false,
-  editOrderId: null,
+  // isOrderEditting: false,
+  // editOrderId: null,
+  isOrderDoneUpdating: false,
   status: 0,
   orderDate: null,
   processedDate: null,
@@ -56,14 +55,14 @@ const orderSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    setUpdateOrder: (state, { payload }) => {
-      return {
-        ...state,
-        isOrderEditting: true,
-        isOrderDetailsReady: true,
-        ...payload,
-      };
-    },
+    // setUpdateOrder: (state, { payload }) => {
+    //   return {
+    //     ...state,
+    //     isOrderEditting: true,
+    //     isOrderDetailsReady: true,
+    //     ...payload,
+    //   };
+    // },
     changeOrderPage: (state, { payload }) => {
       state.page = payload;
     },
@@ -88,6 +87,10 @@ const orderSlice = createSlice({
     [getSingleOrder.fulfilled]: (state, { payload }) => {
       state.isOrderLoading = false;
       state.status = payload.status;
+      state.orderDate = payload.orderDate;
+      state.discountedTotal = payload.discountedTotal;
+      state.address = payload.address;
+      state.user = payload.user;
       state.processedDate = payload.processedDate;
       state.completedDate = payload.completedDate;
     },
@@ -97,12 +100,11 @@ const orderSlice = createSlice({
     },
     [updateOrder.pending]: (state) => {
       state.isOrderLoading = true;
-      state.isDoneUpdating = false;
-      state.isOrderDetailsReady = false;
+      state.isOrderDoneUpdating = false;
     },
     [updateOrder.fulfilled]: (state, { payload }) => {
       state.isOrderLoading = false;
-      state.isDoneUpdating = true;
+      state.isOrderDoneUpdating = true;
       toast.success("Order Updated...");
     },
     [updateOrder.rejected]: (state, { payload }) => {
@@ -125,7 +127,7 @@ const orderSlice = createSlice({
 
 export const {
   handleOrderChange,
-  setUpdateOrder,
+  // setUpdateOrder,
   changeOrderPage,
   clearAllOrdersState,
 } = orderSlice.actions;

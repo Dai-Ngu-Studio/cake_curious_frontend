@@ -17,6 +17,7 @@ import {
 
 const initialState = {
   isUserLoading: false,
+  phoneNumber: "",
   email: "",
   password: "",
   user: getUserFromLocalStorage(),
