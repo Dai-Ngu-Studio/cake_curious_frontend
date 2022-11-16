@@ -1,6 +1,12 @@
 import StoreViewModal from "./StoreViewModal";
+import ModalConfirm from "./ModalConfirm";
 import { BsXLg } from "react-icons/bs";
-export default function ModalWrapper({ setOpenModal, store }) {
+export default function ModalWrapper({
+  setOpenModal,
+  store,
+  isConfirmModal,
+  changeStoreStatus,
+}) {
   return (
     <div>
       <div
@@ -11,7 +17,19 @@ export default function ModalWrapper({ setOpenModal, store }) {
       >
         <BsXLg className="text-5xl fixed right-5 top-5 rounded-full hover:bg-white/25 p-3 text-white cursor-pointer" />
       </div>
-      <StoreViewModal store={store} />
+      {(() => {
+        if (isConfirmModal) {
+          return (
+            <ModalConfirm
+              store={store}
+              changeStoreStatus={changeStoreStatus}
+              setOpenModal={setOpenModal}
+            />
+          );
+        } else {
+          return <StoreViewModal store={store} />;
+        }
+      })()}
     </div>
   );
 }
