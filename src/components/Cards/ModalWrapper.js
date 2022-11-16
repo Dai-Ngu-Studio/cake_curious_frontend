@@ -1,11 +1,12 @@
-import StoreViewModal from "./StoreViewModal";
 import ModalConfirm from "./ModalConfirm";
 import { BsXLg } from "react-icons/bs";
 export default function ModalWrapper({
   setOpenModal,
-  store,
+  viewObject,
   isConfirmModal,
   changeStoreStatus,
+  StoreViewModal,
+  AccountViewModal,
 }) {
   return (
     <div>
@@ -21,13 +22,17 @@ export default function ModalWrapper({
         if (isConfirmModal) {
           return (
             <ModalConfirm
-              store={store}
-              changeStoreStatus={changeStoreStatus}
+              viewObject={viewObject}
+              changeStatus={changeStoreStatus}
               setOpenModal={setOpenModal}
             />
           );
         } else {
-          return <StoreViewModal store={store} />;
+          if (StoreViewModal) {
+            return <StoreViewModal store={viewObject} />;
+          } else if (AccountViewModal) {
+            return <AccountViewModal account={viewObject} />;
+          }
         }
       })()}
     </div>
