@@ -17,7 +17,6 @@ export default function ReportTables() {
     totalReportPages,
     page,
     search,
-    filter,
     isReportLoading,
     sort,
     filterOptions,
@@ -30,7 +29,6 @@ export default function ReportTables() {
         <div className="w-full mb-12 px-4">
           <CardSearch
             sort={sort}
-            filter={filter}
             search={search}
             loading={isReportLoading}
             statusOptions={statusOptions}

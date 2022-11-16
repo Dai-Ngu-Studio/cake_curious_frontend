@@ -16,7 +16,8 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  isAccountEditing: false,
+  // isAccountEditing: false,
+  isAccountDoneUpdating: false,
   editAccountId: null,
   email: "",
   displayName: "",
@@ -50,13 +51,13 @@ const accountSlice = createSlice({
     changeAccountPage: (state, { payload }) => {
       state.page = payload;
     },
-    setUpdateAccount: (state, { payload }) => {
-      return {
-        ...state,
-        isAccountEditing: true,
-        ...payload,
-      };
-    },
+    // setUpdateAccount: (state, { payload }) => {
+    //   return {
+    //     ...state,
+    //     isAccountEditing: true,
+    //     ...payload,
+    //   };
+    // },
     clearAllAccountsState: (state) => initialState,
   },
   extraReducers: {
@@ -74,9 +75,11 @@ const accountSlice = createSlice({
     },
     [updateAccount.pending]: (state) => {
       state.isAccountLoading = true;
+      state.isAccountDoneUpdating = false;
     },
     [updateAccount.fulfilled]: (state, { payload }) => {
       state.isAccountLoading = false;
+      state.isAccountDoneUpdating = true;
       toast.success("Account Updated...");
     },
     [updateAccount.rejected]: (state, { payload }) => {
@@ -99,7 +102,7 @@ const accountSlice = createSlice({
 
 export const {
   handleAccountChange,
-  setUpdateAccount,
+  // setUpdateAccount,
   changeAccountPage,
   clearAllAccountsState,
 } = accountSlice.actions;

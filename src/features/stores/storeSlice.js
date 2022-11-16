@@ -17,7 +17,8 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  isStoreEditing: false,
+  // isStoreEditing: false,
+  isStoreDoneUpdating: false,
   editStoreId: null,
   user: {},
   name: "",
@@ -54,13 +55,13 @@ const storeSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    setUpdateStore: (state, { payload }) => {
-      return {
-        ...state,
-        isStoreEditing: true,
-        ...payload,
-      };
-    },
+    // setUpdateStore: (state, { payload }) => {
+    //   return {
+    //     ...state,
+    //     isStoreEditing: true,
+    //     ...payload,
+    //   };
+    // },
     changeStorePage: (state, { payload }) => {
       state.page = payload;
     },
@@ -109,9 +110,11 @@ const storeSlice = createSlice({
     },
     [updateStore.pending]: (state) => {
       state.isStoreLoading = true;
+      state.isStoreDoneUpdating = false;
     },
     [updateStore.fulfilled]: (state, { payload }) => {
       state.isStoreLoading = false;
+      state.isStoreDoneUpdating = true;
       toast.success("Store Updated...");
     },
     [updateStore.rejected]: (state, { payload }) => {
@@ -134,7 +137,7 @@ const storeSlice = createSlice({
 
 export const {
   handleStoreChange,
-  setUpdateStore,
+  // setUpdateStore,
   changeStorePage,
   clearAllStoresState,
 } = storeSlice.actions;

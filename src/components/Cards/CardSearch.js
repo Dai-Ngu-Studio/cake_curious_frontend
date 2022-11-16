@@ -20,7 +20,6 @@ const CardSearch = ({
   const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
-    if (loading) return;
     dispatch(handleChange({ name: e.target.name, value: e.target.value }));
   };
 
