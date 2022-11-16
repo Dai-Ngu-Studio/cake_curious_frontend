@@ -11,11 +11,12 @@ import {
   updateStore,
 } from "../../features/stores/storeSlice";
 import ModalWrapper from "./ModalWrapper";
-import { BsStarFill } from "react-icons/bs";
+import { BsStarFill, BsEyeFill } from "react-icons/bs";
+
 export default function StoreCardTable() {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalStore, setModalStore] = useState(null);
-
+  const [isConfirmModal, setIsConfirmModal] = useState(false);
   const {
     stores,
     isStoreLoading,
@@ -110,10 +111,6 @@ export default function StoreCardTable() {
                         "hover:bg-green-50 " +
                         (index % 2 === 1 ? "bg-gray-50" : "bg-white")
                       }
-                      onClick={() => {
-                        setModalStore(store);
-                        setOpenModal(true);
-                      }}
                     >
                       <th className="pl-6 align-middle p-1 text-left flex justify-center">
                         <img
@@ -138,13 +135,22 @@ export default function StoreCardTable() {
                         <div className="flex">{store.rating}</div>
                       </td>
                       <td className="pl-6 align-middle p-4">
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            changeStoreStatus(store.id, store.status)
-                          }
-                        >
-                          <span className="mr-2">
+                        <div className="flex items-center">
+                          <span
+                            className="mr-2 cursor-pointer"
+                            onClick={() => {
+                              // let storeEditing = {
+
+                              // }
+                              setModalStore({
+                                id: store.id,
+                                status: store.status,
+                              });
+                              setOpenModal(true);
+                              setIsConfirmModal(true);
+                              // changeStoreStatus(store.id, store.status);
+                            }}
+                          >
                             {store.status === 0 ? (
                               <StatusCard
                                 text="Hoạt động"
@@ -161,21 +167,16 @@ export default function StoreCardTable() {
                           </span>
                         </div>
                       </td>
-                      {/* <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown
-                          link="/admin/store-form"
-                          setUpdate={setUpdateStore({
-                            editStoreId: store.id,
-                            description: store.description,
-                            name: store.name,
-                            photoUrl: store.photoUrl,
-                            address: store.address,
-                            user: store.user,
-                            rating: store.rating,
-                            status: store.status,
-                          })}
+                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                        <BsEyeFill
+                          onClick={() => {
+                            setModalStore(store);
+                            setOpenModal(true);
+                            setIsConfirmModal(false);
+                          }}
+                          className="p-2 w-10 h-10 bg-green-200 text-black/50 hover:bg-emerald-600 hover:text-white rounded-md cursor-pointer"
                         />
-                      </td> */}
+                      </td>
                     </tr>
                   );
                 })}
@@ -187,7 +188,12 @@ export default function StoreCardTable() {
       {(() => {
         if (isOpenModal) {
           return (
-            <ModalWrapper store={modalStore} setOpenModal={setOpenModal} />
+            <ModalWrapper
+              store={modalStore}
+              setOpenModal={setOpenModal}
+              isConfirmModal={isConfirmModal}
+              changeStoreStatus={changeStoreStatus}
+            />
           );
         }
       })()}
