@@ -12,7 +12,7 @@ import {
 } from "../../features/stores/storeSlice";
 import ModalWrapper from "./ModalWrapper";
 import { BsStarFill, BsEyeFill } from "react-icons/bs";
-
+import StoreViewModal from "./StoreViewModal";
 export default function StoreCardTable() {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalStore, setModalStore] = useState(null);
@@ -189,7 +189,8 @@ export default function StoreCardTable() {
         if (isOpenModal) {
           return (
             <ModalWrapper
-              store={modalStore}
+              StoreViewModal={StoreViewModal}
+              viewObject={modalStore}
               setOpenModal={setOpenModal}
               isConfirmModal={isConfirmModal}
               changeStoreStatus={changeStoreStatus}
