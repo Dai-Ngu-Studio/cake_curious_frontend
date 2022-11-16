@@ -3,7 +3,6 @@ import Shop from "../../assets/img/no-store.png";
 export default function StoreViewModal({ store }) {
   return (
     <div className="fixed top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/2 ">
-      <div></div>
       <div className="flex">
         <img
           className="relative min-w-48 max-w-md scale-110 bg-white rounded-xl object-contain border"
@@ -68,7 +67,6 @@ export default function StoreViewModal({ store }) {
           </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }
