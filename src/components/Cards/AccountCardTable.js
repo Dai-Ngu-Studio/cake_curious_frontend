@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllAccounts,
@@ -7,10 +7,15 @@ import {
   updateAccount,
 } from "../../features/accounts/accountSlice";
 import Loading from "../../utils/Loading";
-import TableDropdown from "../Dropdowns/TableDropdown";
 import User from "../../assets/img/user.png";
 import StatusCard from "./StatusCard";
+import { BsEyeFill } from "react-icons/bs";
+import ModalWrapper from "./ModalWrapper";
+import AccountViewModal from "./AccountViewModal";
 export const AccountCardTable = () => {
+  const [isOpenModal, setOpenModal] = useState(false);
+  const [modalAccount, setModalAccount] = useState(null);
+  const [isConfirmModal, setIsConfirmModal] = useState(false);
   const {
     accounts,
     isAccountLoading,
@@ -118,13 +123,22 @@ export const AccountCardTable = () => {
                         <div className="flex">{account.email}</div>
                       </td>
                       <td className="pl-6 align-middle p-4">
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            changeAccountStatus(account.id, account.status)
-                          }
-                        >
-                          <span className="mr-2">
+                        <div className="flex items-center">
+                          <span
+                            className="mr-2"
+                            onClick={() => {
+                              // let storeEditing = {
+
+                              // }
+                              setModalAccount({
+                                id: account.id,
+                                status: account.status,
+                              });
+                              setOpenModal(true);
+                              setIsConfirmModal(true);
+                              // changeStoreStatus(store.id, store.status);
+                            }}
+                          >
                             {account.status === 0 ? (
                               <StatusCard
                                 text="Hoạt động"
@@ -141,20 +155,16 @@ export const AccountCardTable = () => {
                           </span>
                         </div>
                       </td>
-                      {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown
-                          link="/admin/account-form"
-                          setUpdate={setUpdateAccount({
-                            editAccountId: account.id,
-                            email: account.email,
-                            displayName: account.displayName,
-                            photoUrl: account.photoUrl,
-                            gender: account.gender,
-                            roles: account.roles,
-                            status: account.status,
-                          })}
+                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                        <BsEyeFill
+                          onClick={() => {
+                            setModalAccount(account);
+                            setOpenModal(true);
+                            setIsConfirmModal(false);
+                          }}
+                          className="p-2 w-10 h-10 bg-green-200 text-black/50 hover:bg-emerald-600 hover:text-white rounded-md cursor-pointer"
                         />
-                      </td> */}
+                      </td>
                     </tr>
                   );
                 })}
@@ -163,6 +173,19 @@ export const AccountCardTable = () => {
           </div>
         )}
       </div>
+      {(() => {
+        if (isOpenModal) {
+          return (
+            <ModalWrapper
+              AccountViewModal={AccountViewModal}
+              viewObject={modalAccount}
+              setOpenModal={setOpenModal}
+              isConfirmModal={isConfirmModal}
+              changeStoreStatus={changeAccountStatus}
+            />
+          );
+        }
+      })()}
     </>
   );
 };
