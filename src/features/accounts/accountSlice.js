@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   isAccountLoading: false,
+  isModalAccountLoading: true,
   accounts: [],
   totalAccountPages: 1,
   page: 1,
@@ -19,17 +20,28 @@ const initialState = {
   // isAccountEditing: false,
   isAccountDoneUpdating: false,
   editAccountId: null,
+
   email: "",
   displayName: "",
   photoUrl: null,
   gender: "",
   roles: [],
   status: 0,
+  // dateOfBirth: null,
+  // address: "",
+  // citizenshipNumber: "",
+  // citizenshipDate: "",
+  // createdDate: null,
+  user: null,
 };
 
 export const getAllAccounts = createAsyncThunk(
   "account/getAccounts",
   getAllAccountsThunk
+);
+export const getSingleAccount = createAsyncThunk(
+  "account/getSingleAccount",
+  getAccountThunk
 );
 export const updateAccount = createAsyncThunk(
   "account/updateAccount",
@@ -72,6 +84,27 @@ const accountSlice = createSlice({
     [getAllAccounts.rejected]: (state, { payload }) => {
       state.isAccountLoading = false;
       toast.error(payload);
+    },
+    [getSingleAccount.pending]: (state) => {
+      state.isModalAccountLoading = true;
+    },
+    [getSingleAccount.fulfilled]: (state, { payload }) => {
+      state.isModalAccountLoading = false;
+      state.user = payload;
+      // state.submittedDate = payload.submittedDate;
+      // state.itemType = payload.itemType;
+      // state.comment = payload.comment;
+      // state.recipe = payload.recipe;
+      // state.reporter = payload.reporter;
+      // state.title = payload.title;
+      // state.content = payload.content;
+      // state.staff = payload.staff;
+      // state.reportedUser = payload.reportedUser;
+      // state.statusUpdate = payload.status;
+      // state.staff = payload.staff;
+    },
+    [getSingleAccount.rejected]: (state, { payload }) => {
+      state.isModalAccountLoading = false;
     },
     [updateAccount.pending]: (state) => {
       state.isAccountLoading = true;
