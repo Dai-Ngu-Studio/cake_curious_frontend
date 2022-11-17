@@ -30,6 +30,7 @@ import OrderForm from "./views/store/OrderForm";
 import AdminReportForm from "./views/admin/AdminReportForm";
 import StaffReportForm from "./views/staff/StaffReportForm";
 import Chat from "./views/store/Chat";
+import Register from "./views/auth/Register";
 
 function App() {
   return (
@@ -92,6 +93,7 @@ function App() {
 
         <Route path="/auth/" element={<Auth />}>
           <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Route>
         <Route index element={<Landing />} />
         <Route path="/unauthorized" element={<Error />} />

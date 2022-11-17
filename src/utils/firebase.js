@@ -16,6 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
+auth.languageCode = "it";
 const storage = getStorage();
 const db = getFirestore(app);
 

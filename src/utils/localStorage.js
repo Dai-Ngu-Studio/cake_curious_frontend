@@ -6,6 +6,10 @@ export const removeTokenFromLocalStorage = () => {
   localStorage.removeItem("token");
 };
 
+export const removeCaptchaFromLocalStorage = () => {
+  localStorage.removeItem("_grecaptcha");
+};
+
 export const getTokenFromLocalStorage = () => {
   const result = localStorage.getItem("token");
   const token = result ? JSON.parse(result) : null;

@@ -43,6 +43,15 @@ export const loginGoogleThunk = async (thunkAPI) => {
   }
 };
 
+export const updateUserRoleThunk = async (_, thunkAPI) => {
+  try {
+    const updateRole = await customFetch.post("/api/users/current/to-store");
+    return updateRole.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+};
+
 export const getUserThunk = async (_, thunkAPI) => {
   try {
     const user = await customFetch.post("/api/users/login");

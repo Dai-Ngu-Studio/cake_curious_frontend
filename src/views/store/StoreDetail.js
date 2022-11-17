@@ -20,7 +20,7 @@ export default function StoreDetail() {
     description,
     editStoreId,
     photoUrl,
-    address,
+    storeAddress,
     rating,
     isStoreLoading,
   } = useSelector((selector) => selector.store);
@@ -62,7 +62,7 @@ export default function StoreDetail() {
 
   const handleStoreDetailSubmit = (e) => {
     e.preventDefault();
-    if (!name || !address || !description) {
+    if (!name || !storeAddress || !description) {
       toast.error("Please fill out all fields");
       return;
     }
@@ -72,7 +72,7 @@ export default function StoreDetail() {
         storeId: editStoreId,
         store: {
           id: editStoreId,
-          address,
+          address: storeAddress,
           name,
           description,
           photoUrl: image || null,
@@ -117,9 +117,9 @@ export default function StoreDetail() {
               />
               <FormRow
                 type="text"
-                name="address"
+                name="storeAddress"
                 labelText="Address"
-                value={address}
+                value={storeAddress}
                 handleChange={handleStoreDetailInput}
               />
               <div>

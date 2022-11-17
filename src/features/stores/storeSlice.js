@@ -24,7 +24,7 @@ const initialState = {
   name: "",
   description: "",
   photoUrl: null,
-  address: "",
+  storeAddress: "",
   rating: 0,
   status: 0,
 };
@@ -86,11 +86,12 @@ const storeSlice = createSlice({
     [getUserStore.fulfilled]: (state, { payload }) => {
       state.isStoreLoading = false;
       state.editStoreId = payload.id;
+      console.log(payload.user);
       state.user = payload.user;
       state.name = payload.name;
       state.description = payload.description;
       state.photoUrl = payload.photoUrl;
-      state.address = payload.address;
+      state.storeAddress = payload.address;
       state.rating = payload.rating;
     },
     [getUserStore.rejected]: (state, { payload }) => {

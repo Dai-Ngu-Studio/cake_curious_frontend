@@ -13,11 +13,20 @@ import {
   getUserThunk,
   loginGoogleThunk,
   loginUserThunk,
+  updateUserRoleThunk,
 } from "./userThunk";
 
 const initialState = {
   isUserLoading: false,
-  phoneNumber: "",
+  isUserRoleDoneUpdating: false,
+  phoneNumber: "+84",
+  fullName: "",
+  gender: "",
+  dateOfBirth: "",
+  address: "",
+  citizenshipNumber: "",
+  citizenshipDate: "",
+  OTP: "",
   email: "",
   password: "",
   user: getUserFromLocalStorage(),
@@ -26,6 +35,10 @@ const initialState = {
 
 export const loginUser = createAsyncThunk("user/loginUser", loginUserThunk);
 export const getUser = createAsyncThunk("user/getUser", getUserThunk);
+export const updateUserRole = createAsyncThunk(
+  "user/updateUserRole",
+  updateUserRoleThunk
+);
 export const clearStore = createAsyncThunk("user/clearStore", clearStoreThunk);
 export const loginGoogle = createAsyncThunk(
   "user/loginGoogle",
@@ -87,6 +100,17 @@ const userSlice = createSlice({
     },
     [getUser.rejected]: (state, { payload }) => {
       state.isUserLoading = false;
+      toast.error(payload);
+    },
+    [updateUserRole.pending]: (state) => {
+      state.isUserRoleDoneUpdating = false;
+    },
+    [updateUserRole.fulfilled]: (state, { payload }) => {
+      state.isUserRoleDoneUpdating = true;
+      // addUserToLocalStorage(payload);
+    },
+    [updateUserRole.rejected]: (state, { payload }) => {
+      state.isUserRoleDoneUpdating = false;
       toast.error(payload);
     },
     [clearStore.rejected]: () => {
