@@ -158,7 +158,7 @@ export const AccountCardTable = () => {
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <BsEyeFill
                           onClick={() => {
-                            setModalAccount(account);
+                            setModalAccount(account.id);
                             setOpenModal(true);
                             setIsConfirmModal(false);
                           }}
