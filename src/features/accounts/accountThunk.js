@@ -13,7 +13,14 @@ export const getAllAccountsThunk = async (_, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
-
+export const getAccountThunk = async ({ userId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(`/api/users/${userId}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
 export const updateAccountThunk = async ({ userId, user }, thunkAPI) => {
   try {
     const resp = await customFetch.put(`/api/users/${userId}`, user);
