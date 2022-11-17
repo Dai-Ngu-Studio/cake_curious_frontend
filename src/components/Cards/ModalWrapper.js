@@ -31,7 +31,7 @@ export default function ModalWrapper({
           if (StoreViewModal) {
             return <StoreViewModal store={viewObject} />;
           } else if (AccountViewModal) {
-            return <AccountViewModal account={viewObject} />;
+            return <AccountViewModal id={viewObject} />;
           }
         }
       })()}
