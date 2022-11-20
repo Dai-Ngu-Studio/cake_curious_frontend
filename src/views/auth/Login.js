@@ -59,6 +59,8 @@ export default function Login() {
         navigate("/staff/staff-dashboard");
       } else if (priorityRole === 2) {
         navigate("/store/store-dashboard");
+      } else if (priorityRole === 3) {
+        navigate("/auth/register");
       }
     }
   }, [user]);

@@ -27,11 +27,12 @@ const initialState = {
   gender: "",
   roles: [],
   status: 0,
-  // dateOfBirth: null,
-  // address: "",
-  // citizenshipNumber: "",
-  // citizenshipDate: "",
-  // createdDate: null,
+  fullName: "",
+  gender: "",
+  dateOfBirth: "",
+  address: "",
+  citizenshipNumber: "",
+  citizenshipDate: "",
   user: null,
 };
 
