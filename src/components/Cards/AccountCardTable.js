@@ -82,7 +82,7 @@ export const AccountCardTable = () => {
                     Ảnh đại diện
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                    Tên đầy đủ
+                    Chức danh
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Tên hiển thị
@@ -110,11 +110,52 @@ export const AccountCardTable = () => {
                         <img
                           src={account.photoUrl || User}
                           className="w-24 bg-white rounded-full border"
-                          alt="..."
+                          referrerPolicy="no-referrer"
                         ></img>
                       </th>
                       <td className="pl-6 align-middle p-4">
-                        {account.fullName || "Annoymous"}
+                        {(() => {
+                          let smallestRoleID = 10;
+                          account.roles.map((role) => {
+                            if (role < smallestRoleID) {
+                              smallestRoleID = role;
+                            }
+                          });
+
+                          if (smallestRoleID === 3) {
+                            return (
+                              <StatusCard
+                                text="Thợ bánh"
+                                backgroundColor="bg-orange-200"
+                                dotColor="bg-orange-600"
+                              />
+                            );
+                          } else if (smallestRoleID === 2) {
+                            return (
+                              <StatusCard
+                                text="Chủ cửa hàng"
+                                backgroundColor="bg-blue-200"
+                                dotColor="bg-blue-600"
+                              />
+                            );
+                          } else if (smallestRoleID === 1) {
+                            return (
+                              <StatusCard
+                                text="Nhân viên"
+                                backgroundColor="bg-yellow-200"
+                                dotColor="bg-yellow-600"
+                              />
+                            );
+                          } else if (smallestRoleID === 0) {
+                            return (
+                              <StatusCard
+                                text="Quản trị viên"
+                                backgroundColor="bg-red-200"
+                                dotColor="bg-red-600"
+                              />
+                            );
+                          }
+                        })()}
                       </td>
                       <td className="pl-6 align-middle p-4">
                         {account.displayName || "Annoymous"}
