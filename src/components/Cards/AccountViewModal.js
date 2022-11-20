@@ -16,11 +16,13 @@ export default function AccountViewModal({ id }) {
   return (
     <div className="fixed top-1/2 left-1/2 -translate-x-1/3 -translate-y-1/2 ">
       <div className="block item bg-white p-2 rounded-md">
-        <img
-          className="rounded-full object-contain border ml-auto mr-auto w-36 h-36"
-          src={user.photoUrl || NoImg}
-          referrerPolicy="no-referrer"
-        />
+        <div className="bg-white ml-auto mr-auto rounded-full w-40 h-40 ">
+          <img
+            className="rounded-full object-contain ml-auto mr-auto w-36 h-36 -mt-20"
+            src={user.photoUrl || NoImg}
+            referrerPolicy="no-referrer"
+          />
+        </div>
         <div className="p-5 rounded-xl">
           <div className="flex items-center gap-5 ">
             <div className="w-20 text-right">Tên đại diện</div>
