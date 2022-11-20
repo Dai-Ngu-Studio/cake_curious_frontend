@@ -7,7 +7,7 @@ export default function AdminHeaderStats({ cardStats }) {
   return (
     <>
       {/* Header */}
-      <div className="relative pt-32 pb-10">
+      <div className="flex pt-32 pb-10">
         <div className="px-4 md:px-10 mx-auto w-full">
           <div>
             {/* Card stats */}
