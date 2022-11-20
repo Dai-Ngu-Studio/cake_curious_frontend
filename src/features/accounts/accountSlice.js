@@ -91,17 +91,6 @@ const accountSlice = createSlice({
     [getSingleAccount.fulfilled]: (state, { payload }) => {
       state.isModalAccountLoading = false;
       state.user = payload;
-      // state.submittedDate = payload.submittedDate;
-      // state.itemType = payload.itemType;
-      // state.comment = payload.comment;
-      // state.recipe = payload.recipe;
-      // state.reporter = payload.reporter;
-      // state.title = payload.title;
-      // state.content = payload.content;
-      // state.staff = payload.staff;
-      // state.reportedUser = payload.reportedUser;
-      // state.statusUpdate = payload.status;
-      // state.staff = payload.staff;
     },
     [getSingleAccount.rejected]: (state, { payload }) => {
       state.isModalAccountLoading = false;
