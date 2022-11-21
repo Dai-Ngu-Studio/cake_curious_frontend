@@ -173,7 +173,7 @@ export const AccountCardTable = () => {
                       <td className="pl-6 align-middle p-4">
                         <div className="flex items-center">
                           <span
-                            className="mr-2"
+                            className="mr-2 cursor-pointer"
                             onClick={() => {
                               // let storeEditing = {
 
@@ -211,12 +211,12 @@ export const AccountCardTable = () => {
                               setOpenModal(true);
                               setIsConfirmModal(false);
                             }}
-                            className="p-2 w-10 h-10 bg-green-200 text-black/50 hover:bg-emerald-600 hover:text-white rounded-md cursor-pointer"
+                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
                           />
                           {(() => {
                             if (smallestRoleID(account.roles) === 1) {
                               return (
-                                <div className="flex items-center justify-center  bg-slate-500 ml-2 rounded p-2 cursor-pointer text-white w-32">
+                                <div className="flex items-center justify-center  bg-slate-500 hover:bg-slate-500/80 ml-2 rounded p-2 cursor-pointer text-white w-32">
                                   <div className="m-1 font-bold">Hạ chức</div>
                                   <BsPersonXFill className="" />
                                   <BsFillCaretDownFill className="" />
@@ -224,7 +224,7 @@ export const AccountCardTable = () => {
                               );
                             } else if (smallestRoleID(account.roles) === 3) {
                               return (
-                                <div className="flex items-center justify-center bg-orange-400 ml-2 rounded p-2 cursor-pointer text-white w-32">
+                                <div className="flex items-center justify-center bg-orange-400 hover:bg-orange-400/80 ml-2 rounded p-2 cursor-pointer text-white w-32">
                                   <div className="m-1 font-bold">
                                     Thăng chức
                                   </div>
