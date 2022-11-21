@@ -174,7 +174,7 @@ export default function StoreCardTable() {
                             setOpenModal(true);
                             setIsConfirmModal(false);
                           }}
-                          className="p-2 w-10 h-10 bg-green-200 text-black/50 hover:bg-emerald-600 hover:text-white rounded-md cursor-pointer"
+                          className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
                         />
                       </td>
                     </tr>
