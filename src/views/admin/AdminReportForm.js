@@ -224,8 +224,8 @@ const AdminReportForm = () => {
                   return (
                     <>
                       <div>
-                        <label>Name: </label>
-                        {recipeMaterial.name}
+                        <label>Tên nguyên liệu: </label>
+                        {recipeMaterial.materialName}
                       </div>
                       <div>
                         <label>Amount: </label>
@@ -243,18 +243,24 @@ const AdminReportForm = () => {
                 {recipe?.recipeMedia?.map((media) => {
                   return (
                     <>
-                      {/* <div>
-                        <label>Name: </label>
-                        {recipeMaterial.name}
+                      <div>
+                        <label>Id: </label>
+                        {media.id}
                       </div>
                       <div>
-                        <label>Amount: </label>
-                        {recipeMaterial.amount}
+                        <label>mediaUrl: </label>
+                        {media.amount}
                       </div>
+                      <video
+                        src={media.mediaUrl}
+                        width="320"
+                        height="240"
+                        controls
+                      ></video>
                       <div>
-                        <label>Measurement: </label>
-                        {recipeMaterial.measurement}
-                      </div> */}
+                        <label>Type: </label>
+                        {media.media}
+                      </div>
                     </>
                   );
                 })}
