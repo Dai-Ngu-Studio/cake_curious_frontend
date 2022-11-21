@@ -9,7 +9,7 @@ import {
 import Loading from "../../utils/Loading";
 import User from "../../assets/img/user.png";
 import StatusCard from "./StatusCard";
-import { BsEyeFill } from "react-icons/bs";
+import { BsEyeFill, BsPersonCheckFill, BsPersonXFill } from "react-icons/bs";
 import ModalWrapper from "./ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
 export const AccountCardTable = () => {
@@ -113,7 +113,7 @@ export const AccountCardTable = () => {
                           referrerPolicy="no-referrer"
                         ></img>
                       </th>
-                      <td className="pl-6 align-middle p-4">
+                      <td className="pl-6 align-middle">
                         {(() => {
                           let smallestRoleID = 10;
                           account.roles.map((role) => {
@@ -124,11 +124,16 @@ export const AccountCardTable = () => {
 
                           if (smallestRoleID === 3) {
                             return (
-                              <StatusCard
-                                text="Thợ bánh"
-                                backgroundColor="bg-orange-200"
-                                dotColor="bg-orange-600"
-                              />
+                              <div className="flex w-full items-center justify-center">
+                                <div className="w-full">
+                                  <StatusCard
+                                    text="Thợ bánh"
+                                    backgroundColor="bg-orange-200"
+                                    dotColor="bg-orange-600"
+                                  />
+                                </div>
+                                <BsPersonCheckFill className="bg-yellow-400 ml-2 w-10 h-10 rounded p-2 cursor-pointer" />
+                              </div>
                             );
                           } else if (smallestRoleID === 2) {
                             return (
@@ -140,11 +145,16 @@ export const AccountCardTable = () => {
                             );
                           } else if (smallestRoleID === 1) {
                             return (
-                              <StatusCard
-                                text="Nhân viên"
-                                backgroundColor="bg-yellow-200"
-                                dotColor="bg-yellow-600"
-                              />
+                              <div className="flex w-full items-center justify-center">
+                                <div className="w-full">
+                                  <StatusCard
+                                    text="Nhân viên"
+                                    backgroundColor="bg-yellow-200"
+                                    dotColor="bg-yellow-600"
+                                  />
+                                </div>
+                                <BsPersonXFill className="bg-orange-400 ml-2 w-10 h-10 rounded p-2 cursor-pointer" />
+                              </div>
                             );
                           } else if (smallestRoleID === 0) {
                             return (
