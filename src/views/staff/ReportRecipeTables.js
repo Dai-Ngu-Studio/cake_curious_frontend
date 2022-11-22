@@ -16,7 +16,7 @@ import {
   ReportFilterTypeOptions,
 } from "../../utils/ViewOptions";
 
-export default function ReportTables() {
+export default function ReportRecipeTables() {
   const { totalReportPages, page, search, type, status, sort } = useSelector(
     (store) => store.report
   );

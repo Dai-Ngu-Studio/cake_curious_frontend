@@ -18,9 +18,14 @@ export const AdminLinks = {
       linkTo: "/admin/account-tables",
     },
     {
-      name: "Trung tâm hỗ trợ",
+      name: "Báo cáo bình luận",
       style: "fa fa-flag mr-2 text-sm opacity-75",
-      linkTo: "/admin/report-tables",
+      linkTo: "/admin/report-tables-comment",
+    },
+    {
+      name: "Báo cáo công thức",
+      style: "fa fa-flag mr-2 text-sm opacity-75",
+      linkTo: "/admin/report-tables-recipe",
     },
   ],
 };

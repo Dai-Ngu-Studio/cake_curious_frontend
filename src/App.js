@@ -15,7 +15,8 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import StoreTables from "./views/admin/StoreTables";
 import AccountTables from "./views/admin/AccountTables";
 import StaffDashboard from "./views/staff/StaffDashboard";
-import ReportTables from "./views/staff/ReportTables";
+import ReportRecipeTables from "./views/staff/ReportRecipeTables";
+import ReportCommentTables from "./views/staff/ReportCommentTables";
 import Staff from "./layouts/Staff";
 import StoreDashboard from "./views/store/StoreDashboard";
 import ProductTables from "./views/store/ProductTables";
@@ -49,7 +50,11 @@ function App() {
           <Route path="admin-dashboard" element={<AdminDashboard />} />
           <Route path="store-tables" element={<StoreTables />} />
           <Route path="account-tables" element={<AccountTables />} />
-          <Route path="report-tables" element={<ReportTables />} />
+          <Route
+            path="report-tables-comment"
+            element={<ReportRecipeTables />}
+          />
+          <Route path="report-tables-recipe" element={<ReportRecipeTables />} />
           <Route
             path="report-form/:editReportId"
             element={<AdminReportForm />}
@@ -66,7 +71,7 @@ function App() {
           <Route index element={<StaffDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="staff-dashboard" element={<StaffDashboard />} />
-          <Route path="report-tables" element={<ReportTables />} />
+          <Route path="report-tables" element={<ReportRecipeTables />} />
           <Route path="report-form" element={<StaffReportForm />} />
         </Route>
         <Route
