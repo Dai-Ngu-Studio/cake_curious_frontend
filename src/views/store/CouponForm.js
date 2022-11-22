@@ -13,6 +13,7 @@ import {
   updateCoupon,
 } from "../../features/coupons/couponSlice";
 import { CouponStatus, DiscountTypeOptions } from "../../utils/StatusOptions";
+import moment from "moment/moment";
 
 export const CouponForm = () => {
   const {
@@ -136,7 +137,11 @@ export const CouponForm = () => {
               type="date"
               name="expiryDate"
               labelText="Expiry Date"
-              value={expiryDate}
+              value={
+                expiryDate === ""
+                  ? expiryDate
+                  : moment(expiryDate).format("YYYY-MM-DD")
+              }
               handleChange={handleCouponInput}
             />
             <FormRow
