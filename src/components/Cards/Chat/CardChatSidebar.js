@@ -49,18 +49,19 @@ const CardChatSidebar = () => {
 
   const handleSelect = async () => {
     try {
-      const docSnap = await getDoc(doc(db, "users", user.id));
-      if (docSnap.exists()) {
-        await addDoc(collection(db, "rooms"), {
-          createdAt: serverTimestamp(),
-          userInfos: [docSnap.data(), userChatting],
-          lastMessageTime: serverTimestamp(),
-          users: [user.id, userChatting.uid],
-        });
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
+      await addDoc(collection(db, "rooms"), {
+        createdAt: serverTimestamp(),
+        userInfos: [
+          {
+            displayName: user.store?.name,
+            photoUrl: user.store?.photoUrl,
+            uid: user.store?.id,
+          },
+          userChatting,
+        ],
+        updatedAt: serverTimestamp(),
+        users: [user.id, userChatting.uid],
+      });
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +74,7 @@ const CardChatSidebar = () => {
       const q = query(
         collection(db, "rooms"),
         where("users", "array-contains", user.id),
-        orderBy("lastMessageTime", "desc")
+        orderBy("updatedAt", "desc")
       );
       onSnapshot(q, (snapshot) => {
         const documents = snapshot.docs.map((doc) => ({
@@ -146,7 +147,7 @@ const CardChatSidebar = () => {
                       setChatting({
                         chatId: chat.id,
                         userData:
-                          user.id !== chat.userInfos[0].uid
+                          user.store?.id !== chat.userInfos[0].uid
                             ? chat.userInfos[0]
                             : chat.userInfos[1],
                       })
@@ -156,7 +157,7 @@ const CardChatSidebar = () => {
                   <img
                     className="object-cover w-10 h-10 rounded-full"
                     src={
-                      user.id !== chat.userInfos[0].uid
+                      user.store?.id !== chat.userInfos[0].uid
                         ? chat.userInfos[0].photoUrl
                         : chat.userInfos[1].photoUrl
                     }
@@ -166,7 +167,7 @@ const CardChatSidebar = () => {
                   <div className="w-full pb-2">
                     <div className="flex justify-between">
                       <span className="block ml-2 font-semibold text-gray-600">
-                        {user.id !== chat.userInfos[0].uid
+                        {user.store?.id !== chat.userInfos[0].uid
                           ? chat.userInfos[0].displayName
                           : chat.userInfos[1].displayName}
                       </span>

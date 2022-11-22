@@ -34,6 +34,7 @@ const CardChatBody = () => {
       roomId: chatId,
       createdAt: serverTimestamp(),
       text,
+      type: "text",
     });
     await updateDoc(doc(db, "rooms", chatId), {
       lastMessage: text,
