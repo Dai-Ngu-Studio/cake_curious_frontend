@@ -49,18 +49,10 @@ export const updateAccount = createAsyncThunk(
   "account/updateAccount",
   updateAccountThunk
 );
-<<<<<<< HEAD
-=======
-
 export const updateAccountRole = createAsyncThunk(
   "account/changeRoleAccountThunk",
   changeRoleAccountThunk
 );
-export const deleteAccount = createAsyncThunk(
-  "account/deleteAccount",
-  deleteAccountThunk
-);
->>>>>>> f4ec24c3915889839f30a304adf8a75dacc9070f
 
 const accountSlice = createSlice({
   name: "account",
@@ -111,8 +103,6 @@ const accountSlice = createSlice({
       state.isAccountLoading = false;
       toast.error(payload);
     },
-<<<<<<< HEAD
-=======
     [updateAccountRole.pending]: (state) => {
       state.isAccountLoading = true;
       state.isAccountDoneUpdating = false;
@@ -126,18 +116,6 @@ const accountSlice = createSlice({
       state.isAccountLoading = false;
       toast.error(payload);
     },
-    [deleteAccount.pending]: (state) => {
-      state.isAccountLoading = true;
-    },
-    [deleteAccount.fulfilled]: (state, { payload }) => {
-      state.isAccountLoading = false;
-      toast.success("Account Deleted...");
-    },
-    [deleteAccount.rejected]: (state, { payload }) => {
-      state.isAccountLoading = false;
-      toast.error(payload);
-    },
->>>>>>> f4ec24c3915889839f30a304adf8a75dacc9070f
   },
 });
 
