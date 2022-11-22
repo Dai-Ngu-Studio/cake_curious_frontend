@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import accountSlice from "./features/accounts/accountSlice";
 import chatSlice from "./features/chats/chatSlice";
+import couponSlice from "./features/coupons/couponSlice";
 import dashboardSlice from "./features/dashboards/dashboardSlice";
 import imageSlice from "./features/images/imageSlice";
 import orderDetailSlice from "./features/order-details/orderDetailSlice";
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     user: userSlice,
     product: productSlice,
+    coupon: couponSlice,
     account: accountSlice,
     store: storeSlice,
     report: reportSlice,
