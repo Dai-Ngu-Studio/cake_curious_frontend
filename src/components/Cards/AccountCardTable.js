@@ -5,11 +5,18 @@ import {
   getSingleAccount,
   setUpdateAccount,
   updateAccount,
+  updateAccountRole,
 } from "../../features/accounts/accountSlice";
 import Loading from "../../utils/Loading";
 import User from "../../assets/img/user.png";
 import StatusCard from "./StatusCard";
-import { BsEyeFill, BsPersonCheckFill, BsPersonXFill } from "react-icons/bs";
+import {
+  BsEyeFill,
+  BsPersonCheckFill,
+  BsPersonXFill,
+  BsFillCaretDownFill,
+  BsFillCaretUpFill,
+} from "react-icons/bs";
 import ModalWrapper from "./ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
 export const AccountCardTable = () => {
@@ -60,7 +67,27 @@ export const AccountCardTable = () => {
       }
     }
   };
-
+  function changeAccountRole(accountId, accountRole) {
+    dispatch(
+      updateAccountRole({
+        userId: accountId,
+        user: {
+          id: accountId,
+          roles: [accountRole],
+        },
+      })
+    );
+  }
+  function smallestRoleID(roles) {
+    // console.log(roles);
+    let smallestRoleID = 10;
+    roles.map((role) => {
+      if (role < smallestRoleID) {
+        smallestRoleID = role;
+      }
+    });
+    return smallestRoleID;
+  }
   return (
     <>
       <div
@@ -90,14 +117,15 @@ export const AccountCardTable = () => {
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Email
                   </th>
-                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left whitespace-nowrap max-w-full">
                     Trạng thái tài khoản
                   </th>
-                  {/* <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th> */}
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left w-0"></th>
                 </tr>
               </thead>
               <tbody>
                 {accounts.map((account, index) => {
+                  console.log(account);
                   return (
                     <tr
                       key={account.id}
@@ -115,27 +143,15 @@ export const AccountCardTable = () => {
                       </th>
                       <td className="pl-6 align-middle">
                         {(() => {
-                          let smallestRoleID = 10;
-                          account.roles.map((role) => {
-                            if (role < smallestRoleID) {
-                              smallestRoleID = role;
-                            }
-                          });
-
-                          if (smallestRoleID === 3) {
+                          if (smallestRoleID(account.roles) === 3) {
                             return (
-                              <div className="flex w-full items-center justify-center">
-                                <div className="w-full">
-                                  <StatusCard
-                                    text="Thợ bánh"
-                                    backgroundColor="bg-orange-200"
-                                    dotColor="bg-orange-600"
-                                  />
-                                </div>
-                                <BsPersonCheckFill className="bg-yellow-400 ml-2 w-10 h-10 rounded p-2 cursor-pointer" />
-                              </div>
+                              <StatusCard
+                                text="Thợ bánh"
+                                backgroundColor="bg-orange-200"
+                                dotColor="bg-orange-600"
+                              />
                             );
-                          } else if (smallestRoleID === 2) {
+                          } else if (smallestRoleID(account.roles) === 2) {
                             return (
                               <StatusCard
                                 text="Chủ cửa hàng"
@@ -143,20 +159,15 @@ export const AccountCardTable = () => {
                                 dotColor="bg-blue-600"
                               />
                             );
-                          } else if (smallestRoleID === 1) {
+                          } else if (smallestRoleID(account.roles) === 1) {
                             return (
-                              <div className="flex w-full items-center justify-center">
-                                <div className="w-full">
-                                  <StatusCard
-                                    text="Nhân viên"
-                                    backgroundColor="bg-yellow-200"
-                                    dotColor="bg-yellow-600"
-                                  />
-                                </div>
-                                <BsPersonXFill className="bg-orange-400 ml-2 w-10 h-10 rounded p-2 cursor-pointer" />
-                              </div>
+                              <StatusCard
+                                text="Nhân viên"
+                                backgroundColor="bg-yellow-200"
+                                dotColor="bg-yellow-600"
+                              />
                             );
-                          } else if (smallestRoleID === 0) {
+                          } else if (smallestRoleID(account.roles) === 0) {
                             return (
                               <StatusCard
                                 text="Quản trị viên"
@@ -176,7 +187,7 @@ export const AccountCardTable = () => {
                       <td className="pl-6 align-middle p-4">
                         <div className="flex items-center">
                           <span
-                            className="mr-2"
+                            className="mr-2 cursor-pointer"
                             onClick={() => {
                               // let storeEditing = {
 
@@ -207,14 +218,47 @@ export const AccountCardTable = () => {
                         </div>
                       </td>
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <BsEyeFill
-                          onClick={() => {
-                            setModalAccount(account.id);
-                            setOpenModal(true);
-                            setIsConfirmModal(false);
-                          }}
-                          className="p-2 w-10 h-10 bg-green-200 text-black/50 hover:bg-emerald-600 hover:text-white rounded-md cursor-pointer"
-                        />
+                        <div className="flex">
+                          <BsEyeFill
+                            onClick={() => {
+                              setModalAccount(account.id);
+                              setOpenModal(true);
+                              setIsConfirmModal(false);
+                            }}
+                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                          />
+                          {(() => {
+                            if (smallestRoleID(account.roles) === 1) {
+                              return (
+                                <div
+                                  className="flex items-center justify-center  bg-slate-500 hover:bg-slate-500/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
+                                  onClick={() => {
+                                    changeAccountRole(account.id, 3);
+                                  }}
+                                >
+                                  <div className="m-1 font-bold">Hạ chức</div>
+                                  <BsPersonXFill className="" />
+                                  <BsFillCaretDownFill className="" />
+                                </div>
+                              );
+                            } else if (smallestRoleID(account.roles) === 3) {
+                              return (
+                                <div
+                                  className="flex items-center justify-center bg-orange-400 hover:bg-orange-400/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
+                                  onClick={() => {
+                                    changeAccountRole(account.id, 1);
+                                  }}
+                                >
+                                  <div className="m-1 font-bold">
+                                    Thăng chức
+                                  </div>
+                                  <BsPersonXFill className="" />
+                                  <BsFillCaretUpFill className="" />
+                                </div>
+                              );
+                            }
+                          })()}
+                        </div>
                       </td>
                     </tr>
                   );

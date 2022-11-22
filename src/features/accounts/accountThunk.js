@@ -29,3 +29,22 @@ export const updateAccountThunk = async ({ userId, user }, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+<<<<<<< HEAD
+=======
+export const changeRoleAccountThunk = async ({ userId, user }, thunkAPI) => {
+  try {
+    const resp = await customFetch.put(`/api/users/${userId}`, user);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+export const deleteAccountThunk = async ({ userId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.delete(`/api/users/${userId}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+>>>>>>> f4ec24c3915889839f30a304adf8a75dacc9070f
