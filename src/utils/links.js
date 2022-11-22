@@ -45,6 +45,11 @@ export const StoreLinks = {
       linkTo: "/store/product-tables",
     },
     {
+      name: "Phiếu giảm giá",
+      style: "fa-solid fa-tags mr-2 text-sm opacity-75",
+      linkTo: "/store/coupon-tables",
+    },
+    {
       name: "Danh sách đơn đặt",
       style: "fa fa-shopping-cart mr-2 text-sm opacity-75",
       linkTo: "/store/order-tables",

@@ -24,13 +24,13 @@ import Error from "./views/Error";
 import OrderTables from "./views/store/OrderTables";
 import { ProductForm } from "./views/store/ProductForm";
 import StoreDetail from "./views/store/StoreDetail";
-import AccountForm from "./views/admin/AccountForm";
-import StoreForm from "./views/admin/StoreForm";
 import OrderForm from "./views/store/OrderForm";
 import AdminReportForm from "./views/admin/AdminReportForm";
 import StaffReportForm from "./views/staff/StaffReportForm";
 import Chat from "./views/store/Chat";
 import Register from "./views/auth/Register";
+import CouponTables from "./views/store/CouponTables";
+import { CouponForm } from "./views/store/CouponForm";
 
 function App() {
   return (
@@ -47,10 +47,8 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="admin-dashboard" element={<AdminDashboard />} />
-          <Route path="store-form" element={<StoreForm />} />
           <Route path="store-tables" element={<StoreTables />} />
           <Route path="account-tables" element={<AccountTables />} />
-          <Route path="account-form" element={<AccountForm />} />
           <Route path="report-tables" element={<ReportTables />} />
           <Route
             path="report-form/:editReportId"
@@ -84,8 +82,13 @@ function App() {
           <Route path="store-dashboard" element={<StoreDashboard />} />
           <Route path="store-detail" element={<StoreDetail />} />
           <Route path="product-tables" element={<ProductTables />} />
+          <Route path="coupon-tables" element={<CouponTables />} />
+          <Route path="coupon-form" element={<CouponForm />} />
+          <Route path="coupon-form/:editCouponId" element={<CouponForm />} />
           <Route path="order-tables" element={<OrderTables />} />
+          <Route path="product-tables" element={<ProductTables />} />
           <Route path="product-form/:editProductId" element={<ProductForm />} />
+          <Route path="product-form" element={<ProductForm />} />
           <Route path="order-form" element={<OrderForm />} />
           <Route path="order-form/:editOrderId" element={<OrderForm />} />
           <Route path="chat" element={<Chat />} />

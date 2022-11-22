@@ -39,6 +39,17 @@ export const ProductStatus = [
   },
 ];
 
+export const CouponStatus = [
+  {
+    id: 0,
+    name: "Active",
+  },
+  {
+    id: 1,
+    name: "Inactive",
+  },
+];
+
 export const AccountStatus = [
   {
     id: 0,
@@ -79,5 +90,16 @@ export const ReportStatus = [
     name: "Đã xử lý",
     backgroundColor: "bg-red-200",
     dotColor: "bg-red-600",
+  },
+];
+
+export const DiscountTypeOptions = [
+  {
+    name: "PercentOff",
+    value: 0,
+  },
+  {
+    name: "FixedDecrease",
+    value: 1,
   },
 ];

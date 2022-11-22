@@ -39,6 +39,17 @@ export const StoreSortingOptions = [
   },
 ];
 
+export const CouponSortingOptions = [
+  {
+    name: "a-z",
+    value: "AscName",
+  },
+  {
+    name: "z-a",
+    value: "DescName",
+  },
+];
+
 export const ReportSortingOptions = [
   {
     name: "a-z",
