@@ -1,4 +1,9 @@
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import {
+  linkWithCredential,
+  PhoneAuthProvider,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+} from "firebase/auth";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,25 +11,18 @@ import { toast } from "react-toastify";
 import FormRow from "../../components/Inputs/FormRow";
 import FormRowArea from "../../components/Inputs/FormRowArea";
 import FormRowFile from "../../components/Inputs/FormRowFile";
-import {
-  handleAccountChange,
-  updateAccount,
-} from "../../features/accounts/accountSlice";
+import { handleAccountChange } from "../../features/accounts/accountSlice";
 import { getImage } from "../../features/images/imageSlice";
-import { addStore, handleStoreChange } from "../../features/stores/storeSlice";
-import {
-  getUser,
-  handleUserChange,
-  updateUserRole,
-} from "../../features/users/userSlice";
+import { handleStoreChange } from "../../features/stores/storeSlice";
+import { getUser, updateUserRole } from "../../features/users/userSlice";
 import { auth } from "../../utils/firebase";
 import { removeCaptchaFromLocalStorage } from "../../utils/localStorage";
 
 export default function Register() {
-  const { phoneNumber, OTP, user, isUserRoleDoneUpdating } = useSelector(
-    (store) => store.user
-  );
+  const { user, isUserRoleDoneUpdating } = useSelector((store) => store.user);
   const {
+    phoneNumber,
+    OTP,
     fullName,
     gender,
     dateOfBirth,
@@ -39,11 +37,11 @@ export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isVerifying, setIsVerifying] = useState(false);
+  const [verificationId, setVerificationId] = useState(null);
 
   const handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    dispatch(handleUserChange({ name, value }));
     dispatch(handleAccountChange({ name, value }));
     dispatch(handleStoreChange({ name, value }));
   };
@@ -90,7 +88,7 @@ export default function Register() {
     }
   }, [user]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (phoneNumber.length < 12) {
@@ -110,64 +108,76 @@ export default function Register() {
       toast.warning("Please fill out all fields");
       return;
     }
-
-    window.recaptchaVerifier = new RecaptchaVerifier(
+    // const appVerifier = window.recaptchaVerifier;
+    const appVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
         size: "invisible",
-        callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-        },
       },
       auth
     );
-    const appVerifier = window.recaptchaVerifier;
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        setIsVerifying(true);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      const result = await signInWithPhoneNumber(
+        auth,
+        phoneNumber,
+        appVerifier
+      );
+      setVerificationId(result.verificationId);
+      setIsVerifying(true);
+      appVerifier.clear();
+    } catch (error) {
+      // appVerifier.clear();
+      if (error.code === "auth/too-many-requests") {
+        toast.error("You requested too many time. Please try again later");
+      }
+      removeCaptchaFromLocalStorage();
+      console.log(error);
+    }
   };
-  const ValidateOtp = () => {
+  const ValidateOtp = async () => {
     if (OTP.length === 6) {
-      let confirmationResult = window.confirmationResult;
-      confirmationResult
-        .confirm(OTP)
-        .then((result) => {
-          // User signed in successfully.
+      const phoneCredential = PhoneAuthProvider.credential(verificationId, OTP);
+      try {
+        const resp = await linkWithCredential(
+          auth.currentUser,
+          phoneCredential
+        );
+        if (resp.providerId === "phone") {
           dispatch(
-            addStore({
-              name,
-              description,
-              photoUrl: image || null,
-              address: storeAddress,
-            })
-          );
-          dispatch(
-            updateAccount({
-              userId: user.id,
-              user: {
-                id: user.id,
+            updateUserRole({
+              request: {
+                name,
+                description,
+                photoUrl: image || null,
+                storeAddress,
                 fullName,
                 gender,
                 dateOfBirth,
+                phoneNumber: resp.user.phoneNumber,
                 address,
                 citizenshipNumber,
                 citizenshipDate,
               },
             })
           );
-          dispatch(updateUserRole());
-          // ...
-        })
-        .catch((error) => {
-          // User couldn't sign in (bad verification code?)
-          // ...
-          console.log(error);
-        });
+        }
+      } catch (error) {
+        if (error.code === "auth/provider-already-linked") {
+          toast.error("The account you logged in is already linked.");
+        } else if (error.code === "auth/invalid-verification-code") {
+          toast.error("Invalid verification code");
+        } else if (
+          error.code === "auth/account-exists-with-different-credential"
+        ) {
+          toast.error(
+            "This phone number is linked to another account. Please use a different phone number"
+          );
+        } else if (error.code === "auth/code-expired") {
+          toast.error("Code expired");
+        }
+        removeCaptchaFromLocalStorage();
+        console.log(error);
+      }
     }
   };
 
