@@ -5,6 +5,7 @@ import {
   getAccountThunk,
   getAllAccountsThunk,
   updateAccountThunk,
+  changeRoleAccountThunk,
 } from "./accountThunk";
 
 const initialState = {
@@ -47,6 +48,11 @@ export const getSingleAccount = createAsyncThunk(
 export const updateAccount = createAsyncThunk(
   "account/updateAccount",
   updateAccountThunk
+);
+
+export const updateAccountRole = createAsyncThunk(
+  "account/changeRoleAccountThunk",
+  changeRoleAccountThunk
 );
 export const deleteAccount = createAsyncThunk(
   "account/deleteAccount",
@@ -106,6 +112,19 @@ const accountSlice = createSlice({
       toast.success("Account Updated...");
     },
     [updateAccount.rejected]: (state, { payload }) => {
+      state.isAccountLoading = false;
+      toast.error(payload);
+    },
+    [updateAccountRole.pending]: (state) => {
+      state.isAccountLoading = true;
+      state.isAccountDoneUpdating = false;
+    },
+    [updateAccountRole.fulfilled]: (state, { payload }) => {
+      state.isAccountLoading = false;
+      state.isAccountDoneUpdating = true;
+      toast.success("Chỉnh sửa chức vụ thành công");
+    },
+    [updateAccountRole.rejected]: (state, { payload }) => {
       state.isAccountLoading = false;
       toast.error(payload);
     },

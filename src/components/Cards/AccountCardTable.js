@@ -5,6 +5,7 @@ import {
   getSingleAccount,
   setUpdateAccount,
   updateAccount,
+  updateAccountRole,
 } from "../../features/accounts/accountSlice";
 import Loading from "../../utils/Loading";
 import User from "../../assets/img/user.png";
@@ -66,7 +67,19 @@ export const AccountCardTable = () => {
       }
     }
   };
+  function changeAccountRole(accountId, accountRole) {
+    dispatch(
+      updateAccountRole({
+        userId: accountId,
+        user: {
+          id: accountId,
+          roles: [accountRole],
+        },
+      })
+    );
+  }
   function smallestRoleID(roles) {
+    // console.log(roles);
     let smallestRoleID = 10;
     roles.map((role) => {
       if (role < smallestRoleID) {
@@ -112,6 +125,7 @@ export const AccountCardTable = () => {
               </thead>
               <tbody>
                 {accounts.map((account, index) => {
+                  console.log(account);
                   return (
                     <tr
                       key={account.id}
@@ -216,7 +230,12 @@ export const AccountCardTable = () => {
                           {(() => {
                             if (smallestRoleID(account.roles) === 1) {
                               return (
-                                <div className="flex items-center justify-center  bg-slate-500 hover:bg-slate-500/80 ml-2 rounded p-2 cursor-pointer text-white w-32">
+                                <div
+                                  className="flex items-center justify-center  bg-slate-500 hover:bg-slate-500/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
+                                  onClick={() => {
+                                    changeAccountRole(account.id, 3);
+                                  }}
+                                >
                                   <div className="m-1 font-bold">Hạ chức</div>
                                   <BsPersonXFill className="" />
                                   <BsFillCaretDownFill className="" />
@@ -224,7 +243,12 @@ export const AccountCardTable = () => {
                               );
                             } else if (smallestRoleID(account.roles) === 3) {
                               return (
-                                <div className="flex items-center justify-center bg-orange-400 hover:bg-orange-400/80 ml-2 rounded p-2 cursor-pointer text-white w-32">
+                                <div
+                                  className="flex items-center justify-center bg-orange-400 hover:bg-orange-400/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
+                                  onClick={() => {
+                                    changeAccountRole(account.id, 1);
+                                  }}
+                                >
                                   <div className="m-1 font-bold">
                                     Thăng chức
                                   </div>
