@@ -131,19 +131,17 @@ export default function Login() {
             )}
           </button>
           <br />
-          <div className="mt-3 mb-5">
-            Chưa có tài khoản Cakecurious?{" "}
-            {/* <Link to="/register" className="text-blue-600">
-              Register now.
-            </Link>{" "} */}
-            <Link to="/register" className="text-blue-600">
-              Tạo tài khoản
-            </Link>{" "}
-          </div>
+
           <div className="flex justify-center items-center h-10">
             <hr className="w-10" />
             <div className="text-gray-400">OR</div>
             <hr className="w-10" />
+          </div>
+          <div className="mt-3 mb-5">
+            Hông thích Email và password ?
+            {/* <Link to="/register" className="text-blue-600">
+              Register now.
+            </Link>{" "} */}
           </div>
           <div
             className="flex justify-center items-center cursor-pointer px-12 py-3 mt-5 font-semibold text-gray-900 bg-white border-2 border-gray-500 rounded-full shadow outline-none hover:bg-blue-50 hover:border-blue-400 hover:shadow-lg focus:outline-none"
