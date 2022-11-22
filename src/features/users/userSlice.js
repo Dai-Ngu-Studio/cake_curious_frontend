@@ -19,14 +19,6 @@ import {
 const initialState = {
   isUserLoading: false,
   isUserRoleDoneUpdating: false,
-  phoneNumber: "+84",
-  fullName: "",
-  gender: "",
-  dateOfBirth: "",
-  address: "",
-  citizenshipNumber: "",
-  citizenshipDate: "",
-  OTP: "",
   email: "",
   password: "",
   user: getUserFromLocalStorage(),
@@ -107,7 +99,7 @@ const userSlice = createSlice({
     },
     [updateUserRole.fulfilled]: (state, { payload }) => {
       state.isUserRoleDoneUpdating = true;
-      // addUserToLocalStorage(payload);
+      toast.success("Role updated!");
     },
     [updateUserRole.rejected]: (state, { payload }) => {
       state.isUserRoleDoneUpdating = false;

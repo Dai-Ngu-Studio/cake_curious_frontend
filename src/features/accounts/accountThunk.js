@@ -29,12 +29,3 @@ export const updateAccountThunk = async ({ userId, user }, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
-
-export const deleteAccountThunk = async ({ userId }, thunkAPI) => {
-  try {
-    const resp = await customFetch.delete(`/api/users/${userId}`);
-    return resp.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
-};

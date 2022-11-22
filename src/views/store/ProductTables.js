@@ -12,15 +12,8 @@ import {
 import { ProductSortingOptions } from "../../utils/ViewOptions";
 
 export default function ProductTables() {
-  const {
-    totalProductPages,
-    page,
-    search,
-    filter,
-    isProductLoading,
-    sort,
-    filterOptions,
-  } = useSelector((store) => store.product);
+  const { totalProductPages, page, search, filter, sort, filterOptions } =
+    useSelector((store) => store.product);
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -29,7 +22,6 @@ export default function ProductTables() {
             sort={sort}
             filter={filter}
             search={search}
-            loading={isProductLoading}
             filterOptions={filterOptions}
             handleChange={handleProductChange}
             sortOptions={ProductSortingOptions}

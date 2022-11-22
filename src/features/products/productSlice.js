@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   addProductThunk,
-  deleteProductThunk,
   getAllProductsThunk,
   getProductThunk,
   updateProductThunk,
@@ -11,7 +10,6 @@ import {
 const initialState = {
   isProductLoading: false,
   products: [],
-  product: {},
   totalProductPages: 1,
   page: 1,
   size: 10,
@@ -19,9 +17,6 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Ingredient", "Tool"],
-  // isProductEditing: false,
-  // editProductId: "",
-  isProductDoneUpdating: false,
   productType: 0,
   productCategoryId: 0,
   name: "",
@@ -49,10 +44,6 @@ export const updateProduct = createAsyncThunk(
   "product/updateProduct",
   updateProductThunk
 );
-export const deleteProduct = createAsyncThunk(
-  "product/deleteProduct",
-  deleteProductThunk
-);
 
 const productSlice = createSlice({
   name: "product",
@@ -65,13 +56,6 @@ const productSlice = createSlice({
     changeProductPage: (state, { payload }) => {
       state.page = payload;
     },
-    // setUpdateProduct: (state, { payload }) => {
-    //   return {
-    //     ...state,
-    //     isProductEditing: true,
-    //     ...payload,
-    //   };
-    // },
     clearProductValues: () => {
       return {
         ...initialState,
@@ -124,25 +108,12 @@ const productSlice = createSlice({
     },
     [updateProduct.pending]: (state) => {
       state.isProductLoading = true;
-      state.isProductDoneUpdating = false;
     },
     [updateProduct.fulfilled]: (state, { payload }) => {
       state.isProductLoading = false;
-      state.isProductDoneUpdating = true;
       toast.success("Product Updated...");
     },
     [updateProduct.rejected]: (state, { payload }) => {
-      state.isProductLoading = false;
-      toast.error(payload);
-    },
-    [deleteProduct.pending]: (state) => {
-      state.isProductLoading = true;
-    },
-    [deleteProduct.fulfilled]: (state, { payload }) => {
-      state.isProductLoading = false;
-      toast.success("Product Deleted...");
-    },
-    [deleteProduct.rejected]: (state, { payload }) => {
       state.isProductLoading = false;
       toast.error(payload);
     },
@@ -151,7 +122,6 @@ const productSlice = createSlice({
 
 export const {
   handleProductChange,
-  // setUpdateProduct,
   changeProductPage,
   clearAllProductsState,
   clearProductValues,

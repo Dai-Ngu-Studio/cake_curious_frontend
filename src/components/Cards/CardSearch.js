@@ -5,7 +5,6 @@ import FormRow from "../Inputs/FormRow";
 import FormRadioSelect from "../Inputs/FormRadioSelect";
 
 const CardSearch = ({
-  loading,
   search,
   filter,
   handleChange,

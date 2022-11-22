@@ -15,15 +15,9 @@ import {
 // components
 
 export default function StoreTables() {
-  const {
-    totalStorePages,
-    page,
-    search,
-    filter,
-    isStoreLoading,
-    sort,
-    filterOptions,
-  } = useSelector((selector) => selector.store);
+  const { totalStorePages, page, search, filter, sort } = useSelector(
+    (selector) => selector.store
+  );
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -32,7 +26,6 @@ export default function StoreTables() {
             sort={sort}
             filter={filter}
             search={search}
-            loading={isStoreLoading}
             filterOptions={StoreFilterOptions}
             sortOptions={StoreSortingOptions}
             handleChange={handleStoreChange}

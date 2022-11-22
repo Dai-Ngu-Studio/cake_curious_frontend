@@ -21,8 +21,6 @@ import { useParams } from "react-router-dom";
 export const ProductForm = () => {
   const {
     isProductLoading,
-    // isProductEditing,
-    // editProductId,
     productType,
     productCategoryId,
     name,

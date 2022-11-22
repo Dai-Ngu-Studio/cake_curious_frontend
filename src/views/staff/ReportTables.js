@@ -17,15 +17,9 @@ import {
 } from "../../utils/ViewOptions";
 
 export default function ReportTables() {
-  const {
-    totalReportPages,
-    page,
-    search,
-    type,
-    status,
-    isReportLoading,
-    sort,
-  } = useSelector((store) => store.report);
+  const { totalReportPages, page, search, type, status, sort } = useSelector(
+    (store) => store.report
+  );
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -35,7 +29,6 @@ export default function ReportTables() {
             type={type}
             status={status}
             search={search}
-            loading={isReportLoading}
             statusOptions={ReportFilterStatusOptions}
             typeOptions={ReportFilterTypeOptions}
             sortOptions={ReportSortingOptions}

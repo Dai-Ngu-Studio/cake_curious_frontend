@@ -17,16 +17,16 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  // isAccountEditing: false,
   isAccountDoneUpdating: false,
   editAccountId: null,
-
   email: "",
   displayName: "",
   photoUrl: null,
   gender: "",
   roles: [],
   status: 0,
+  phoneNumber: "+84",
+  OTP: "",
   fullName: "",
   gender: "",
   dateOfBirth: "",
@@ -48,10 +48,6 @@ export const updateAccount = createAsyncThunk(
   "account/updateAccount",
   updateAccountThunk
 );
-export const deleteAccount = createAsyncThunk(
-  "account/deleteAccount",
-  deleteAccountThunk
-);
 
 const accountSlice = createSlice({
   name: "account",
@@ -64,13 +60,6 @@ const accountSlice = createSlice({
     changeAccountPage: (state, { payload }) => {
       state.page = payload;
     },
-    // setUpdateAccount: (state, { payload }) => {
-    //   return {
-    //     ...state,
-    //     isAccountEditing: true,
-    //     ...payload,
-    //   };
-    // },
     clearAllAccountsState: (state) => initialState,
   },
   extraReducers: {
@@ -109,24 +98,9 @@ const accountSlice = createSlice({
       state.isAccountLoading = false;
       toast.error(payload);
     },
-    [deleteAccount.pending]: (state) => {
-      state.isAccountLoading = true;
-    },
-    [deleteAccount.fulfilled]: (state, { payload }) => {
-      state.isAccountLoading = false;
-      toast.success("Account Deleted...");
-    },
-    [deleteAccount.rejected]: (state, { payload }) => {
-      state.isAccountLoading = false;
-      toast.error(payload);
-    },
   },
 });
 
-export const {
-  handleAccountChange,
-  // setUpdateAccount,
-  changeAccountPage,
-  clearAllAccountsState,
-} = accountSlice.actions;
+export const { handleAccountChange, changeAccountPage, clearAllAccountsState } =
+  accountSlice.actions;
 export default accountSlice.reducer;

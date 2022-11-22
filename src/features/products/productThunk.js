@@ -46,12 +46,3 @@ export const updateProductThunk = async ({ productId, product }, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
-
-export const deleteProductThunk = async ({ productId }, thunkAPI) => {
-  try {
-    const resp = await customFetch.delete(`/api/products/${productId}`);
-    return resp.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
-};

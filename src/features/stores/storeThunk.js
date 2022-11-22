@@ -40,12 +40,3 @@ export const updateStoreThunk = async ({ storeId, store }, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
-
-export const deleteStoreThunk = async ({ storeId }, thunkAPI) => {
-  try {
-    const resp = await customFetch.delete(`/api/stores/${storeId}`);
-    return resp.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
-};

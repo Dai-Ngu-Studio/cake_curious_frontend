@@ -13,6 +13,7 @@ import { clearAllReportsState } from "../reports/reportSlice";
 import { clearAllStoresState } from "../stores/storeSlice";
 import { clearUserLoginValues, logoutUser } from "./userSlice";
 import { clearAllDashboardsState } from "../dashboards/dashboardSlice";
+import { clearAllCouponsState } from "../coupons/couponSlice";
 
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   try {
@@ -43,9 +44,12 @@ export const loginGoogleThunk = async (thunkAPI) => {
   }
 };
 
-export const updateUserRoleThunk = async (_, thunkAPI) => {
+export const updateUserRoleThunk = async ({ request }, thunkAPI) => {
   try {
-    const updateRole = await customFetch.post("/api/users/current/to-store");
+    const updateRole = await customFetch.post(
+      "/api/users/current/to-store",
+      request
+    );
     return updateRole.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -70,6 +74,7 @@ export const clearStoreThunk = async (message, thunkAPI) => {
     thunkAPI.dispatch(clearAllProductsState());
     thunkAPI.dispatch(clearAllStoresState());
     thunkAPI.dispatch(clearAllDashboardsState());
+    thunkAPI.dispatch(clearAllCouponsState());
     return Promise.resolve();
   } catch (error) {
     return Promise.reject();

@@ -12,15 +12,8 @@ import { OrderSortingOptions } from "../../utils/ViewOptions";
 // components
 
 export default function OrderTables() {
-  const {
-    totalOrderPages,
-    page,
-    search,
-    filter,
-    isOrderLoading,
-    sort,
-    filterOptions,
-  } = useSelector((store) => store.order);
+  const { totalOrderPages, page, search, filter, sort, filterOptions } =
+    useSelector((store) => store.order);
 
   return (
     <>
@@ -30,7 +23,6 @@ export default function OrderTables() {
             sort={sort}
             filter={filter}
             search={search}
-            loading={isOrderLoading}
             filterOptions={filterOptions}
             handleChange={handleOrderChange}
             sortOptions={OrderSortingOptions}

@@ -6,67 +6,26 @@ import Product from "../../assets/img/product.png";
 
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllProducts,
-  setUpdateProduct,
-  updateProduct,
-} from "../../features/products/productSlice";
+import { getAllProducts } from "../../features/products/productSlice";
 import Loading from "../../utils/Loading";
 import { Link } from "react-router-dom";
 
 export default function ProductCardTable() {
-  const {
-    products,
-    isProductLoading,
-    page,
-    search,
-    filter,
-    sort,
-    isProductDoneUpdating,
-  } = useSelector((store) => store.product);
+  const { products, isProductLoading, page, search, filter, sort } =
+    useSelector((store) => store.product);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllProducts());
-  }, [page, search, filter, sort, isProductDoneUpdating]);
+  }, [page, search, filter, sort]);
 
   if (isProductLoading) {
     return <Loading />;
   }
 
-  const changeProductStatus = (productId, productStatus) => {
-    if (productId) {
-      if (productStatus === 0) {
-        dispatch(
-          updateProduct({
-            productId: productId,
-            product: {
-              id: productId,
-              status: 1,
-            },
-          })
-        );
-      } else {
-        dispatch(
-          updateProduct({
-            productId: productId,
-            product: {
-              id: productId,
-              status: 0,
-            },
-          })
-        );
-      }
-    }
-  };
-
   return (
     <>
-      <div
-        className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
-        }
-      >
+      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -128,12 +87,7 @@ export default function ProductCardTable() {
                         <div className="flex">{product.price}</div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            changeProductStatus(product.id, product.status)
-                          }
-                        >
+                        <div className="flex items-center">
                           <span className="mr-2">
                             {product.status === 0 ? "Active" : "Inactive"}
                           </span>

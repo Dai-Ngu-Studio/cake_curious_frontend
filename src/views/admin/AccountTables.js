@@ -14,8 +14,9 @@ import {
 // components
 
 export default function AccountTables() {
-  const { totalAccountPages, page, search, filter, isAccountLoading, sort } =
-    useSelector((store) => store.account);
+  const { totalAccountPages, page, search, filter, sort } = useSelector(
+    (store) => store.account
+  );
   return (
     <>
       <div className="flex flex-wrap mt-4">
@@ -24,7 +25,6 @@ export default function AccountTables() {
             sort={sort}
             filter={filter}
             search={search}
-            loading={isAccountLoading}
             filterOptions={AccountFilterOptions}
             sortOptions={AccountSortingOptions}
             handleChange={handleAccountChange}

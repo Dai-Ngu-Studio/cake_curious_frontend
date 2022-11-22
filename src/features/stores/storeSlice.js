@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   addStoreThunk,
-  deleteStoreThunk,
   getAllStoresThunk,
   updateStoreThunk,
   userStoreThunk,
@@ -17,7 +16,6 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  // isStoreEditing: false,
   isStoreDoneUpdating: false,
   editStoreId: null,
   user: {},
@@ -42,10 +40,6 @@ export const updateStore = createAsyncThunk(
   "store/updateStore",
   updateStoreThunk
 );
-export const deleteStore = createAsyncThunk(
-  "store/deleteStore",
-  deleteStoreThunk
-);
 
 const storeSlice = createSlice({
   name: "store",
@@ -55,13 +49,6 @@ const storeSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    // setUpdateStore: (state, { payload }) => {
-    //   return {
-    //     ...state,
-    //     isStoreEditing: true,
-    //     ...payload,
-    //   };
-    // },
     changeStorePage: (state, { payload }) => {
       state.page = payload;
     },
@@ -86,7 +73,6 @@ const storeSlice = createSlice({
     [getUserStore.fulfilled]: (state, { payload }) => {
       state.isStoreLoading = false;
       state.editStoreId = payload.id;
-      console.log(payload.user);
       state.user = payload.user;
       state.name = payload.name;
       state.description = payload.description;
@@ -122,24 +108,9 @@ const storeSlice = createSlice({
       state.isStoreLoading = false;
       toast.error(payload);
     },
-    [deleteStore.pending]: (state) => {
-      state.isStoreLoading = true;
-    },
-    [deleteStore.fulfilled]: (state, { payload }) => {
-      state.isStoreLoading = false;
-      toast.success("Store Deleted...");
-    },
-    [deleteStore.rejected]: (state, { payload }) => {
-      state.isStoreLoading = false;
-      toast.error(payload);
-    },
   },
 });
 
-export const {
-  handleStoreChange,
-  // setUpdateStore,
-  changeStorePage,
-  clearAllStoresState,
-} = storeSlice.actions;
+export const { handleStoreChange, changeStorePage, clearAllStoresState } =
+  storeSlice.actions;
 export default storeSlice.reducer;
