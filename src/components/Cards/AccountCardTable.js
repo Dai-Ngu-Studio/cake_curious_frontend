@@ -125,7 +125,6 @@ export const AccountCardTable = () => {
               </thead>
               <tbody>
                 {accounts.map((account, index) => {
-                  console.log(account);
                   return (
                     <tr
                       key={account.id}
