@@ -23,7 +23,7 @@ export const AdminLinks = {
       linkTo: "/admin/report-tables-comment",
     },
     {
-      name: "Báo cáo công thức",
+      name: "Kiểm tra công thức",
       style: "fa-solid fa-skull-crossbones mr-2 text-sm opacity-75",
       linkTo: "/admin/report-tables-recipe",
     },
