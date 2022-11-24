@@ -18,50 +18,56 @@ import {
   serverTimestamp,
   where,
 } from "firebase/firestore";
+import FormRow from "../../Inputs/FormRow";
 
 const CardChatSidebar = () => {
   const { user } = useSelector((store) => store.user);
   const { username } = useSelector((store) => store.chat);
-  // const [userName, setUserName] = useState("");
   const [userChattings, setUserChattings] = useState([]);
   const [chats, setChats] = useState([]);
   const dispatch = useDispatch();
 
-  const handleChatInput = async () => {
-    try {
-      if (userChattings.length > 0) {
-        setUserChattings([]);
-      }
-      if (username === "") {
-        setUserChattings([]);
-        return;
-      }
-      const q = query(
-        collection(db, "rooms"),
-        where("users", "array-contains", user.id)
-      );
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        querySnapshot.forEach((doc) => {
-          doc.data().userInfos.map((userInfo) => {
-            if (
-              user.store?.id !== userInfo.uid &&
-              userInfo.displayName.toLowerCase().includes(username)
-            ) {
-              setUserChattings((prevState) => [...prevState, userInfo]);
-            }
-          });
-        });
-      } else {
-        setUserChattings([]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleChatInput = async () => {
+  //   try {
+  //     if (userChattings.length > 0) {
+  //       setUserChattings([]);
+  //     }
+  //     if (username === "") {
+  //       setUserChattings([]);
+  //       return;
+  //     }
+  //     const q = query(
+  //       collection(db, "rooms"),
+  //       where("users", "array-contains", user.id)
+  //     );
+  //     const querySnapshot = await getDocs(q);
+  //     if (!querySnapshot.empty) {
+  //       querySnapshot.forEach((doc) => {
+  //         doc.data().userInfos.map((userInfo) => {
+  //           if (
+  //             user.store?.id !== userInfo.uid &&
+  //             userInfo.displayName.toLowerCase().includes(username)
+  //           ) {
+  //             setUserChattings((prevState) => [...prevState, userInfo]);
+  //           }
+  //         });
+  //       });
+  //     } else {
+  //       setUserChattings([]);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  const handleKey = (e) => {
-    e.code === "Enter" && handleChatInput();
+  // const handleKey = (e) => {
+  //   e.code === "Enter" && handleChatInput();
+  // };
+
+  const handleChatInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    dispatch(handleChatChange({ name, value }));
   };
 
   const handleSelect = async (userChatting) => {
@@ -83,7 +89,7 @@ const CardChatSidebar = () => {
             userChatting,
           ],
           updatedAt: serverTimestamp(),
-          users: [user.id, userChatting.uid],
+          users: [user.store.id, userChatting.uid],
         });
       } else {
         docSnap.forEach((doc) => {
@@ -99,14 +105,43 @@ const CardChatSidebar = () => {
       console.log(error);
     }
     setUserChattings([]);
-    // setUserName("");
   };
+
+  useEffect(() => {
+    try {
+      if (userChattings.length > 0) {
+        setUserChattings([]);
+      }
+      if (username === "") {
+        setUserChattings([]);
+        return;
+      }
+      const q = query(
+        collection(db, "rooms"),
+        where("users", "array-contains", user.store.id)
+      );
+      onSnapshot(q, (snapshot) => {
+        snapshot.docs.map((doc) => {
+          doc.data().userInfos.map((userInfo) => {
+            if (
+              user.store?.id !== userInfo.uid &&
+              userInfo.displayName.toLowerCase().includes(username)
+            ) {
+              setUserChattings((prevState) => [...prevState, userInfo]);
+            }
+          });
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [username]);
 
   useEffect(() => {
     try {
       const q = query(
         collection(db, "rooms"),
-        where("users", "array-contains", user.id),
+        where("users", "array-contains", user.store.id),
         orderBy("updatedAt", "desc")
       );
       onSnapshot(q, (snapshot) => {
@@ -138,23 +173,29 @@ const CardChatSidebar = () => {
               <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </span>
-          <input
+          <FormRow
+            type="text"
+            placeholder="Search"
+            value={username}
+            style="block w-full py-2 pl-10 bg-gray-100 rounded outline-none"
+            name="username"
+            handleChange={handleChatInput}
+          />
+          {/* <input
             type="text"
             className="block w-full py-2 pl-10 bg-gray-100 rounded outline-none"
             placeholder="Search"
             name="username"
-            onKeyDown={handleKey}
             onChange={(e) =>
               dispatch(
                 handleChatChange({ name: e.target.name, value: e.target.value })
               )
             }
             value={username}
-          />
+          /> */}
         </div>
       </div>
       <ul className="overflow-auto h-[32rem]">
-        {/* {console.log(userChattings)} */}
         {userChattings &&
           userChattings.map((userChatting, index) => {
             return (
