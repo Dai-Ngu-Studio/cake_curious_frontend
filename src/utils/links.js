@@ -19,12 +19,12 @@ export const AdminLinks = {
     },
     {
       name: "Báo cáo bình luận",
-      style: "fa fa-flag mr-2 text-sm opacity-75",
+      style: "fa fa-comment mr-2 text-sm opacity-75",
       linkTo: "/admin/report-tables-comment",
     },
     {
       name: "Báo cáo công thức",
-      style: "fa fa-flag mr-2 text-sm opacity-75",
+      style: "fa-solid fa-skull-crossbones mr-2 text-sm opacity-75",
       linkTo: "/admin/report-tables-recipe",
     },
   ],

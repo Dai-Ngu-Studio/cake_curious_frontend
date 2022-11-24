@@ -9,7 +9,7 @@ import StatusCard from "./StatusCard";
 import { getAllReports } from "../../features/reports/reportSlice";
 import { ReportStatus } from "../../utils/StatusOptions";
 
-export default function ReportCardTable() {
+export default function ReportCommentCardTable() {
   const { user } = useSelector((store) => store.user);
   let priorityRole = 99;
   for (let i = 0; i < user.hasRoles.length; i++) {

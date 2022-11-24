@@ -52,7 +52,7 @@ function App() {
           <Route path="account-tables" element={<AccountTables />} />
           <Route
             path="report-tables-comment"
-            element={<ReportRecipeTables />}
+            element={<ReportCommentTables />}
           />
           <Route path="report-tables-recipe" element={<ReportRecipeTables />} />
           <Route

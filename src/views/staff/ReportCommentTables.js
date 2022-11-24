@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
-import ReportCardTable from "../../components/Cards/ReportCardTable";
+import ReportCardTable from "../../components/Cards/ReportCommentCardTable";
 
 // components
 

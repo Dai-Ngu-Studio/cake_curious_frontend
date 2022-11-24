@@ -2,14 +2,14 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
-import ReportCardTable from "../../components/Cards/ReportCardTable";
+import ReportRecipeCardTable from "../../components/Cards/ReportRecipeCardTable";
 
 // components
 
 import {
-  changeReportPage,
-  handleReportChange,
-} from "../../features/reports/reportSlice";
+  changeRecipePage,
+  handleRecipeChange,
+} from "../../features/recipes/recipeSlice";
 import {
   ReportSortingOptions,
   ReportFilterStatusOptions,
@@ -17,8 +17,8 @@ import {
 } from "../../utils/ViewOptions";
 
 export default function ReportRecipeTables() {
-  const { totalReportPages, page, search, type, status, sort } = useSelector(
-    (store) => store.report
+  const { totalPage, page, search, type, status, sort } = useSelector(
+    (store) => store.recipe
   );
   return (
     <>
@@ -29,17 +29,18 @@ export default function ReportRecipeTables() {
             type={type}
             status={status}
             search={search}
-            statusOptions={ReportFilterStatusOptions}
-            typeOptions={ReportFilterTypeOptions}
-            sortOptions={ReportSortingOptions}
-            handleChange={handleReportChange}
+            // statusOptions={ReportFilterStatusOptions}
+            // typeOptions={ReportFilterTypeOptions}
+            // sortOptions={ReportSortingOptions}
+            handleChange={handleRecipeChange}
           />
-          <ReportCardTable />
-          {totalReportPages > 1 && (
+          <ReportRecipeCardTable />
+          {console.log(totalPage)}
+          {totalPage > 1 && (
             <CardPaging
-              totalPages={totalReportPages}
+              totalPages={totalPage}
               page={page}
-              handleChangePage={changeReportPage}
+              handleChangePage={changeRecipePage}
             />
           )}
         </div>
