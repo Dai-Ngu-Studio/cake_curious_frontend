@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
 import NoImg from "../../assets/img/no-store.png";
-
-import PropTypes from "prop-types";
-// components
-
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../utils/Loading";
