@@ -27,9 +27,9 @@ const CardChatBody = () => {
   const handleSend = async () => {
     await addDoc(collection(db, `rooms/${chatId}/messages`), {
       author: {
-        firstName: user.displayName,
-        id: user.id,
-        imageUrl: user.photoUrl,
+        firstName: user.store === null ? user.displayName : user.store.name,
+        id: user.store === null ? user.id : user.store.id,
+        imageUrl: user.store === null ? user.photoUrl : user.store.photoUrl,
       },
       roomId: chatId,
       createdAt: serverTimestamp(),

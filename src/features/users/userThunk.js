@@ -28,16 +28,15 @@ export const loginGoogleThunk = async (thunkAPI) => {
   try {
     const googleAuth = new GoogleAuthProvider();
     const authGoogle = await signInWithPopup(auth, googleAuth);
-
-    const res = await getDoc(doc(db, "users", authGoogle.user.uid));
-    if (!res.exists()) {
-      await setDoc(doc(db, "users", authGoogle.user.uid), {
-        uid: authGoogle.user.uid,
-        displayName: authGoogle.user.displayName,
-        email: authGoogle.user.email,
-        photoUrl: authGoogle.user.photoURL,
-      });
-    }
+    // const res = await getDoc(doc(db, "users", authGoogle.user.uid));
+    // if (!res.exists()) {
+    //   await setDoc(doc(db, "users", authGoogle.user.uid), {
+    //     uid: authGoogle.user.uid,
+    //     displayName: authGoogle.user.displayName,
+    //     email: authGoogle.user.email,
+    //     photoUrl: authGoogle.user.photoURL,
+    //   });
+    // }
     return authGoogle.user.toJSON();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
