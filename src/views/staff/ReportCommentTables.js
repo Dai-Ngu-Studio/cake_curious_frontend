@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
-import ReportCardTable from "../../components/Cards/ReportCommentCardTable";
+import ReportCommentCardTable from "../../components/Cards/ReportCommentCardTable";
 
 // components
 
@@ -17,8 +17,8 @@ import {
 } from "../../utils/ViewOptions";
 
 export default function ReportCommentTables() {
-  const { totalReportPages, page, search, type, status, sort } = useSelector(
-    (store) => store.report
+  const { totalPage, page, search, type, status, sort } = useSelector(
+    (store) => store.comment
   );
   return (
     <>
@@ -34,10 +34,10 @@ export default function ReportCommentTables() {
             sortOptions={ReportSortingOptions}
             handleChange={handleReportChange}
           />
-          <ReportCardTable />
-          {totalReportPages > 1 && (
+          <ReportCommentCardTable />
+          {totalPage > 1 && (
             <CardPaging
-              totalPages={totalReportPages}
+              totalPages={totalPage}
               page={page}
               handleChangePage={changeReportPage}
             />
