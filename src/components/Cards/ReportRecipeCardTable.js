@@ -6,7 +6,7 @@ import Loading from "../../utils/Loading";
 import StatusCard from "./StatusCard";
 import { getAllReportedRecipes } from "../../features/recipes/recipeSlice";
 import { ReportStatus } from "../../utils/StatusOptions";
-
+import { BsEyeFill } from "react-icons/bs";
 export default function ReportRecipeCardTable() {
   const {
     isRecipesLoading,
@@ -17,6 +17,7 @@ export default function ReportRecipeCardTable() {
     status,
     sort,
   } = useSelector((selector) => selector.recipe);
+  const { user } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -25,6 +26,17 @@ export default function ReportRecipeCardTable() {
 
   if (isRecipesLoading) {
     return <Loading />;
+  }
+
+  function smallestRoleID(roles) {
+    // console.log(roles);
+    let smallestRoleID = 10;
+    roles.map((role) => {
+      if (role.roleId < smallestRoleID) {
+        smallestRoleID = role.roleId;
+      }
+    });
+    return smallestRoleID;
   }
   return (
     <>
@@ -107,46 +119,15 @@ export default function ReportRecipeCardTable() {
                       </td>
                       <td className="pl-6 align-middle p-4">
                         {recipe.totalPendingReports}
-
-                        {/* <div className="flex items-center">
-                          <span
-                            className="mr-2 cursor-pointer"
-                            onClick={() => {
-                              let storeEditing = {};
-                              setModalStore({
-                                id: store.id,
-                                status: store.status,
-                              });
-                              setOpenModal(true);
-                              setIsConfirmModal(true);
-                              changeStoreStatus(store.id, store.status);
-                            }}
-                          >
-                            {store.status === 0 ? (
-                              <StatusCard
-                                text="Hoạt động"
-                                backgroundColor="bg-green-200"
-                                dotColor="bg-green-600"
-                              />
-                            ) : (
-                              <StatusCard
-                                text="Dừng hoạt động"
-                                backgroundColor="bg-gray-200"
-                                dotColor="bg-gray-600"
-                              />
-                            )}
-                          </span>
-                        </div> */}
                       </td>
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        {/* <BsEyeFill
-                          onClick={() => {
-                            setModalStore(store);
-                            setOpenModal(true);
-                            setIsConfirmModal(false);
-                          }}
-                          className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
-                        /> */}
+                        <TableDropdown
+                          link={
+                            smallestRoleID(user.hasRoles) === 0
+                              ? `/admin/report-recipe/${recipe.id}`
+                              : `/staff/report-recipe/${recipe.id}`
+                          }
+                        />
                       </td>
                     </tr>
                   );
@@ -159,11 +140,3 @@ export default function ReportRecipeCardTable() {
     </>
   );
 }
-
-// CardTable.defaultProps = {
-//   color: "light",
-// };
-
-// CardTable.propTypes = {
-//   color: PropTypes.oneOf(["light", "dark"]),
-// };

@@ -26,7 +26,7 @@ import OrderTables from "./views/store/OrderTables";
 import { ProductForm } from "./views/store/ProductForm";
 import StoreDetail from "./views/store/StoreDetail";
 import OrderForm from "./views/store/OrderForm";
-import AdminReportForm from "./views/admin/AdminReportForm";
+import AdminRecipeReportForm from "./views/admin/AdminRecipeReportForm";
 import StaffReportForm from "./views/staff/StaffReportForm";
 import Chat from "./views/store/Chat";
 import Register from "./views/auth/Register";
@@ -56,8 +56,8 @@ function App() {
           />
           <Route path="report-tables-recipe" element={<ReportRecipeTables />} />
           <Route
-            path="report-form/:editReportId"
-            element={<AdminReportForm />}
+            path="report-recipe/:recipeId"
+            element={<AdminRecipeReportForm />}
           />
         </Route>
         <Route

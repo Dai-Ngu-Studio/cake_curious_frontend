@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { getAllReportedRecipesThunk } from "./recipeThunk";
+import { getAllReportedRecipesThunk, getRecipeThunk } from "./recipeThunk";
 
 const initialState = {
   isRecipesLoading: true,
   reportedRecipes: [],
+  recipe: null,
   isModalLoading: true,
   page: 1,
   size: 10,
@@ -18,6 +19,7 @@ export const getAllReportedRecipes = createAsyncThunk(
   "recipe/getRecipes",
   getAllReportedRecipesThunk
 );
+export const getRecipe = createAsyncThunk("recipe/getRecipe", getRecipeThunk);
 // export const getSingleAccount = createAsyncThunk(
 //   "account/getSingleAccount",
 //   getAccountThunk
@@ -56,6 +58,16 @@ const recipeSlice = createSlice({
     [getAllReportedRecipes.rejected]: (state, { payload }) => {
       state.isRecipesLoading = false;
       toast.error(payload);
+    },
+    [getRecipe.pending]: (state) => {
+      state.isRecipesLoading = true;
+    },
+    [getRecipe.fulfilled]: (state, { payload }) => {
+      state.isRecipesLoading = false;
+      state.recipe = payload;
+    },
+    [getRecipe.rejected]: (state, { payload }) => {
+      state.isRecipesLoading = false;
     },
   },
 });

@@ -31,3 +31,11 @@ export const updateReportThunk = async ({ reportId, report }, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const getReportsOfAnItemThunk = async ({ itemId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(`/api/reports/of-an-item/${itemId}`);
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaEllipsisV } from "react-icons/fa";
 
 const TableDropdown = ({ link, setUpdate }) => {
   // dropdown props
@@ -21,12 +21,12 @@ const TableDropdown = ({ link, setUpdate }) => {
           setToggleTableDropDown(false);
         }}
       >
-        <i className="fas fa-ellipsis-v"></i>
+        <FaEllipsisV className="" />
       </div>
       <div
         className={
           (isDropDownTableExpanded ? "absolute " : "hidden ") +
-          "bg-white z-10 rounded shadow-2xl"
+          "bg-white z-10 rounded shadow-2xl right-7"
         }
         onMouseOver={() => {
           setToggleTableDropDown(true);

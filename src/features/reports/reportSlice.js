@@ -4,6 +4,7 @@ import {
   getAllReportsThunk,
   getReportThunk,
   updateReportThunk,
+  getReportsOfAnItemThunk,
 } from "./reportThunk";
 
 const initialState = {
@@ -35,7 +36,10 @@ export const getAllReports = createAsyncThunk(
   "report/getReports",
   getAllReportsThunk
 );
-
+export const getReportsOfAnItem = createAsyncThunk(
+  "report/getReportsOfAnItem",
+  getReportsOfAnItemThunk
+);
 export const getSingleReport = createAsyncThunk(
   "report/getSingleReport",
   getReportThunk
@@ -69,6 +73,18 @@ const reportSlice = createSlice({
       state.totalReportPages = payload.totalPage;
     },
     [getAllReports.rejected]: (state, { payload }) => {
+      state.isReportLoading = false;
+      toast.error(payload);
+    },
+    [getReportsOfAnItem.pending]: (state) => {
+      state.isReportLoading = true;
+    },
+    [getReportsOfAnItem.fulfilled]: (state, { payload }) => {
+      state.isReportLoading = false;
+      state.reports = payload.reports;
+      state.totalReportPages = payload.totalPage;
+    },
+    [getReportsOfAnItem.rejected]: (state, { payload }) => {
       state.isReportLoading = false;
       toast.error(payload);
     },
