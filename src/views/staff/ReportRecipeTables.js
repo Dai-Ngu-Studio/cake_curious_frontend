@@ -35,7 +35,6 @@ export default function ReportRecipeTables() {
             handleChange={handleRecipeChange}
           />
           <ReportRecipeCardTable />
-          {console.log(totalPage)}
           {totalPage > 1 && (
             <CardPaging
               totalPages={totalPage}

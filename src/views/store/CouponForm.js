@@ -140,7 +140,7 @@ export const CouponForm = () => {
               value={
                 expiryDate === ""
                   ? expiryDate
-                  : moment(expiryDate).format("YYYY-MM-DD")
+                  : moment.utc(expiryDate).local().format("YYYY-MM-DD")
               }
               handleChange={handleCouponInput}
             />

@@ -75,7 +75,10 @@ export const OrderCardTable = () => {
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex">
-                          {moment(order.orderDate).format("MMM Do, YYYY")}
+                          {moment
+                            .utc(order.orderDate)
+                            .local()
+                            .format("MMM Do, YYYY")}
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">

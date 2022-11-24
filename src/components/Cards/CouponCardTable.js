@@ -78,7 +78,10 @@ export default function CouponCardTable() {
                         {coupon.name}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        {moment(coupon.expiryDate).format("MMM Do, YYYY")}
+                        {moment
+                          .utc(coupon.expiryDate)
+                          .local()
+                          .format("MMM Do, YYYY")}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex">{coupon.maxUses}</div>

@@ -111,18 +111,20 @@ const OrderForm = () => {
           </div>
           <div>
             <label>Order Date: </label>
-            {orderDate ? moment(orderDate).format("MMM Do, YYYY") : "Unknown"}
+            {orderDate
+              ? moment.utc(orderDate).local().format("MMM Do, YYYY")
+              : "Unknown"}
           </div>
           <div>
             <label>Processed Date: </label>
             {processedDate
-              ? moment(processedDate).format("MMM Do, YYYY")
+              ? moment.utc(processedDate).local().format("MMM Do, YYYY")
               : "Unknown"}
           </div>
           <div>
             <label>Completed Date: </label>
             {completedDate
-              ? moment(completedDate).format("MMM Do, YYYY")
+              ? moment.utc(completedDate).local().format("MMM Do, YYYY")
               : "Unknown"}
           </div>
           <div>
