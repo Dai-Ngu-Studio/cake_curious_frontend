@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { getAllReportedRecipesThunk, getRecipeThunk } from "./recipeThunk";
+import {
+  getAllReportedRecipesThunk,
+  getRecipeThunk,
+  deleteRecipeThunk,
+} from "./recipeThunk";
 
 const initialState = {
   isRecipesLoading: true,
@@ -11,7 +15,7 @@ const initialState = {
   size: 10,
   search: "",
   sort: "All",
-  filter: "All",
+  filter: "Active",
   totalPage: 1,
 };
 
@@ -20,6 +24,10 @@ export const getAllReportedRecipes = createAsyncThunk(
   getAllReportedRecipesThunk
 );
 export const getRecipe = createAsyncThunk("recipe/getRecipe", getRecipeThunk);
+export const deleteRecipe = createAsyncThunk(
+  "recipe/deleteRecipe",
+  deleteRecipeThunk
+);
 // export const getSingleAccount = createAsyncThunk(
 //   "account/getSingleAccount",
 //   getAccountThunk
@@ -67,6 +75,15 @@ const recipeSlice = createSlice({
       state.recipe = payload;
     },
     [getRecipe.rejected]: (state, { payload }) => {
+      state.isRecipesLoading = false;
+    },
+    [deleteRecipe.pending]: (state) => {
+      state.isRecipesLoading = true;
+    },
+    [deleteRecipe.fulfilled]: (state, { payload }) => {
+      state.isRecipesLoading = false;
+    },
+    [deleteRecipe.rejected]: (state, { payload }) => {
       state.isRecipesLoading = false;
     },
   },

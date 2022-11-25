@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import FormRowSelect from "../../components/Inputs/FormRowSelect";
-import { getRecipe } from "../../features/recipes/recipeSlice";
+import { getRecipe, deleteRecipe } from "../../features/recipes/recipeSlice";
 import { getReportsOfAnItem } from "../../features/reports/reportSlice";
 import Loading from "../../utils/Loading";
 import StatusCard from "../../components/Cards/StatusCard";
@@ -35,12 +35,8 @@ export default function AdminRecipeReportForm() {
   }
   return (
     <div className="grid grid-cols-3 pt-28 gap-5">
-      <div className="bg-red-400 col-span-2">
-        <div
-          className={
-            "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
-          }
-        >
+      <div className="col-span-2 shadow-lg rounded-xl">
+        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 rounded bg-white">
           {reports.length === 0 ? (
             <div className="block w-full overflow-x-auto">
               <h2 className="text-center pb-3">No reports to display...</h2>
@@ -52,13 +48,10 @@ export default function AdminRecipeReportForm() {
                 <thead>
                   <tr>
                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                      Title
+                      Tựa đề
                     </th>
                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                      Reporter
-                    </th>
-                    <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                      Baker
+                      Người báo cáo
                     </th>
                     <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                       Status
@@ -67,11 +60,14 @@ export default function AdminRecipeReportForm() {
                   </tr>
                 </thead>
                 <tbody>
-                  {reports.map((report) => {
+                  {reports.map((report, index) => {
                     return (
                       <tr
                         key={report.id}
-                        className="bg-white hover:bg-green-50"
+                        className={
+                          "hover:bg-green-50 " +
+                          (index % 2 === 1 ? "bg-gray-50" : "bg-white")
+                        }
                       >
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                           {report.title}
@@ -89,42 +85,9 @@ export default function AdminRecipeReportForm() {
                         </td>
                         <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                           <div className="flex items-center">
-                            {report.reportedUser.photoUrl && (
-                              <img
-                                src={report.reportedUser.photoUrl}
-                                className="mr-2 h-12 w-12 rounded-full border"
-                              ></img>
-                            )}
-                            <div>{report.reportedUser.displayName}</div>
-                          </div>
-                        </td>
-                        {/* <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                          <div className="flex">
-                            {report.itemType === 1 ? (
-                              <StatusCard
-                                text="Bình luận"
-                                backgroundColor="bg-orange-200"
-                                dotColor="bg-orange-600"
-                              />
-                            ) : (
-                              <StatusCard
-                                text="Công thức"
-                                backgroundColor="bg-purple-200"
-                                dotColor="bg-purple-600"
-                              />
-                            )}
-                          </div>
-                        </td> */}
-                        <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                          <div className="flex items-center">
                             <span className="mr-2">
                               {ReportStatus.map((status) => {
                                 return (
-                                  // <StatusCard
-                                  //   text={status.name}
-                                  //   backgroundColor="bg-gray-200"
-                                  //   dotColor="bg-gray-600"
-                                  // />
                                   <div key={status.id}>
                                     {report.status === status.id ? (
                                       <StatusCard
@@ -195,7 +158,7 @@ export default function AdminRecipeReportForm() {
                 <div className="flex items-center justify-center p-2">
                   <div className="font-bold text-2xl">{recipe.name}</div>
                 </div>
-                <div className="pl-16 text-xl">
+                <div className="px-8 text-xl">
                   <div className="flex items-center p-2">
                     <BsClock className="text-green-600 mr-10" />
                     <div>Thời gian nấu {recipe.cookTime}</div>
@@ -224,7 +187,7 @@ export default function AdminRecipeReportForm() {
                     {mod(currentCarouselPage, recipe.recipeSteps.length + 1)}
                   </div>
                 </div>
-                <div className="flex items-center p-2">
+                <div className="flex items-center px-10 text-xl">
                   <div>
                     {
                       recipe.recipeSteps[
@@ -240,6 +203,17 @@ export default function AdminRecipeReportForm() {
             );
           }
         })()}
+        <div className="">
+          <button
+            type="button"
+            className="absolute ml-44 bottom-0 mb-20 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center mr-2 text-lg"
+            onClick={() => {
+              dispatch(deleteRecipe({ id: recipeId }));
+            }}
+          >
+            Xóa bỏ công thức
+          </button>
+        </div>
       </div>
     </div>
   );
