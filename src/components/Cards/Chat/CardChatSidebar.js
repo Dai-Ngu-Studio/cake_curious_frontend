@@ -19,50 +19,19 @@ import {
   where,
 } from "firebase/firestore";
 import FormRow from "../../Inputs/FormRow";
+import { Link, useParams } from "react-router-dom";
+import { getSingleAccount } from "../../../features/accounts/accountSlice";
 
 const CardChatSidebar = () => {
   const { user } = useSelector((store) => store.user);
-  const { username } = useSelector((store) => store.chat);
+  const { user: account, isUserChatting } = useSelector(
+    (store) => store.account
+  );
+  const { username, userData } = useSelector((store) => store.chat);
   const [userChattings, setUserChattings] = useState([]);
   const [chats, setChats] = useState([]);
   const dispatch = useDispatch();
-
-  // const handleChatInput = async () => {
-  //   try {
-  //     if (userChattings.length > 0) {
-  //       setUserChattings([]);
-  //     }
-  //     if (username === "") {
-  //       setUserChattings([]);
-  //       return;
-  //     }
-  //     const q = query(
-  //       collection(db, "rooms"),
-  //       where("users", "array-contains", user.id)
-  //     );
-  //     const querySnapshot = await getDocs(q);
-  //     if (!querySnapshot.empty) {
-  //       querySnapshot.forEach((doc) => {
-  //         doc.data().userInfos.map((userInfo) => {
-  //           if (
-  //             user.store?.id !== userInfo.uid &&
-  //             userInfo.displayName.toLowerCase().includes(username)
-  //           ) {
-  //             setUserChattings((prevState) => [...prevState, userInfo]);
-  //           }
-  //         });
-  //       });
-  //     } else {
-  //       setUserChattings([]);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const handleKey = (e) => {
-  //   e.code === "Enter" && handleChatInput();
-  // };
+  const { userChatId } = useParams();
 
   const handleChatInput = (e) => {
     const name = e.target.name;
@@ -70,43 +39,44 @@ const CardChatSidebar = () => {
     dispatch(handleChatChange({ name, value }));
   };
 
-  const handleSelect = async (userChatting) => {
-    try {
-      const q = query(
-        collection(db, "rooms"),
-        where("users", "array-contains", userChatting.uid)
-      );
-      const docSnap = await getDocs(q);
-      if (docSnap.empty) {
-        await addDoc(collection(db, "rooms"), {
-          createdAt: serverTimestamp(),
-          userInfos: [
-            {
-              displayName: user.store?.name,
-              photoUrl: user.store?.photoUrl,
-              uid: user.store?.id,
-            },
-            userChatting,
-          ],
-          updatedAt: serverTimestamp(),
-          users: [user.store.id, userChatting.uid],
-        });
-      } else {
-        docSnap.forEach((doc) => {
-          dispatch(
-            setChatting({
-              chatId: doc.id,
-              userData: userChatting,
-            })
-          );
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-    setUserChattings([]);
-  };
+  // const handleSelect = async (userChatting) => {
+  //   try {
+  //     const q = query(
+  //       collection(db, "rooms"),
+  //       where("users", "array-contains", userChatting.uid)
+  //     );
+  //     const docSnap = await getDocs(q);
+  //     if (docSnap.empty) {
+  //       await addDoc(collection(db, "rooms"), {
+  //         createdAt: serverTimestamp(),
+  //         userInfos: [
+  //           {
+  //             displayName: user.store?.name,
+  //             photoUrl: user.store?.photoUrl,
+  //             uid: user.store?.id,
+  //           },
+  //           userChatting,
+  //         ],
+  //         updatedAt: serverTimestamp(),
+  //         users: [user.store.id, userChatting.uid],
+  //       });
+  //     } else {
+  //       docSnap.forEach((doc) => {
+  //         dispatch(
+  //           setChatting({
+  //             chatId: doc.id,
+  //             userData: userChatting,
+  //           })
+  //         );
+  //       });
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setUserChattings([]);
+  // };
 
+  // search user thats already created room
   useEffect(() => {
     try {
       if (userChattings.length > 0) {
@@ -137,24 +107,94 @@ const CardChatSidebar = () => {
     }
   }, [username]);
 
+  // get list of user chatting with current store owner
   useEffect(() => {
+    if (user.store) {
+      try {
+        const q = query(
+          collection(db, "rooms"),
+          where("users", "array-contains", user.store.id),
+          orderBy("updatedAt", "desc")
+        );
+        onSnapshot(q, (snapshot) => {
+          const documents = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setChats(documents);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }, [user.id]);
+
+  // select user you want to chat
+  const select = async () => {
     try {
       const q = query(
         collection(db, "rooms"),
-        where("users", "array-contains", user.store.id),
-        orderBy("updatedAt", "desc")
+        where("users", "in", [[user.store.id, userChatId]])
       );
-      onSnapshot(q, (snapshot) => {
-        const documents = snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        setChats(documents);
-      });
+      const docSnap = await getDocs(q);
+      if (docSnap.empty) {
+        await addDoc(collection(db, "rooms"), {
+          createdAt: serverTimestamp(),
+          userInfos: [
+            {
+              displayName: user.store?.name,
+              photoUrl: user.store?.photoUrl,
+              uid: user.store?.id,
+            },
+            {
+              displayName: account.displayName,
+              photoUrl: account.photoUrl,
+              uid: account.id,
+            },
+          ],
+          updatedAt: serverTimestamp(),
+          users: [user.store?.id, account.id],
+        });
+        dispatch(
+          setChatting({
+            chatId: doc.id,
+            userData: {
+              displayName: account.displayName,
+              photoUrl: account.photoUrl,
+              uid: account.id,
+            },
+          })
+        );
+      } else {
+        docSnap.forEach((doc) => {
+          dispatch(
+            setChatting({
+              chatId: doc.id,
+              userData: {
+                displayName: account.displayName,
+                photoUrl: account.photoUrl,
+                uid: account.id,
+              },
+            })
+          );
+        });
+      }
+      setUserChattings([]);
     } catch (error) {
       console.log(error);
     }
-  }, [user.id]);
+  };
+
+  useEffect(() => {
+    if (userChatId) {
+      dispatch(getSingleAccount({ userId: userChatId }));
+    }
+  }, [userChatId]);
+  useEffect(() => {
+    if (isUserChatting && account) {
+      select();
+    }
+  }, [isUserChatting]);
 
   return (
     <>
@@ -199,10 +239,26 @@ const CardChatSidebar = () => {
         {userChattings &&
           userChattings.map((userChatting, index) => {
             return (
-              <div
+              // <div
+              //   key={index}
+              //   className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none"
+              //   onClick={() => handleSelect(userChatting)}
+              // >
+              //   <img
+              //     className="object-cover w-10 h-10 rounded-full"
+              //     src={userChatting.photoUrl || User}
+              //     alt="username"
+              //   />
+              //   <div className="w-full">
+              //     <span className="block ml-2 font-semibold text-gray-600">
+              //       {userChatting.displayName}
+              //     </span>
+              //   </div>
+              // </div>
+              <Link
                 key={index}
                 className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none"
-                onClick={() => handleSelect(userChatting)}
+                to={`/store/chat/${userChatting.uid}`}
               >
                 <img
                   className="object-cover w-10 h-10 rounded-full"
@@ -214,29 +270,65 @@ const CardChatSidebar = () => {
                     {userChatting.displayName}
                   </span>
                 </div>
-              </div>
+              </Link>
             );
           })}
         <h2 className="my-2 mb-2 ml-2 text-lg text-gray-600">Chats</h2>
         <li>
-          {/* .sort((a, b) => b[1].date - a[1].date) */}
           {chats &&
             chats.map((chat) => {
               return (
-                <a
+                // <a
+                //   className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none"
+                //   key={chat.id}
+                //   onClick={() =>
+                //     dispatch(
+                //       setChatting({
+                //         chatId: chat.id,
+                //         userData:
+                //           user.store?.id !== chat.userInfos[0].uid
+                //             ? chat.userInfos[0]
+                //             : chat.userInfos[1],
+                //       })
+                //     )
+                //   }
+                // >
+                //   <img
+                //     className="object-cover w-10 h-10 rounded-full"
+                //     src={
+                //       user.store?.id !== chat.userInfos[0].uid
+                //         ? chat.userInfos[0].photoUrl
+                //         : chat.userInfos[1].photoUrl
+                //     }
+                //     alt="username"
+                //     referrerPolicy="no-referrer"
+                //   />
+                //   <div className="w-full pb-2">
+                //     <div className="flex justify-between">
+                //       <span className="block ml-2 font-semibold text-gray-600">
+                //         {user.store?.id !== chat.userInfos[0].uid
+                //           ? chat.userInfos[0].displayName
+                //           : chat.userInfos[1].displayName}
+                //       </span>
+                //       {/* <span className="block ml-2 text-sm text-gray-600">
+                //         25 minutes
+                //       </span> */}
+                //     </div>
+                //     {chat.lastMessage && (
+                //       <span className="block ml-2 text-sm text-gray-600">
+                //         {chat.lastMessage}
+                //       </span>
+                //     )}
+                //   </div>
+                // </a>
+                <Link
                   className="flex items-center px-3 py-2 text-sm transition duration-150 ease-in-out border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none"
                   key={chat.id}
-                  onClick={() =>
-                    dispatch(
-                      setChatting({
-                        chatId: chat.id,
-                        userData:
-                          user.store?.id !== chat.userInfos[0].uid
-                            ? chat.userInfos[0]
-                            : chat.userInfos[1],
-                      })
-                    )
-                  }
+                  to={`/store/chat/${
+                    user.store?.id !== chat.userInfos[0].uid
+                      ? chat.userInfos[0].uid
+                      : chat.userInfos[1].uid
+                  }`}
                 >
                   <img
                     className="object-cover w-10 h-10 rounded-full"
@@ -265,7 +357,7 @@ const CardChatSidebar = () => {
                       </span>
                     )}
                   </div>
-                </a>
+                </Link>
               );
             })}
         </li>

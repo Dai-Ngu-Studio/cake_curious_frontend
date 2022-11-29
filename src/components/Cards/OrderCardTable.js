@@ -6,6 +6,7 @@ import User from "../../assets/img/user.png";
 import moment from "moment/moment";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { OrderStatus } from "../../utils/StatusOptions";
+import { setChatting } from "../../features/chats/chatSlice";
 
 export const OrderCardTable = () => {
   const { orders, isOrderLoading, page, search, filter, sort } = useSelector(
@@ -105,7 +106,11 @@ export const OrderCardTable = () => {
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown link={`/store/order-form/${order.id}`} />
+                        <TableDropdown
+                          link={`/store/order-form/${order.id}`}
+                          userChatLink={`/store/chat/${order.user.id}`}
+                          role={2}
+                        />
                       </td>
                     </tr>
                   );

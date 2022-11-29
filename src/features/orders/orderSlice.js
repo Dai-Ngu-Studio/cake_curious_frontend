@@ -74,6 +74,7 @@ const orderSlice = createSlice({
     },
     [getAllOrders.fulfilled]: (state, { payload }) => {
       state.isOrderLoading = false;
+      // console.log(payload.orders);
       state.orders = payload.orders;
       state.totalOrderPages = payload.totalPage;
     },

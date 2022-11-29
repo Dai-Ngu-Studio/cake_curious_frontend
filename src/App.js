@@ -97,6 +97,7 @@ function App() {
           <Route path="order-form" element={<OrderForm />} />
           <Route path="order-form/:editOrderId" element={<OrderForm />} />
           <Route path="chat" element={<Chat />} />
+          <Route path="chat/:userChatId" element={<Chat />} />
         </Route>
 
         <Route path="/auth/" element={<Auth />}>

@@ -1,4 +1,5 @@
 import { uuidv4 } from "@firebase/util";
+import User from "../../../assets/img/user.png";
 import {
   addDoc,
   arrayUnion,
@@ -47,7 +48,6 @@ const CardChatBody = () => {
   const handleKey = (e) => {
     e.code === "Enter" && handleSend();
   };
-
   useEffect(() => {
     try {
       if (chatId) {
@@ -73,12 +73,8 @@ const CardChatBody = () => {
     <div className="w-full">
       <div className="relative flex items-center p-3 border-b border-gray-300">
         <img
-          className={
-            Object.keys(userData).length === 0
-              ? null
-              : "object-cover w-10 h-10 rounded-full"
-          }
-          src={userData.photoUrl}
+          className="object-cover w-10 h-10 rounded-full"
+          src={userData.photoUrl || User}
           alt=""
           referrer="no-referrer"
         />

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
-  deleteAccountThunk,
   getAccountThunk,
   getAllAccountsThunk,
   updateAccountThunk,
@@ -34,6 +33,9 @@ const initialState = {
   address: "",
   citizenshipNumber: "",
   citizenshipDate: "",
+  /* --- only for getting user info when chatting ---- */
+  isUserChatting: false,
+  /* ---------------------- */
   user: null,
 };
 
@@ -65,6 +67,12 @@ const accountSlice = createSlice({
     changeAccountPage: (state, { payload }) => {
       state.page = payload;
     },
+    clearGetUserChatState: (state) => {
+      return {
+        ...state,
+        user: null,
+      };
+    },
     clearAllAccountsState: (state) => initialState,
   },
   extraReducers: {
@@ -82,13 +90,16 @@ const accountSlice = createSlice({
     },
     [getSingleAccount.pending]: (state) => {
       state.isModalAccountLoading = true;
+      state.isUserChatting = false;
     },
     [getSingleAccount.fulfilled]: (state, { payload }) => {
       state.isModalAccountLoading = false;
+      state.isUserChatting = true;
       state.user = payload;
     },
     [getSingleAccount.rejected]: (state, { payload }) => {
       state.isModalAccountLoading = false;
+      state.isUserChatting = false;
     },
     [updateAccount.pending]: (state) => {
       state.isAccountLoading = true;
@@ -119,6 +130,10 @@ const accountSlice = createSlice({
   },
 });
 
-export const { handleAccountChange, changeAccountPage, clearAllAccountsState } =
-  accountSlice.actions;
+export const {
+  handleAccountChange,
+  clearGetUserChatState,
+  changeAccountPage,
+  clearAllAccountsState,
+} = accountSlice.actions;
 export default accountSlice.reducer;
