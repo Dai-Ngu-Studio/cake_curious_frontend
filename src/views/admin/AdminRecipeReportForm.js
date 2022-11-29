@@ -274,9 +274,8 @@ export default function AdminRecipeReportForm() {
         ) : (
           ""
         )}
-
         {(() => {
-          if (mod(currentCarouselPage, recipe.recipeSteps.length + 1) === 0) {
+          if (mod(currentCarouselPage, recipe?.recipeSteps.length + 1) === 0) {
             return (
               <>
                 <img src={recipe.thumbnailUrl} className="w-full"></img>
@@ -302,23 +301,23 @@ export default function AdminRecipeReportForm() {
             return (
               <>
                 <video
-                  src={recipe.videoUrl}
+                  src={recipe?.videoUrl}
                   className="w-full"
                   controls
                 ></video>
                 <div className="flex items-center justify-center p-5">
                   <div className="font-bold text-2xl">
                     Step{" "}
-                    {mod(currentCarouselPage, recipe.recipeSteps.length + 1)}
+                    {mod(currentCarouselPage, recipe?.recipeSteps.length + 1)}
                   </div>
                 </div>
                 <div className="flex items-center px-10 text-xl">
                   <div>
                     {
-                      recipe.recipeSteps[
+                      recipe?.recipeSteps[
                         mod(
                           currentCarouselPage,
-                          recipe.recipeSteps.length + 1
+                          recipe?.recipeSteps.length + 1
                         ) - 1
                       ].content
                     }
