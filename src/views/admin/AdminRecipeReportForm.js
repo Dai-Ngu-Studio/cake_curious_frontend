@@ -35,7 +35,6 @@ export default function AdminRecipeReportForm() {
   const [isHoverRight, setIsHoverRight] = useState(false);
   const [currentCarouselPage, setCurrentCarouselPage] = useState(0);
   useEffect(() => {
-    console.log("ASJKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaHD");
     dispatch(getRecipe({ id: recipeId }));
     dispatch(getReportsOfAnItem({ itemId: recipeId }));
   }, []);
