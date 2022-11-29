@@ -5,6 +5,7 @@ import {
   getReportThunk,
   updateReportThunk,
   getReportsOfAnItemThunk,
+  bulkUpdateReportsThunk,
 } from "./reportThunk";
 
 const initialState = {
@@ -49,7 +50,10 @@ export const updateReport = createAsyncThunk(
   "report/updateReport",
   updateReportThunk
 );
-
+export const updateBulkReports = createAsyncThunk(
+  "report/updateBulkReports",
+  bulkUpdateReportsThunk
+);
 const reportSlice = createSlice({
   name: "report",
   initialState,
@@ -116,6 +120,17 @@ const reportSlice = createSlice({
       toast.success("Report Updated...");
     },
     [updateReport.rejected]: (state, { payload }) => {
+      state.isReportDoneUpdating = false;
+      toast.error(payload);
+    },
+    [updateBulkReports.pending]: (state) => {
+      state.isReportDoneUpdating = false;
+    },
+    [updateBulkReports.fulfilled]: (state, { payload }) => {
+      state.isReportDoneUpdating = true;
+      toast.success("Đổi trạng thái thành công");
+    },
+    [updateBulkReports.rejected]: (state, { payload }) => {
       state.isReportDoneUpdating = false;
       toast.error(payload);
     },

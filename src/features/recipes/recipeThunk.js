@@ -23,7 +23,7 @@ export const getRecipeThunk = async ({ id }, thunkAPI) => {
 };
 export const deleteRecipeThunk = async ({ id }, thunkAPI) => {
   try {
-    const resp = await customFetch.delete(`/api/recipes/${id}`);
+    const resp = await customFetch.delete(`/api/recipes/take-down/${id}`);
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);
