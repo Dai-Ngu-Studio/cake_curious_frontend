@@ -15,7 +15,7 @@ export const getAllReportedRecipesThunk = async (_, thunkAPI) => {
 };
 export const getRecipeThunk = async ({ id }, thunkAPI) => {
   try {
-    const resp = await customFetch.get(`/api/recipes/${id}`);
+    const resp = await customFetch.get(`/api/recipes/${id}/model`);
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);

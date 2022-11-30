@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   isRecipesLoading: true,
+  isRecipeDoneUpdating: false,
   reportedRecipes: [],
   recipe: null,
   isModalLoading: true,
@@ -78,13 +79,13 @@ const recipeSlice = createSlice({
       state.isRecipesLoading = false;
     },
     [deleteRecipe.pending]: (state) => {
-      state.isRecipesLoading = true;
+      state.isRecipeDoneUpdating = false;
     },
     [deleteRecipe.fulfilled]: (state, { payload }) => {
-      state.isRecipesLoading = false;
+      state.isRecipeDoneUpdating = true;
     },
     [deleteRecipe.rejected]: (state, { payload }) => {
-      state.isRecipesLoading = false;
+      state.isRecipeDoneUpdating = true;
     },
   },
 });
