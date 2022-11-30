@@ -82,6 +82,10 @@ export const ProductForm = () => {
       toast.error("Please fill out all fields");
       return;
     }
+    if (!image) {
+      toast.warning("Please select a picture for your product");
+      return;
+    }
 
     if (isProductEditing) {
       dispatch(

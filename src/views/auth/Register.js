@@ -90,9 +90,8 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (phoneNumber.length < 12) {
-      toast.warning("Required phone number to be 12 digits");
+    if (phoneNumber.replace("+", "").length < 11) {
+      toast.warning("Required phone number need to be 11 digits");
       return;
     }
     if (

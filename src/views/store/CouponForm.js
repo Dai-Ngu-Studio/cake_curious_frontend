@@ -51,19 +51,22 @@ export const CouponForm = () => {
 
   const handleCouponSubmit = (e) => {
     e.preventDefault();
-    if (!name || !code || !discount || !maxUses || !expiryDate) {
+    if (!name || !code || !discount || !expiryDate) {
       toast.error("Please fill out all fields");
       return;
     }
     if (parseInt(maxUses) < 0) {
       toast.error("Max uses aren't allowed to go below 0");
+      return;
     }
     if (parseInt(discount) < 0) {
       toast.error("Discount aren't allowed to go below 0");
+      return;
     }
     if (parseInt(discountType) === 0) {
-      if (parseInt(discount) > 100) {
-        toast.error("Percentage discount aren't allowed to go above 100");
+      if (parseInt(discount) < 0 || parseInt(discount) > 50) {
+        toast.warning("Percentage discount only from 0 - 50");
+        return;
       }
     }
 
