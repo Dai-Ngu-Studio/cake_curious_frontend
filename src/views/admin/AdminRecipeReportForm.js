@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import FormRowSelect from "../../components/Inputs/FormRowSelect";
 import { getRecipe, deleteRecipe } from "../../features/recipes/recipeSlice";
 import {
   getReportsOfAnItem,
@@ -9,7 +8,7 @@ import {
 } from "../../features/reports/reportSlice";
 import Loading from "../../utils/Loading";
 
-import RecipeReportCard from "../../components/Cards/RecipeReportCard";
+import RecipeCard from "../../components/Cards/RecipeCard";
 import ReportTableCard from "../../components/Cards/ReportTableCard";
 export default function AdminRecipeReportForm() {
   const { recipe, isRecipesLoading, isRecipeDoneUpdating } = useSelector(
@@ -45,10 +44,7 @@ export default function AdminRecipeReportForm() {
           handleUpdateReports={handleUpdateReports}
         />
       </div>
-      <RecipeReportCard
-        recipe={recipe}
-        handleDeleteRecipe={handleDeleteRecipe}
-      />
+      <RecipeCard recipe={recipe} handleDeleteRecipe={handleDeleteRecipe} />
     </div>
   );
 }
