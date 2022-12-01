@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { FaEdit, FaEllipsisV } from "react-icons/fa";
 import { clearGetUserChatState } from "../../features/accounts/accountSlice";
@@ -36,22 +35,22 @@ const TableDropdown = ({ link, userChatLink, role }) => {
           setToggleTableDropDown(false);
         }}
       >
-        <Link
-          to={link}
+        <a
+          href={link}
           className="m-1 p-2  flex text-blueGray-700 justify-center items-center gap-2 rounded hover:bg-sky-100"
         >
           <FaEdit className="flex justify-center items-center" />
           Update
-        </Link>
+        </a>
         {role === 2 && (
-          <Link
-            to={userChatLink}
+          <a
+            href={userChatLink}
             onClick={() => dispatch(clearGetUserChatState())}
             className="m-1 p-2  flex text-blueGray-700 justify-center items-center gap-2 rounded hover:bg-sky-100"
           >
             <FaEdit className="flex justify-center items-center" />
             Chat
-          </Link>
+          </a>
         )}
 
         {/* <a
