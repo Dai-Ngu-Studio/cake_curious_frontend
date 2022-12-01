@@ -29,9 +29,9 @@ export default function ReportCommentTables() {
             type={type}
             status={status}
             search={search}
-            statusOptions={ReportFilterStatusOptions}
-            typeOptions={ReportFilterTypeOptions}
-            sortOptions={ReportSortingOptions}
+            // statusOptions={ReportFilterStatusOptions}
+            // typeOptions={ReportFilterTypeOptions}
+            // sortOptions={ReportSortingOptions}
             handleChange={handleReportChange}
           />
           <ReportCommentCardTable />
