@@ -32,7 +32,7 @@ import Chat from "./views/store/Chat";
 import Register from "./views/auth/Register";
 import CouponTables from "./views/store/CouponTables";
 import { CouponForm } from "./views/store/CouponForm";
-
+import AdminCommentReportForm from "./views/admin/AdminCommentReportForm";
 function App() {
   return (
     <BrowserRouter>
@@ -58,6 +58,10 @@ function App() {
           <Route
             path="report-recipe/:recipeId"
             element={<AdminRecipeReportForm />}
+          />
+          <Route
+            path="report-comment/:commentId"
+            element={<AdminCommentReportForm />}
           />
         </Route>
         <Route
