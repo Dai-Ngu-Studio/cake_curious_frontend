@@ -3,9 +3,7 @@ import NoImg from "../../assets/img/no-store.png";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../utils/Loading";
-import StatusCard from "./StatusCard";
 import { getAllReportedComments } from "../../features/comments/commentSlice";
-import { ReportStatus } from "../../utils/StatusOptions";
 
 export default function ReportCommentCardTable() {
   const { user } = useSelector((store) => store.user);
@@ -16,18 +14,34 @@ export default function ReportCommentCardTable() {
       priorityRole = roleId;
     }
   }
-  const { reportedComments, isLoading, page, search, type, status, sort } =
-    useSelector((store) => store.comment);
+  const {
+    reportedComments,
+    isCommentsLoading,
+    page,
+    search,
+    type,
+    status,
+    sort,
+  } = useSelector((store) => store.comment);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllReportedComments());
   }, [page, search, type, status, sort]);
 
-  if (isLoading) {
+  if (isCommentsLoading) {
     return <Loading />;
   }
-  console.log(reportedComments);
+  function smallestRoleID(roles) {
+    // console.log(roles);
+    let smallestRoleID = 10;
+    roles.map((role) => {
+      if (role.roleId < smallestRoleID) {
+        smallestRoleID = role.roleId;
+      }
+    });
+    return smallestRoleID;
+  }
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -70,7 +84,7 @@ export default function ReportCommentCardTable() {
                       }
                     >
                       <th className="pl-6 align-middle p-1 text-left flex justify-center">
-                        <img src={comment.images[0].mediaUrl || NoImg}></img>
+                        <img src={comment.images[0]?.mediaUrl || NoImg}></img>
                       </th>
                       <td className="pl-6 p-4">
                         <div className="flex items-center">
@@ -108,46 +122,15 @@ export default function ReportCommentCardTable() {
 
                       <td className="pl-6 align-middle p-4">
                         {comment.totalPendingReports}
-
-                        {/* <div className="flex items-center">
-                          <span
-                            className="mr-2 cursor-pointer"
-                            onClick={() => {
-                              let storeEditing = {};
-                              setModalStore({
-                                id: store.id,
-                                status: store.status,
-                              });
-                              setOpenModal(true);
-                              setIsConfirmModal(true);
-                              changeStoreStatus(store.id, store.status);
-                            }}
-                          >
-                            {store.status === 0 ? (
-                              <StatusCard
-                                text="Hoạt động"
-                                backgroundColor="bg-green-200"
-                                dotColor="bg-green-600"
-                              />
-                            ) : (
-                              <StatusCard
-                                text="Dừng hoạt động"
-                                backgroundColor="bg-gray-200"
-                                dotColor="bg-gray-600"
-                              />
-                            )}
-                          </span>
-                        </div> */}
                       </td>
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        {/* <BsEyeFill
-                          onClick={() => {
-                            setModalStore(store);
-                            setOpenModal(true);
-                            setIsConfirmModal(false);
-                          }}
-                          className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
-                        /> */}
+                        <TableDropdown
+                          link={
+                            smallestRoleID(user.hasRoles) === 0
+                              ? `/admin/report-comment/${comment.id}`
+                              : `/staff/report-comment/${comment.id}`
+                          }
+                        />
                       </td>
                     </tr>
                   );
