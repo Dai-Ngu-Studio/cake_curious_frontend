@@ -112,10 +112,10 @@ export default function StoreCardTable() {
                         (index % 2 === 1 ? "bg-gray-50" : "bg-white")
                       }
                     >
-                      <th className="pl-6 align-middle p-1 text-left flex justify-center">
+                      <th className="pl-6 align-middle p-1 text-left flex justify-center w-32">
                         <img
                           src={store.photoUrl || StoreImg}
-                          className="w-32"
+                          className="rounded-lg"
                         ></img>
                       </th>
                       <td className="pl-6 align-middle p-4">{store.name}</td>

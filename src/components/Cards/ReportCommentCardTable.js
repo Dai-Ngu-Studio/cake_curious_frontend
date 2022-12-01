@@ -33,7 +33,6 @@ export default function ReportCommentCardTable() {
     return <Loading />;
   }
   function smallestRoleID(roles) {
-    // console.log(roles);
     let smallestRoleID = 10;
     roles.map((role) => {
       if (role.roleId < smallestRoleID) {
@@ -83,9 +82,12 @@ export default function ReportCommentCardTable() {
                         (index % 2 === 1 ? "bg-gray-50" : "bg-white")
                       }
                     >
-                      <th className="pl-6 align-middle p-1 text-left flex justify-center">
-                        <img src={comment.images[0]?.mediaUrl || NoImg}></img>
-                      </th>
+                      <td className="pl-6 align-middle p-1 text-left flex justify-center">
+                        <img
+                          className="rounded-lg"
+                          src={comment.images[0]?.mediaUrl || NoImg}
+                        ></img>
+                      </td>
                       <td className="pl-6 p-4">
                         <div className="flex items-center">
                           {comment.user.photoUrl && (

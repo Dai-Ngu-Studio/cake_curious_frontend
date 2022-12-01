@@ -84,7 +84,10 @@ export default function ReportRecipeCardTable() {
                       }
                     >
                       <th className="pl-6 align-middle p-1 text-left flex justify-center">
-                        <img src={recipe.photoUrl || NoImg} className=""></img>
+                        <img
+                          className="rounded-lg"
+                          src={recipe.photoUrl || NoImg}
+                        ></img>
                       </th>
                       <td className="pl-6 align-middle p-4">{recipe.name}</td>
                       <td className="pl-6 p-4">
