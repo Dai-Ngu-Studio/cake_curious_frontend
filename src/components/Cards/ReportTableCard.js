@@ -111,18 +111,18 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
           <table className="items-center w-full">
             <thead className="bg-gray-200 border">
               <tr>
-                <th className="px-6 align- border-none py-3 text-xs font-semibold text-left"></th>
-                <th className="px-6 align- border-none py-3 text-xs font-semibold text-left">
+                <th className="px-6 py-3 text-xs font-semibold text-left"></th>
+                <th className="px-6 py-3 text-xs font-semibold text-left">
                   Người báo cáo
                 </th>
-                <th className="px-6 align- border-none py-3 text-xs font-semibold text-left">
+                <th className="px-6 py-3 text-xs font-semibold text-left max-w-200-px">
                   Tựa đề
                 </th>
 
-                <th className="px-6 align- border-none py-3 text-xs font-semibold text-left">
+                <th className="px-6 py-3 text-xs font-semibold text-left">
                   Status
                 </th>
-                <th className="px-6 align- border-none py-3 text-xs font-semibold text-left"></th>
+                <th className="px-6 py-3 text-xs font-semibold text-left"></th>
               </tr>
             </thead>
             <tbody>
@@ -145,7 +145,7 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                         onChange={(e) => {}}
                       />
                     </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base break-words p-4">
                       <div className="flex items-center">
                         {report.reporter.photoUrl && (
                           <img
@@ -157,7 +157,7 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                         <div>{report.reporter.displayName}</div>
                       </div>
                     </td>
-                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base break-words p-4">
                       {report.title}
                     </td>
 
@@ -184,12 +184,12 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                       {/* <TableDropdown
-                    link={
-                      priorityRole === 0
-                        ? `/admin/report-form/${report.id}`
-                        : `/staff/report-form/${report.id}`
-                    }
-                  /> */}
+                        link={
+                          priorityRole === 0
+                            ? `/admin/report-form/${report.id}`
+                            : `/staff/report-form/${report.id}`
+                        }
+                      /> */}
                     </td>
                   </tr>
                 );
