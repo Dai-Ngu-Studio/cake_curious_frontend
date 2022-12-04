@@ -49,6 +49,7 @@ export const updateUserRoleThunk = async ({ request }, thunkAPI) => {
       "/api/users/current/to-store",
       request
     );
+    thunkAPI.dispatch(clearAllAccountsState());
     return updateRole.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
