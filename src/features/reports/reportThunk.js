@@ -42,7 +42,9 @@ export const bulkUpdateReportsThunk = async ({ reportIds }, thunkAPI) => {
 };
 export const getReportsOfAnItemThunk = async ({ itemId }, thunkAPI) => {
   try {
-    const resp = await customFetch.get(`/api/reports/of-an-item/${itemId}`);
+    const { page, size, sort, filter } = thunkAPI.getState().report;
+    let url = `/api/reports/of-an-item/${itemId}?sort=${sort}&filter=${filter}&page=${page}&size=${size}`;
+    const resp = await customFetch.get(url);
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);

@@ -27,7 +27,6 @@ import { ProductForm } from "./views/store/ProductForm";
 import StoreDetail from "./views/store/StoreDetail";
 import OrderForm from "./views/store/OrderForm";
 import AdminRecipeReportForm from "./views/admin/AdminRecipeReportForm";
-import StaffReportForm from "./views/staff/StaffReportForm";
 import Chat from "./views/store/Chat";
 import Register from "./views/auth/Register";
 import CouponTables from "./views/store/CouponTables";
@@ -75,8 +74,19 @@ function App() {
           <Route index element={<StaffDashboard />} />
           <Route path="profile" element={<Profile />} />
           <Route path="staff-dashboard" element={<StaffDashboard />} />
-          <Route path="report-tables" element={<ReportRecipeTables />} />
-          <Route path="report-form" element={<StaffReportForm />} />
+          <Route
+            path="report-tables-comment"
+            element={<ReportCommentTables />}
+          />
+          <Route path="report-tables-recipe" element={<ReportRecipeTables />} />
+          <Route
+            path="report-recipe/:recipeId"
+            element={<AdminRecipeReportForm />}
+          />
+          <Route
+            path="report-comment/:commentId"
+            element={<AdminCommentReportForm />}
+          />
         </Route>
         <Route
           path="/store/"

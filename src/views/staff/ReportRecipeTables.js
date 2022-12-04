@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
-import ReportRecipeCardTable from "../../components/Cards/ReportRecipeCardTable";
+import ReportRecipeCardTable from "../../components/Cards/Report/ReportRecipeCardTable";
 
 // components
 
@@ -11,9 +11,7 @@ import {
   handleRecipeChange,
 } from "../../features/recipes/recipeSlice";
 import {
-  ReportSortingOptions,
-  ReportFilterStatusOptions,
-  ReportFilterTypeOptions,
+  ReportedItemSortingOptions
 } from "../../utils/ViewOptions";
 
 export default function ReportRecipeTables() {
@@ -29,9 +27,7 @@ export default function ReportRecipeTables() {
             type={type}
             status={status}
             search={search}
-            // statusOptions={ReportFilterStatusOptions}
-            // typeOptions={ReportFilterTypeOptions}
-            // sortOptions={ReportSortingOptions}
+            sortOptions={ReportedItemSortingOptions}
             handleChange={handleRecipeChange}
           />
           <ReportRecipeCardTable />

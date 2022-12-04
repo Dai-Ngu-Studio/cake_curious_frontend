@@ -50,14 +50,14 @@ export const CouponSortingOptions = [
   },
 ];
 
-export const ReportSortingOptions = [
+export const ReportedItemSortingOptions = [
   {
-    name: "a-z",
-    value: "AscTitle",
+    name: "Số báo cáo thấp nhất",
+    value: "AscPendingReport",
   },
   {
-    name: "z-a",
-    value: "DescTitle",
+    name: "Số báo cáo nhiều nhất",
+    value: "DescPendingReport",
   },
 ];
 
@@ -99,7 +99,24 @@ export const AccountFilterOptions = [
     name: "Đang hoạt động",
     value: "Active",
   },
+  // {
+  //   name: "Quản trị viên",
+  //   value: "Administrator",
+  // },
+  {
+    name: "Nhân viên",
+    value: "Staff",
+  },
+  {
+    name: "Chủ cửa hàng",
+    value: "StoreOwner",
+  },
+  {
+    name: "Thợ bánh",
+    value: "Baker",
+  },
 ];
+
 export const ReportFilterStatusOptions = [
   {
     name: "Tất cả",
@@ -118,17 +135,13 @@ export const ReportFilterStatusOptions = [
     value: "Rejected",
   },
 ];
-export const ReportFilterTypeOptions = [
+export const ReportSortingOptions = [
   {
-    name: "Tất cả",
-    value: "All",
+    name: "Ngày cũ nhất",
+    value: "AscDate",
   },
   {
-    name: "Bình luận",
-    value: "Comment",
-  },
-  {
-    name: "Công thức bánh",
-    value: "Recipe",
+    name: "Ngày mới nhất",
+    value: "DescDate",
   },
 ];
