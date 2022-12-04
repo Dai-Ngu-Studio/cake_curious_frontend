@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { AccountCardTable } from "../../components/Cards/AccountCardTable";
+import { AccountCardTable } from "../../components/Cards/Account/AccountCardTable";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
 import {

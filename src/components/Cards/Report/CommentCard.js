@@ -1,4 +1,4 @@
-import User from "../../assets/img/user.png";
+import User from "../../../assets/img/user.png";
 
 import { BsFillExclamationTriangleFill } from "react-icons/bs";
 export default function CommentCard({ comment, handleDeleteComment }) {

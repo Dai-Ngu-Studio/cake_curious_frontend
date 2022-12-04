@@ -1,6 +1,6 @@
 import React from "react";
 // components
-import CardStats from "../Cards/CardStats";
+import CardStats from "../Cards/Dashboard/CardStats";
 
 export default function StoreHeaderStats({ cardStats }) {
   return (

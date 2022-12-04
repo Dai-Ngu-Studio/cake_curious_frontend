@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CardBarChart from "../../components/Cards/CardBarChart";
-import CardLineChart from "../../components/Cards/CardLineChart";
+import CardBarChart from "../../components/Cards/Dashboard/CardBarChart";
+import CardLineChart from "../../components/Cards/Dashboard/CardLineChart";
 import StoreHeaderStats from "../../components/Headers/StoreHeaderStats";
 import { getStoreDashboard } from "../../features/dashboards/dashboardSlice";
 import Loading from "../../utils/Loading";

@@ -1,4 +1,4 @@
-import Shop from "../../assets/img/no-store.png";
+import Shop from "../../../assets/img/no-store.png";
 
 export default function StoreViewModal({ store }) {
   return (
