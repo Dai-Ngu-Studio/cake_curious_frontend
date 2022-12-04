@@ -8,17 +8,19 @@ const FormRow = ({
   labelText,
   style,
   placeholder,
+  disabled,
 }) => {
   return (
     <div>
       {labelText ? <label htmlFor={labelText}>{labelText}</label> : null}
       <input
+        disabled={disabled}
         id={name}
         type={type}
         name={name}
         value={value}
         onChange={handleChange}
-        className={style}
+        className={disabled ? style + " bg-gray-300" : style}
         placeholder={placeholder}
       />
     </div>

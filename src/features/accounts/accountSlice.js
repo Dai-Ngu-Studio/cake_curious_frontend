@@ -27,12 +27,12 @@ const initialState = {
   status: 0,
   phoneNumber: "+84",
   OTP: "",
-  fullName: "",
-  gender: "",
-  dateOfBirth: "",
-  address: "",
-  citizenshipNumber: "",
-  citizenshipDate: "",
+  // fullName: "",
+  // gender: "",
+  // dateOfBirth: "",
+  // address: "",
+  // citizenshipNumber: "",
+  // citizenshipDate: "",
   /* --- only for getting user info when chatting ---- */
   isUserChatting: false,
   /* ---------------------- */
