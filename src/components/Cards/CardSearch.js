@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { AccountSortingOptions } from "../../utils/ViewOptions";
 import FormRow from "../Inputs/FormRow";
 import FormRadioSelect from "../Inputs/FormRadioSelect";
 
@@ -10,11 +9,7 @@ const CardSearch = ({
   handleChange,
   sortOptions,
   filterOptions,
-  statusOptions,
-  typeOptions,
   sort,
-  status,
-  type,
 }) => {
   const dispatch = useDispatch();
 
@@ -23,37 +18,15 @@ const CardSearch = ({
   };
 
   return (
-    <div className="flex justify-between items-center mt-40 bg-white p-3">
-      {statusOptions && typeOptions ? (
-        <>
-          <div className="relative">
-            <FormRadioSelect
-              name="status"
-              value={status}
-              list={statusOptions}
-              handleChange={handleInputChange}
-            />
-          </div>
-          <div className="relative">
-            <FormRadioSelect
-              name="type"
-              value={type}
-              list={typeOptions}
-              handleChange={handleInputChange}
-            />
-          </div>
-        </>
-      ) : (
-        <div className="relative">
+    <div className="flex justify-between items-center mt-40 bg-white p-3">     
+      <div className="relative">
           <FormRadioSelect
             name="filter"
             value={filter}
             list={filterOptions}
             handleChange={handleInputChange}
           />
-        </div>
-      )}
-
+        </div>  
       <div className="inline-flex justify-center items-center">
         <p className="pr-2">Sắp xếp theo</p>
         <FormRadioSelect

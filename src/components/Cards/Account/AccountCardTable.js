@@ -2,23 +2,21 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllAccounts,
-  getSingleAccount,
-  setUpdateAccount,
   updateAccount,
   updateAccountRole,
-} from "../../features/accounts/accountSlice";
-import Loading from "../../utils/Loading";
-import User from "../../assets/img/user.png";
-import StatusCard from "./StatusCard";
+} from "../../../features/accounts/accountSlice";
+import Loading from "../../../utils/Loading";
+import User from "../../../assets/img/user.png";
+import StatusCard from "../StatusCard";
 import {
   BsEyeFill,
-  BsPersonCheckFill,
   BsPersonXFill,
   BsFillCaretDownFill,
   BsFillCaretUpFill,
 } from "react-icons/bs";
-import ModalWrapper from "./ModalWrapper";
+import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
+
 export const AccountCardTable = () => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalAccount, setModalAccount] = useState(null);

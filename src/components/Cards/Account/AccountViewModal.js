@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import NoImg from "../../assets/img/user.png";
+import NoImg from "../../../assets/img/user.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleAccount } from "../../features/accounts/accountSlice";
-import Loading from "../../utils/Loading";
+import { getSingleAccount } from "../../../features/accounts/accountSlice";
+import Loading from "../../../utils/Loading";
 
 export default function AccountViewModal({ id }) {
   const { user, isModalAccountLoading } = useSelector((slice) => slice.account);

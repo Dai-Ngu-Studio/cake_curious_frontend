@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import StatusCard from "../../components/Cards/StatusCard";
-import { ReportStatus } from "../../utils/StatusOptions";
+import StatusCard from "../StatusCard";
+import { ReportStatus } from "../../../utils/StatusOptions";
 import { BsFillPencilFill } from "react-icons/bs";
 export default function ReportTableCard({ reports, handleUpdateReports }) {
   const [checkedState, setCheckedState] = useState([]);

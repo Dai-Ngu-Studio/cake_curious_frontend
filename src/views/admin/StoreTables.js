@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
-import StoreCardTable from "../../components/Cards/StoreCardTable";
+import StoreCardTable from "../../components/Cards/Store/StoreCardTable";
 import {
   changeStorePage,
   handleStoreChange,

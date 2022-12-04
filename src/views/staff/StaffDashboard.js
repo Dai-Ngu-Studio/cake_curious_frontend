@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import CardBarChart from "../../components/Cards/CardBarChart";
-import CardLineChart from "../../components/Cards/CardLineChart";
-import CardPageVisits from "../../components/Cards/CardPageVisits";
-import CardSocialTraffic from "../../components/Cards/CardSocialTraffic";
+import CardBarChart from "../../components/Cards/Dashboard/CardBarChart";
+import CardLineChart from "../../components/Cards/Dashboard/CardLineChart";
+import CardPageVisits from "../../components/Cards/Dashboard/CardPageVisits";
+import CardSocialTraffic from "../../components/Cards/Dashboard/CardSocialTraffic";
 import AdminHeaderStats from "../../components/Headers/AdminHeaderStats";
 import { getAdminDashboard } from "../../features/dashboards/dashboardSlice";
 import Loading from "../../utils/Loading";

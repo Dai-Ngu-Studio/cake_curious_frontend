@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
-import StoreImg from "../../assets/img/no-store.png";
+import StoreImg from "../../../assets/img/no-store.png";
 // components
-import StatusCard from "./StatusCard";
-import TableDropdown from "../Dropdowns/TableDropdown";
+import StatusCard from "../StatusCard";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../utils/Loading";
+import Loading from "../../../utils/Loading";
 import {
   getAllStores,
-  setUpdateStore,
   updateStore,
-} from "../../features/stores/storeSlice";
-import ModalWrapper from "./ModalWrapper";
+} from "../../../features/stores/storeSlice";
+import ModalWrapper from "../ModalWrapper";
 import { BsStarFill, BsEyeFill } from "react-icons/bs";
 import StoreViewModal from "./StoreViewModal";
 export default function StoreCardTable() {
