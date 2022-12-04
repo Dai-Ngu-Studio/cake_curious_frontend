@@ -15,7 +15,6 @@ export default function RecipeCard({ recipe, handleDeleteRecipe }) {
   function getCurrentStep() {
     return mod(currentCarouselPage, recipe.recipeSteps.length + 1);
   }
-
   return (
     <div
       className="shadow-lg rounded-lg overflow-hidden"
@@ -44,7 +43,7 @@ export default function RecipeCard({ recipe, handleDeleteRecipe }) {
       )}
       {mod(currentCarouselPage, recipe.recipeSteps.length + 1) === 0 ? (
         <>
-          <img src={recipe.thumbnailUrl} className="w-full"></img>
+          <img src={recipe.photoUrl} className="w-full"></img>
           <div className="flex items-center justify-center p-2">
             <div className="font-bold text-2xl">{recipe.name}</div>
           </div>
