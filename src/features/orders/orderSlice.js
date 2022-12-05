@@ -17,8 +17,6 @@ const initialState = {
   sort: "All",
   filter: "All",
   filterOptions: ["Pending", "Completed", "Cancelled", "Processing"],
-  // isOrderEditting: false,
-  // editOrderId: null,
   isOrderDoneUpdating: false,
   status: 0,
   orderDate: null,
@@ -55,14 +53,6 @@ const orderSlice = createSlice({
       state.page = 1;
       state[name] = value;
     },
-    // setUpdateOrder: (state, { payload }) => {
-    //   return {
-    //     ...state,
-    //     isOrderEditting: true,
-    //     isOrderDetailsReady: true,
-    //     ...payload,
-    //   };
-    // },
     changeOrderPage: (state, { payload }) => {
       state.page = payload;
     },
@@ -74,7 +64,6 @@ const orderSlice = createSlice({
     },
     [getAllOrders.fulfilled]: (state, { payload }) => {
       state.isOrderLoading = false;
-      // console.log(payload.orders);
       state.orders = payload.orders;
       state.totalOrderPages = payload.totalPage;
     },
