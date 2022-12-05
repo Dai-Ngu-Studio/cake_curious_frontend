@@ -77,9 +77,14 @@ export const StaffLinks = {
       linkTo: "/staff/staff-dashboard",
     },
     {
-      name: "Trung tâm hỗ trợ",
-      style: "fa fa-flag mr-2 text-sm opacity-75",
-      linkTo: "/staff/report-tables",
+      name: "Báo cáo bình luận",
+      style: "fa fa-comment mr-2 text-sm opacity-75",
+      linkTo: "/staff/report-tables-comment",
+    },
+    {
+      name: "Kiểm tra công thức",
+      style: "fa-solid fa-skull-crossbones mr-2 text-sm opacity-75",
+      linkTo: "/staff/report-tables-recipe",
     },
   ],
 };

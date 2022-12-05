@@ -27,6 +27,7 @@ const orderDetailSlice = createSlice({
     changeOrderDetailPage: (state, { payload }) => {
       state.page = payload;
     },
+    clearAllOrderDetailsState: (state) => initialState,
   },
   extraReducers: {
     [getAllOrderDetails.pending]: (state) => {
@@ -44,6 +45,6 @@ const orderDetailSlice = createSlice({
   },
 });
 
-export const { handleOrderDetailChange, changeOrderDetailPage } =
+export const { handleOrderDetailChange, changeOrderDetailPage, clearAllOrderDetailsState } =
   orderDetailSlice.actions;
 export default orderDetailSlice.reducer;

@@ -15,6 +15,9 @@ export const getAllProductCategories = createAsyncThunk(
 const productCategorySlice = createSlice({
   name: "productCategory",
   initialState,
+  reducers: {
+    clearAllProductCategoriesState: (state) => initialState,
+  },
   extraReducers: {
     [getAllProductCategories.pending]: (state) => {
       state.isProductCategoryLoading = true;
@@ -30,4 +33,5 @@ const productCategorySlice = createSlice({
   },
 });
 
+export const { clearAllProductCategoriesState } = productCategorySlice.actions;
 export default productCategorySlice.reducer;

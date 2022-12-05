@@ -53,6 +53,7 @@ const userSlice = createSlice({
         toast.success(payload);
       }
     },
+    clearAllUsersState: (state) => initialState,
     clearUserLoginValues: (state) => {
       return { ...state, email: "", password: "" };
     },
@@ -111,6 +112,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleUserChange, logoutUser, clearUserLoginValues } =
+export const { handleUserChange, logoutUser, clearUserLoginValues, clearAllUsersState } =
   userSlice.actions;
 export default userSlice.reducer;

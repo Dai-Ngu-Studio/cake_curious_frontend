@@ -20,9 +20,10 @@ const chatSlice = createSlice({
         ...payload,
       };
     },
+    clearAllChatsState: (state) => initialState,
   },
   extraReducers: {},
 });
 
-export const { handleChatChange, setChatting } = chatSlice.actions;
+export const { handleChatChange, setChatting, clearAllChatsState } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -126,10 +126,10 @@ export const ReportFilterStatusOptions = [
     name: "Đang chờ xử lý",
     value: "Pending",
   },
-  {
-    name: "Đã xử lý",
-    value: "Censored",
-  },
+  // {
+  //   name: "Đã xử lý",
+  //   value: "Censored",
+  // },
   {
     name: "Không vấn đề",
     value: "Rejected",

@@ -14,6 +14,13 @@ import { clearAllStoresState } from "../stores/storeSlice";
 import { clearUserLoginValues, logoutUser } from "./userSlice";
 import { clearAllDashboardsState } from "../dashboards/dashboardSlice";
 import { clearAllCouponsState } from "../coupons/couponSlice";
+import { clearAllCommentsState } from "../comments/commentSlice";
+import { clearAllRecipesState } from "../recipes/recipeSlice";
+import { clearAllChatsState } from "../chats/chatSlice";
+import { clearImageValues } from "../images/imageSlice";
+import { clearAllProductCategoriesState } from "../product-categories/productCategorySlice";
+import { clearAllOrdersState } from "../orders/orderSlice";
+import { clearAllOrderDetailsState } from "../order-details/orderDetailSlice";
 
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   try {
@@ -75,6 +82,13 @@ export const clearStoreThunk = async (message, thunkAPI) => {
     thunkAPI.dispatch(clearAllStoresState());
     thunkAPI.dispatch(clearAllDashboardsState());
     thunkAPI.dispatch(clearAllCouponsState());
+    thunkAPI.dispatch(clearAllCommentsState());
+    thunkAPI.dispatch(clearAllRecipesState());
+    thunkAPI.dispatch(clearAllChatsState());
+    thunkAPI.dispatch(clearAllProductCategoriesState());
+    thunkAPI.dispatch(clearImageValues());
+    thunkAPI.dispatch(clearAllOrdersState());
+    thunkAPI.dispatch(clearAllOrderDetailsState());
     return Promise.resolve();
   } catch (error) {
     return Promise.reject();
