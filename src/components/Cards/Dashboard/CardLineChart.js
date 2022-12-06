@@ -1,8 +1,41 @@
 import React from "react";
 import { Chart } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import moment from "moment";
 
 export default function CardLineChart({ lineChart, role }) {
+  let currentYearData = null;
+  let lastYearData = null;
+  let label = "";
+  // const months = [];
+  // for (let index = 0; index < lineChart?.currentYearActiveUser?.length; index++) {
+  //   const element =  lineChart?.currentYearActiveUser[index];
+  //   if (element > 0) {
+  //     // console.log(element);
+  //      months.push(moment().year(new Date().getFullYear()).month(index+1).date(0).startOf("month").format("MMM"))
+  //   }
+  //   // months.push(moment().year(2022).month(index+1).date(0).startOf("month"))
+  //   // console.log(element)
+  // }
+  // console.log(months)
+  switch (role) {
+    case 0:
+      currentYearData = lineChart?.currentYearActiveUser
+      lastYearData = lineChart?.lastYearActiveUser
+      label = "Active user"
+      break;
+    case 1:
+      currentYearData = lineChart?.currentYearProcessedReports
+      lastYearData = lineChart?.currentYearUnprocessedReports
+      label = "Reports"
+      break;
+    case 2:
+      currentYearData = lineChart?.currentYearStoreVisit
+      lastYearData = lineChart?.lastYearStoreVisit
+      label = "Store visit"
+      break;
+  }
+
   const config = {
     labels: [
       "January",
@@ -20,24 +53,18 @@ export default function CardLineChart({ lineChart, role }) {
     ],
     datasets: [
       {
-        label: new Date().getFullYear(),
+        label: role === 0 ? new Date().getFullYear() : "Processed Reports",
         backgroundColor: "#4c51bf",
         borderColor: "#4c51bf",
-        data:
-          role === 0
-            ? lineChart?.lastYearActiveUser
-            : lineChart?.lastYearStoreVisit,
+        data: currentYearData,
         fill: false,
       },
       {
-        label: new Date().getFullYear() - 1,
+        label: role === 0 ? new Date().getFullYear() - 1 : "Unprocessed Reports",
         fill: false,
         backgroundColor: "#fff",
         borderColor: "#fff",
-        data:
-          role === 0
-            ? lineChart?.currentYearActiveUser
-            : lineChart?.currentYearStoreVisit,
+        data: lastYearData,
       },
     ],
   };
@@ -122,7 +149,7 @@ export default function CardLineChart({ lineChart, role }) {
                 Overview
               </h6>
               <h2 className="text-white text-xl font-semibold">
-                {role === 0 ? "Active user" : "Store visit"}
+                {label}
               </h2>
             </div>
           </div>

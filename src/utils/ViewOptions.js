@@ -30,12 +30,12 @@ export const AccountSortingOptions = [
 
 export const StoreSortingOptions = [
   {
-    name: "a-z",
-    value: "AscName",
+    name: "Ngày mới nhất",
+    value: "AscCreatedDate",
   },
   {
-    name: "z-a",
-    value: "DescName",
+    name: "Ngày cũ nhất",
+    value: "DescCreatedDate",
   },
 ];
 

@@ -17,3 +17,12 @@ export const getStoreDashboardThunk = async (_, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+
+export const getStaffDashboardThunk = async (_, thunkAPI) => {
+  try {
+    const resp = await customFetch.get("/api/dashboard-reports/staff");
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

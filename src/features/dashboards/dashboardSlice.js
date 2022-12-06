@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
   getAdminDashboardThunk,
+  getStaffDashboardThunk,
   getStoreDashboardThunk,
 } from "./dashboardThunk";
 
@@ -21,6 +22,10 @@ export const getAdminDashboard = createAsyncThunk(
 export const getStoreDashboard = createAsyncThunk(
   "dashboard/getStoreDashboard",
   getStoreDashboardThunk
+);
+export const getStaffDashboard = createAsyncThunk(
+  "dashboard/getStaffDashboard",
+  getStaffDashboardThunk
 );
 
 const dashboardSlice = createSlice({
@@ -55,6 +60,20 @@ const dashboardSlice = createSlice({
       state.lineChart = payload.lineChart;
     },
     [getStoreDashboard.rejected]: (state, { payload }) => {
+      state.isDashboardLoading = false;
+      toast.error(payload);
+    },
+    [getStaffDashboard.pending]: (state) => {
+      state.isDashboardLoading = true;
+    },
+    [getStaffDashboard.fulfilled]: (state, { payload }) => {
+      console.log(payload)
+      state.isDashboardLoading = false;
+      state.cardStats = payload.cardStats;
+      state.barChart = payload.barChart;
+      state.lineChart = payload.lineChart;
+    },
+    [getStaffDashboard.rejected]: (state, { payload }) => {
       state.isDashboardLoading = false;
       toast.error(payload);
     },

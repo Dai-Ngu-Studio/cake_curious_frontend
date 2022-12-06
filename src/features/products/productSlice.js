@@ -23,7 +23,6 @@ const initialState = {
   description: "",
   quantity: 0,
   price: 0,
-  discount: 0,
   photoUrl: null,
   status: 0,
 };

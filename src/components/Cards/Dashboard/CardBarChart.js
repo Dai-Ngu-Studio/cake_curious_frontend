@@ -4,6 +4,23 @@ import { Bar } from "react-chartjs-2";
 import moment from "moment/moment";
 
 export default function CardBarChart({ barChart, role }) {
+  let currentMonthData = null;
+  let lastMonthData = null;
+  switch (role) {
+    case 0:
+      currentMonthData = barChart?.currentMonthReport
+      lastMonthData = barChart?.lastMonthReport
+      break;
+    case 1:
+      currentMonthData = barChart?.currentMonthReports
+      lastMonthData = barChart?.lastMonthReports
+      break;
+    case 2:
+      currentMonthData = barChart?.currentMonthSales
+      lastMonthData = barChart?.lastMonthSales
+      break;
+  }
+  
   const config = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     datasets: [
@@ -11,7 +28,7 @@ export default function CardBarChart({ barChart, role }) {
         label: moment().month(new Date().getMonth()).format("MMMM"),
         backgroundColor: "#ed64a6",
         borderColor: "#ed64a6",
-        data: role === 0 ? barChart?.lastMonthReport : barChart?.lastMonthSales,
+        data: currentMonthData,
         fill: false,
         barThickness: 8,
       },
@@ -22,10 +39,7 @@ export default function CardBarChart({ barChart, role }) {
         fill: false,
         backgroundColor: "#4c51bf",
         borderColor: "#4c51bf",
-        data:
-          role === 0
-            ? barChart?.currentMonthReport
-            : barChart?.currentMonthSales,
+        data: lastMonthData,
         barThickness: 8,
       },
     ],
@@ -99,7 +113,7 @@ export default function CardBarChart({ barChart, role }) {
                 Performance
               </h6>
               <h2 className="text-blueGray-700 text-xl font-semibold">
-                {role === 0 ? "User report" : "Week sales"}
+                {role === 0 || role === 1 ? "User report" : "Week sales"}
               </h2>
             </div>
           </div>
