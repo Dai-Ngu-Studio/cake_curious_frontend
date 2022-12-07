@@ -2,7 +2,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import NotificationDropdown from "../Dropdowns/NotificationDropdown";
+// import NotificationDropdown from "../Dropdowns/NotificationDropdown";
 import UserDropdown from "../Dropdowns/UserDropdown";
 import logoText from "../../assets/img/cake-curious-logo-text-line.png";
 import userTemp from "../../assets/img/user-sidebar-temp.png";
@@ -32,7 +32,7 @@ export default function Sidebar({ props }) {
           {/* User */}
           <ul className="md:hidden items-center flex flex-wrap list-none">
             <li className="inline-block relative">
-              <NotificationDropdown />
+              {/* <NotificationDropdown /> */}
             </li>
             <li className="inline-block relative">
               <UserDropdown />
