@@ -169,17 +169,17 @@ export default function Register() {
         }
       } catch (error) {
         if (error.code === "auth/provider-already-linked") {
-          toast.error("The account you logged in is already linked.");
+          toast.error("Tài khoản bạn đăng nhập đã có sđt");
         } else if (error.code === "auth/invalid-verification-code") {
-          toast.error("Invalid verification code");
+          toast.error("Mã OTP không hợp lệ");
         } else if (
           error.code === "auth/account-exists-with-different-credential"
         ) {
           toast.error(
-            "This phone number is linked to another account. Please use a different phone number"
+            "Số điện thoại này đang được dùng ở 1 cửa hàng khác. Vui lòng nhập số khác hoặc kiểm tra lại"
           );
         } else if (error.code === "auth/code-expired") {
-          toast.error("Code expired");
+          toast.error("Mã OTP hết hạn");
         }
         removeCaptchaFromLocalStorage();
       }
@@ -220,7 +220,7 @@ export default function Register() {
         ),
       }));
       Swal.fire(
-        "Xác nhận CCCD thành công!",
+        "Nhận thông tin CCCD thành công!",
         "Thông tin CCCD của bạn đã được nhập!",
         "success"
       );
@@ -355,7 +355,7 @@ export default function Register() {
                     <div className="grid grid-cols-2 gap-5 py-2">
                       <FormRow
                         type="text"
-                        labelText="Phone"
+                        labelText="Số điện thoại"
                         name="phoneNumber"
                         value={phoneNumber}
                         style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -364,7 +364,7 @@ export default function Register() {
                       />
                       <FormRow
                         type="text"
-                        labelText="Store Name"
+                        labelText="Tên cửa hàng"
                         name="name"
                         value={name}
                         style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -372,13 +372,6 @@ export default function Register() {
                       />
                     </div>
                     <div className="relative w-full mb-3">
-                      {/* <FormRowFile
-                        type="file"
-                        name="photoUrl"
-                        keyword="product-detail"
-                        value={photoUrl}
-                        handleChange={handleFileUpload}
-                      /> */}
                       <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
                         {photoUrl ? (
                           <img src={photoUrl} className="" />
@@ -413,7 +406,7 @@ export default function Register() {
                       </label>
                       <FormRow
                         type="text"
-                        labelText="Store Address"
+                        labelText="Địa chỉ cửa hàng"
                         name="storeAddress"
                         value={storeAddress}
                         style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -421,7 +414,7 @@ export default function Register() {
                       />
                       <FormRowArea
                         type="text"
-                        labelText="Description"
+                        labelText="Mô tả cho cửa hàng"
                         name="description"
                         value={description}
                         style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -435,7 +428,7 @@ export default function Register() {
                         type="button"
                         onClick={handleSubmit}
                       >
-                        Save
+                        Lưu
                       </button>
                     </div>
                     <div id="recaptcha-container"></div>
@@ -446,7 +439,7 @@ export default function Register() {
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                           htmlFor="grid-password"
                         >
-                          Verification code
+                          Mã xác nhận OTP
                         </label>
                         <input
                           type="text"
@@ -462,7 +455,7 @@ export default function Register() {
                             type="button"
                             onClick={ValidateOtp}
                           >
-                            Verify OTP
+                            Xác nhận mã OTP này!
                           </button>
                         </div>
                       </>
