@@ -19,11 +19,11 @@ export const OrderStatus = [
 
 export const ProductTypeOptions = [
   {
-    name: "Ingredient",
+    name: "Nguyên liệu",
     value: 0,
   },
   {
-    name: "Tool",
+    name: "Dụng cụ nhà bếp",
     value: 1,
   },
 ];
@@ -31,22 +31,22 @@ export const ProductTypeOptions = [
 export const ProductStatus = [
   {
     id: 0,
-    name: "Active",
+    name: "Đang bán",
   },
   {
     id: 1,
-    name: "Inactive",
+    name: "Chưa bán",
   },
 ];
 
 export const CouponStatus = [
   {
     id: 0,
-    name: "Active",
+    name: "Hoạt động",
   },
   {
     id: 1,
-    name: "Inactive",
+    name: "Ngưng hoạt động",
   },
 ];
 
