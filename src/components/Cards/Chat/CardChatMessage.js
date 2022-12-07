@@ -20,15 +20,25 @@ const CardChatMessage = ({ message }) => {
           : "justify-start"
       }`}
     >
-      <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-        <span className="block">{message.text}</span>
-        <img
-          className="object-cover w-10 h-10 rounded-full"
-          src={message.author.imageUrl}
-          alt=""
-          referrerPolicy="no-referrer"
-        />
-      </div>
+      {message.author.id === (user.store === null ? user.id : user.store.id) ? (
+        <>
+          <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded-xl shadow bg-green-200">
+            <span className="block">{message.text}</span>
+          </div>
+        </>
+      ) : (
+        <>
+          <img
+            className="object-cover w-10 h-10 rounded-full"
+            src={message.author.imageUrl}
+            alt=""
+            referrerPolicy="no-referrer"
+          />
+          <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded-xl shadow bg-gray-300 ml-2">
+            <span className="block">{message.text}</span>
+          </div>
+        </>
+      )}
     </li>
   );
 };
