@@ -6,7 +6,7 @@ const FormRowArea = ({
   handleChange,
   labelText,
   disabled,
-  className,
+  style,
 }) => {
   return (
     <div>
@@ -16,7 +16,7 @@ const FormRowArea = ({
         id={name}
         rows="4"
         disabled={disabled}
-        className={className}
+        className={style}
         value={value}
         onChange={handleChange}
       ></textarea>
