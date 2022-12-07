@@ -33,7 +33,7 @@ export default function ProductCardTable() {
                 className="font-semibold text-lg text-blueGray-700"
                 to="/store/product-form"
               >
-                Create
+                Tạo mới sản phẩm
               </Link>
             </div>
           </div>

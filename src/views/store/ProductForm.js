@@ -211,7 +211,6 @@ export const ProductForm = () => {
             </div>
 
             <div className="flex justify-between items-center pt-10">
-              {" "}
               <FormRowSelect
                 name="status"
                 labelText="Trạng thái sản phẩm mong muốn sau khi tạo"

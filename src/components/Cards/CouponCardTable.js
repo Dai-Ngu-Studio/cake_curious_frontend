@@ -34,7 +34,7 @@ export default function CouponCardTable() {
                 className="font-semibold text-lg text-blueGray-700"
                 to="/store/coupon-form"
               >
-                Create
+                Tạo mới Phiếu giảm giá
               </Link>
             </div>
           </div>
