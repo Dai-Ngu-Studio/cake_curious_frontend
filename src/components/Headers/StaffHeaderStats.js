@@ -3,7 +3,7 @@ import React from "react";
 // components
 import CardStats from "../Cards/Dashboard/CardStats";
 
-export default function AdminHeaderStats({ cardStats }) {
+export default function StaffHeaderStats({ cardStats }) {
   return (
     <>
       {/* Header */}
@@ -14,50 +14,50 @@ export default function AdminHeaderStats({ cardStats }) {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="REPORT"
-                  statTitle={cardStats?.currentWeekReport}
-                  statArrow={cardStats?.sinceLastWeekReport > 0 ? "up" : "down"}
-                  statPercent={cardStats?.sinceLastWeekReport}
+                  statSubtitle="TODAY REPORTS"
+                  statTitle={cardStats?.todayReports}
+                  statArrow={cardStats?.sinceYesterdayReports > 0 ? "up" : "down"}
+                  statPercent={cardStats?.sinceYesterdayReports}
                   statPercentColor={
-                    cardStats?.sinceLastWeekReport > 0
+                    cardStats?.sinceYesterdayReports > 0
                       ? "text-red-500"
                       : "text-emerald-500"
                   }
-                  statDescripiron="Since last week"
+                  statDescripiron="Since yesterday"
                   statIconName="far fa-chart-bar"
                   statIconColor="bg-red-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="NEW BAKERS"
-                  statTitle={cardStats?.currentMonthNewBaker}
+                  statSubtitle="REPORTED RECIPE"
+                  statTitle={cardStats?.currentWeekReportedRecipes}
                   statArrow={
-                    cardStats?.sinceLastMonthNewBaker > 0 ? "up" : "down"
+                    cardStats?.sinceLastWeekReportedRecipes > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastMonthNewBaker}
+                  statPercent={cardStats?.sinceLastWeekReportedRecipes}
                   statPercentColor={
-                    cardStats?.sinceLastMonthNewBaker > 0
-                      ? "text-emerald-500"
-                      : "text-red-500"
+                    cardStats?.sinceLastWeekReportedRecipes > 0
+                      ? "text-red-500"
+                      : "text-emerald-500"
                   }
-                  statDescripiron="Since last month"
+                  statDescripiron="Since last week"
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="ACTIVE USERS"
-                  statTitle={cardStats?.currentWeekActiveUser}
+                  statSubtitle="REPORTED COMMENT"
+                  statTitle={cardStats?.currentWeekReportedComments}
                   statArrow={
-                    cardStats?.sinceLastWeekActiveUser > 0 ? "up" : "down"
+                    cardStats?.sinceLastWeekReportedComments > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastWeekActiveUser}
+                  statPercent={cardStats?.sinceLastWeekReportedComments}
                   statPercentColor={
-                    cardStats?.sinceLastWeekActiveUser > 0
-                      ? "text-emerald-500"
-                      : "text-red-500"
+                    cardStats?.sinceLastWeekReportedComments > 0
+                      ? "text-red-500"
+                      : "text-emerald-500"
                   }
                   statDescripiron="Since last week"
                   statIconName="fas fa-users"
@@ -67,17 +67,17 @@ export default function AdminHeaderStats({ cardStats }) {
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
                   statSubtitle="NEW STORE"
-                  statTitle={cardStats?.currentMonthNewStore}
+                  statTitle={cardStats?.currentWeekProcessedReports}
                   statArrow={
-                    cardStats?.sinceLastMonthNewStore > 0 ? "up" : "down"
+                    cardStats?.sinceLastWeekProcessedReports > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastMonthNewStore}
+                  statPercent={cardStats?.sinceLastWeekProcessedReports}
                   statPercentColor={
-                    cardStats?.sinceLastMonthNewStore > 0
-                      ? "text-emerald-500"
-                      : "text-red-500"
+                    cardStats?.sinceLastWeekProcessedReports > 0
+                      ? "text-red-500"
+                      : "text-emerald-500"
                   }
-                  statDescripiron="Since last month"
+                  statDescripiron="Since last week"
                   statIconName="fas fa-percent"
                   statIconColor="bg-lightBlue-500"
                 />

@@ -27,7 +27,6 @@ export const ProductForm = () => {
     description,
     quantity,
     price,
-    discount,
     photoUrl,
     status,
   } = useSelector((store) => store.product);
@@ -95,7 +94,6 @@ export const ProductForm = () => {
             description,
             quantity: parseInt(quantity),
             price: parseFloat(price),
-            discount: parseFloat(discount),
             photoUrl: image || null,
             status: parseInt(status),
           },
@@ -114,7 +112,6 @@ export const ProductForm = () => {
         description,
         quantity,
         price,
-        discount,
         photoUrl: image || null,
         status,
       })
@@ -172,13 +169,6 @@ export const ProductForm = () => {
               name="price"
               labelText="Price"
               value={price}
-              handleChange={handleProductInput}
-            />
-            <FormRow
-              type="number"
-              name="discount"
-              labelText="Discount"
-              value={discount}
               handleChange={handleProductInput}
             />
             <FormRowSelect

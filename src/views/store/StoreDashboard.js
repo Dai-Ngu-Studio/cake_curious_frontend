@@ -11,14 +11,14 @@ export default function StoreDashboard() {
   const { isDashboardLoading, barChart, lineChart, cardStats } = useSelector(
     (store) => store.dashboard
   );
-  const { user } = useSelector((store) => store.user);
-  let priorityRole = 99;
-  for (let i = 0; i < user.hasRoles.length; i++) {
-    var roleId = user.hasRoles[i].roleId;
-    if (roleId < priorityRole) {
-      priorityRole = roleId;
-    }
-  }
+  // const { user } = useSelector((store) => store.user);
+  // let priorityRole = 99;
+  // for (let i = 0; i < user.hasRoles.length; i++) {
+  //   var roleId = user.hasRoles[i].roleId;
+  //   if (roleId < priorityRole) {
+  //     priorityRole = roleId;
+  //   }
+  // }
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,10 +33,10 @@ export default function StoreDashboard() {
       <StoreHeaderStats cardStats={cardStats} />
       <div className="flex flex-wrap">
         <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-          <CardLineChart lineChart={lineChart} role={priorityRole} />
+          <CardLineChart lineChart={lineChart} role={2} />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardBarChart barChart={barChart} role={priorityRole} />
+          <CardBarChart barChart={barChart} role={2} />
         </div>
       </div>
     </>

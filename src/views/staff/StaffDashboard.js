@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import CardBarChart from "../../components/Cards/Dashboard/CardBarChart";
 import CardLineChart from "../../components/Cards/Dashboard/CardLineChart";
-import CardPageVisits from "../../components/Cards/Dashboard/CardPageVisits";
-import CardSocialTraffic from "../../components/Cards/Dashboard/CardSocialTraffic";
-import AdminHeaderStats from "../../components/Headers/AdminHeaderStats";
-import { getAdminDashboard } from "../../features/dashboards/dashboardSlice";
+import StaffHeaderStats from "../../components/Headers/StaffHeaderStats";
+import { getStaffDashboard } from "../../features/dashboards/dashboardSlice";
 import Loading from "../../utils/Loading";
 
 export default function StaffDashboard() {
@@ -14,14 +12,12 @@ export default function StaffDashboard() {
     isDashboardLoading,
     barChart,
     lineChart,
-    tableStoreVisit,
-    tableFamousRecipe,
     cardStats,
   } = useSelector((store) => store.dashboard);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAdminDashboard());
+    dispatch(getStaffDashboard());
   }, []);
 
   if (isDashboardLoading) {
@@ -29,21 +25,13 @@ export default function StaffDashboard() {
   }
   return (
     <>
-      <AdminHeaderStats cardStats={cardStats} />
+      <StaffHeaderStats cardStats={cardStats} />
       <div className="flex flex-wrap">
         <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-          <CardLineChart lineChart={lineChart} role={0} />
+          <CardLineChart lineChart={lineChart} role={1} />
         </div>
         <div className="w-full xl:w-4/12 px-4">
-          <CardBarChart barChart={barChart} role={0} />
-        </div>
-      </div>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-          <CardPageVisits famousRecipes={tableFamousRecipe} />
-        </div>
-        <div className="w-full xl:w-4/12 px-4">
-          <CardSocialTraffic storeVisits={tableStoreVisit} />
+          <CardBarChart barChart={barChart} role={1} />
         </div>
       </div>
     </>
