@@ -1,10 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-// components
-
-import AuthNavbar from "../components/Navbars/AuthNavbar";
-import FooterSmall from "../components/Footers/FooterSmall";
-
+// import AuthNavbar from "../components/Navbars/AuthNavbar";
+// import FooterSmall from "../components/Footers/FooterSmall";
 // views
 
 import Login from "../views/auth/Login";
