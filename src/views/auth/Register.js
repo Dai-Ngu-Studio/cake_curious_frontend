@@ -19,22 +19,18 @@ import { handleStoreChange } from "../../features/stores/storeSlice";
 import { getUser, updateUserRole } from "../../features/users/userSlice";
 import { auth } from "../../utils/firebase";
 import { removeCaptchaFromLocalStorage } from "../../utils/localStorage";
+import LeftSvg from "./LeftSvg";
+import Swal from "sweetalert2";
 
 export default function Register() {
   const { user, isUserRoleDoneUpdating } = useSelector((store) => store.user);
-  const {
-    phoneNumber,
-    OTP,
-    // fullName,
-    // gender,
-    // dateOfBirth,
-    // address,
-    // citizenshipNumber,
-    // citizenshipDate,
-  } = useSelector((store) => store.account);
+
+  const { phoneNumber, OTP } = useSelector((store) => store.account);
   const { name, description, photoUrl, storeAddress } = useSelector(
     (selector) => selector.store
   );
+  const [step, setStep] = useState(1);
+
   const { image } = useSelector((store) => store.image);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -98,7 +94,7 @@ export default function Register() {
       }
     }
   }, [user]);
-
+  useEffect(() => {}, [step]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -142,7 +138,6 @@ export default function Register() {
         toast.error("You requested too many time. Please try again later");
       }
       removeCaptchaFromLocalStorage();
-      console.log(error);
     }
   };
   const ValidateOtp = async () => {
@@ -187,7 +182,6 @@ export default function Register() {
           toast.error("Code expired");
         }
         removeCaptchaFromLocalStorage();
-        console.log(error);
       }
     }
   };
@@ -202,7 +196,9 @@ export default function Register() {
       const qrCode = await scanFile(file);
       // It returns null if no QR code is found
       if (qrCode === null) {
-        setError("No QR code is found ");
+        setError(
+          "Không thể xác minh QR code, vui lòng thử lại với ảnh rõ ràng"
+        );
         return;
       }
       const [
@@ -213,7 +209,6 @@ export default function Register() {
         address,
         citizenshipDate,
       ] = qrCode.replaceAll("||", "|").split("|");
-      console.log(dateOfBirth);
       setResult((prevState) => ({
         fullName: fullName,
         gender: gender,
@@ -224,198 +219,254 @@ export default function Register() {
           "DD/MM/YYYY"
         ),
       }));
+      Swal.fire(
+        "Xác nhận CCCD thành công!",
+        "Thông tin CCCD của bạn đã được nhập!",
+        "success"
+      );
+      setStep(2);
     } catch (e) {
       if (e instanceof Event) {
-        setError("Invalid Image");
+        setError("Vui lòng thử lại với ảnh rõ ràng hơn");
       } else {
-        console.log(e);
-        setError("Unknown error");
+        setError("Lỗi xác nhận ảnh");
       }
     }
   };
-
   return (
     <>
-      <div className="container mx-auto px-4 h-full">
-        <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-6/12 px-4">
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-              <div className="rounded-t mb-0 px-6 py-6">
-                <div className="text-center mb-3">
-                  <input type="file" onChange={handleFileInput} />
-                </div>
-                {error}
-                {/* <div className="btn-wrapper text-center">
-                  <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img
-                      alt="..."
-                      className="w-5 mr-1"
-                      src={require("../../assets/img/github.svg").default}
-                    />
-                    Github
-                  </button>
-                  <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img
-                      alt="..."
-                      className="w-5 mr-1"
-                      src={require("../../assets/img/google.svg").default}
-                    />
-                    Google
-                  </button>
-                </div> */}
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
+      <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
+        <div className="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-3/4 overflow-hidden">
+          <div className="md:flex w-full">
+            <div className="hidden md:flex items-center w-1/2 bg-emerald-500 py-10 px-10">
+              <LeftSvg />
+            </div>
+            <div className="w-full md:w-1/2 py-10 px-5 md:px-10">
+              <div className="text-center mb-10">
+                <h1 className="font-bold text-3xl text-gray-900">
+                  ĐĂNG KÝ BÁN HÀNG
+                </h1>
+                <p>Vui lòng nhập thông tin để đăng ký</p>
               </div>
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <div className="text-blueGray-400 text-center mb-3 font-bold">
-                  <small>User Information</small>
-                </div>
-                <form>
-                  <div className="relative w-full mb-3">
-                    <FormRow
-                      type="text"
-                      labelText="Full Name"
-                      name="fullName"
-                      value={result.fullName}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      // handleChange={handleUserInput}
-                      disabled={true}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Gender"
-                      name="gender"
-                      value={result.gender}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      // handleChange={handleUserInput}
-                      disabled={true}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Date Of Birth"
-                      name="dateOfBirth"
-                      value={result.dateOfBirth}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      // handleChange={handleUserInput}
-                      disabled={true}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Address"
-                      name="address"
-                      value={result.address}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      // handleChange={handleUserInput}
-                      disabled={true}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Citizenship Number"
-                      name="citizenshipNumber"
-                      value={result.citizenshipNumber}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      // handleChange={handleUserInput}
-                      disabled={true}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Citizenship Date"
-                      name="citizenshipDate"
-                      value={result.citizenshipDate}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      // handleChange={handleUserInput}
-                      disabled={true}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Phone"
-                      name="phoneNumber"
-                      value={phoneNumber}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Phone Number"
-                      handleChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="flex justify-center items-center h-10">
-                    <hr className="w-10" />
-                    <div className="text-gray-400">STORE INFO</div>
-                    <hr className="w-10" />
-                  </div>
-                  <div className="relative w-full mb-3">
-                    <FormRowFile
-                      type="file"
-                      name="photoUrl"
-                      keyword="product-detail"
-                      value={photoUrl}
-                      handleChange={handleFileUpload}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Store Name"
-                      name="name"
-                      value={name}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      handleChange={handleUserInput}
-                    />
-                    <FormRow
-                      type="text"
-                      labelText="Store Address"
-                      name="storeAddress"
-                      value={storeAddress}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      handleChange={handleUserInput}
-                    />
-                    <FormRowArea
-                      type="text"
-                      labelText="Description"
-                      name="description"
-                      value={description}
-                      style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      handleChange={handleUserInput}
-                    />
-                  </div>
-
-                  <div className="text-center mt-6">
-                    <button
-                      className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={handleSubmit}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </form>
-                <div id="recaptcha-container"></div>
-                {isVerifying && (
+              <div>
+                {step === 1 && (
                   <>
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Verification code
+                    <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+                      <span className="flex items-center space-x-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="w-6 h-6 text-gray-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          />
+                        </svg>
+                        <span className="font-medium text-gray-600">
+                          Chọn ảnh mặt trước CCCD có QR để xác nhận thông tin
+                          <div className="text-red-500">{error}</div>
+                        </span>
+                      </span>
+                      <input
+                        type="file"
+                        name="file_upload"
+                        className="hidden"
+                        onChange={handleFileInput}
+                      />
                     </label>
-                    <input
-                      type="text"
-                      name="OTP"
-                      value={OTP}
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="OTP"
-                      onChange={handleUserInput}
-                    />
+                    <div className="relative w-full mb-3">
+                      <div className="grid grid-cols-2 gap-5 py-2">
+                        <FormRow
+                          type="text"
+                          labelText="Họ và tên"
+                          name="fullName"
+                          value={result.fullName}
+                          style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          // handleChange={handleUserInput}
+                          disabled={true}
+                        />
+                        <FormRow
+                          type="text"
+                          labelText="Giới tính"
+                          name="gender"
+                          value={result.gender}
+                          style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          // handleChange={handleUserInput}
+                          disabled={true}
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-5 py-2">
+                        <FormRow
+                          type="text"
+                          labelText="Ngày sinh"
+                          name="dateOfBirth"
+                          value={result.dateOfBirth}
+                          style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          // handleChange={handleUserInput}
+                          disabled={true}
+                        />
+                        <FormRow
+                          type="text"
+                          labelText="Địa chỉ"
+                          name="address"
+                          value={result.address}
+                          style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          // handleChange={handleUserInput}
+                          disabled={true}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-5 py-2">
+                        <FormRow
+                          type="text"
+                          labelText="Số CCCD"
+                          name="citizenshipNumber"
+                          value={result.citizenshipNumber}
+                          style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          // handleChange={handleUserInput}
+                          disabled={true}
+                        />
+                        <FormRow
+                          type="text"
+                          labelText="Ngày đăng ký CCCD"
+                          name="citizenshipDate"
+                          value={result.citizenshipDate}
+                          style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          // handleChange={handleUserInput}
+                          disabled={true}
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {step === 2 && (
+                  <>
+                    <div className="flex justify-center items-center">
+                      <hr className="w-10" />
+                      <div className="text-gray-400">Thông tin cửa hàng</div>
+                      <hr className="w-10" />
+                    </div>
+                    <div className="grid grid-cols-2 gap-5 py-2">
+                      <FormRow
+                        type="text"
+                        labelText="Phone"
+                        name="phoneNumber"
+                        value={phoneNumber}
+                        style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Phone Number"
+                        handleChange={handleUserInput}
+                      />
+                      <FormRow
+                        type="text"
+                        labelText="Store Name"
+                        name="name"
+                        value={name}
+                        style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        handleChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="relative w-full mb-3">
+                      {/* <FormRowFile
+                        type="file"
+                        name="photoUrl"
+                        keyword="product-detail"
+                        value={photoUrl}
+                        handleChange={handleFileUpload}
+                      /> */}
+                      <label className="flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+                        {photoUrl ? (
+                          <img src={photoUrl} className="" />
+                        ) : (
+                          <span className="flex items-center space-x-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="w-6 h-6 text-gray-600"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                              />
+                            </svg>
+                            <span className="font-medium text-gray-600">
+                              Chọn ảnh cửa hàng
+                            </span>
+                          </span>
+                        )}
+
+                        <input
+                          type="file"
+                          name="photoUrl"
+                          className="hidden"
+                          onChange={handleFileUpload}
+                        />
+                      </label>
+                      <FormRow
+                        type="text"
+                        labelText="Store Address"
+                        name="storeAddress"
+                        value={storeAddress}
+                        style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        handleChange={handleUserInput}
+                      />
+                      <FormRowArea
+                        type="text"
+                        labelText="Description"
+                        name="description"
+                        value={description}
+                        style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        handleChange={handleUserInput}
+                      />
+                    </div>
+
                     <div className="text-center mt-6">
                       <button
                         className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                         type="button"
-                        onClick={ValidateOtp}
+                        onClick={handleSubmit}
                       >
-                        Verify OTP
+                        Save
                       </button>
                     </div>
+                    <div id="recaptcha-container"></div>
+
+                    {isVerifying && (
+                      <>
+                        <label
+                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Verification code
+                        </label>
+                        <input
+                          type="text"
+                          name="OTP"
+                          value={OTP}
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          placeholder="OTP"
+                          onChange={handleUserInput}
+                        />
+                        <div className="text-center mt-6">
+                          <button
+                            className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={ValidateOtp}
+                          >
+                            Verify OTP
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
               </div>
