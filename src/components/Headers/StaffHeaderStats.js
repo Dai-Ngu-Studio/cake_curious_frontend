@@ -14,7 +14,7 @@ export default function StaffHeaderStats({ cardStats }) {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="TODAY REPORTS"
+                  statSubtitle="SỐ BÁO CÁO HÔM NAY"
                   statTitle={cardStats?.todayReports}
                   statArrow={cardStats?.sinceYesterdayReports > 0 ? "up" : "down"}
                   statPercent={cardStats?.sinceYesterdayReports}
@@ -23,14 +23,14 @@ export default function StaffHeaderStats({ cardStats }) {
                       ? "text-red-500"
                       : "text-emerald-500"
                   }
-                  statDescripiron="Since yesterday"
+                  statDescripiron="Từ hôm qua"
                   statIconName="far fa-chart-bar"
                   statIconColor="bg-red-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="REPORTED RECIPE"
+                  statSubtitle="CÔNG THỨC BỊ BÁO CÁO"
                   statTitle={cardStats?.currentWeekReportedRecipes}
                   statArrow={
                     cardStats?.sinceLastWeekReportedRecipes > 0 ? "up" : "down"
@@ -41,14 +41,14 @@ export default function StaffHeaderStats({ cardStats }) {
                       ? "text-red-500"
                       : "text-emerald-500"
                   }
-                  statDescripiron="Since last week"
+                  statDescripiron="Từ tuần trước"
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="REPORTED COMMENT"
+                  statSubtitle="BÌNH LUẬN BỊ BÁO CÁO"
                   statTitle={cardStats?.currentWeekReportedComments}
                   statArrow={
                     cardStats?.sinceLastWeekReportedComments > 0 ? "up" : "down"
@@ -59,14 +59,14 @@ export default function StaffHeaderStats({ cardStats }) {
                       ? "text-red-500"
                       : "text-emerald-500"
                   }
-                  statDescripiron="Since last week"
+                  statDescripiron="Từ tuần trước"
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="NEW STORE"
+                  statSubtitle="BÁO CÁO ĐÃ XỬ LÝ"
                   statTitle={cardStats?.currentWeekProcessedReports}
                   statArrow={
                     cardStats?.sinceLastWeekProcessedReports > 0 ? "up" : "down"
@@ -77,7 +77,7 @@ export default function StaffHeaderStats({ cardStats }) {
                       ? "text-red-500"
                       : "text-emerald-500"
                   }
-                  statDescripiron="Since last week"
+                  statDescripiron="Từ tuần trước"
                   statIconName="fas fa-percent"
                   statIconColor="bg-lightBlue-500"
                 />
