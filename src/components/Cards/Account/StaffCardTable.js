@@ -14,6 +14,7 @@ import {
   BsEyeFill,
   BsFileEarmarkExcelFill,
   BsFileCheckFill,
+  BsFillPersonPlusFill,
 } from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
@@ -89,21 +90,23 @@ export const StaffCardTable = () => {
     });
     return smallestRoleID;
   }
-  async function test() {
+  async function addStaffModal() {
     const { value: email } = await Swal.fire({
-      title: "Enter your IP address",
-      input: "text",
-      inputLabel: "Your IP address",
+      title: "Nhập email nhân viên",
+      input: "email",
       showCancelButton: true,
+      inputPlaceholder: "example@domain.com",
+      confirmButtonColor: "rgb(22 163 74)",
       inputValidator: (value) => {
         if (!value) {
-          return "You need to write something!";
+          return "Vui lòng nhập email";
         }
       },
     });
-    dispatch(addStaff({ email: email }));
+
     if (email) {
-      Swal.fire(`Your IP address is ${email}`);
+      dispatch(addStaff({ email: email }));
+      Swal.fire(`Đã thêm tài khoản nhân viên ${email} thành công`);
     }
   }
   return (
@@ -114,11 +117,13 @@ export const StaffCardTable = () => {
         }
       >
         <div
+          className="flex items-center p-2 ml-5 w-fit text-green-500 border border-green-600 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
           onClick={() => {
-            test();
+            addStaffModal();
           }}
         >
-          Thêm tài khoản nhân viên kiểm duyệt
+          <BsFillPersonPlusFill className="text-3xl mr-2" />
+          <div> Thêm tài khoản nhân viên</div>
         </div>
         {accounts.length === 0 ? (
           <div className="block w-full overflow-x-auto">
