@@ -32,6 +32,7 @@ import Register from "./views/auth/Register";
 import CouponTables from "./views/store/CouponTables";
 import { CouponForm } from "./views/store/CouponForm";
 import AdminCommentReportForm from "./views/admin/AdminCommentReportForm";
+import StaffManagement from "./views/admin/StaffManagement";
 function App() {
   return (
     <BrowserRouter>
@@ -62,6 +63,7 @@ function App() {
             path="report-comment/:commentId"
             element={<AdminCommentReportForm />}
           />
+          <Route path="staff-management" element={<StaffManagement />} />
         </Route>
         <Route
           path="/staff/"
