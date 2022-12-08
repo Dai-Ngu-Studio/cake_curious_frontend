@@ -5,6 +5,7 @@ import {
   addUserToLocalStorage,
   getTokenFromLocalStorage,
   getUserFromLocalStorage,
+  removeCaptchaFromLocalStorage,
   removeTokenFromLocalStorage,
   removeUserFromLocalStorage,
 } from "../../utils/localStorage";
@@ -18,6 +19,7 @@ import {
 
 const initialState = {
   isUserLoading: false,
+  isDoneGettingUser: false,
   isUserRoleDoneUpdating: false,
   email: "",
   password: "",
@@ -47,13 +49,25 @@ const userSlice = createSlice({
     logoutUser: (state, { payload }) => {
       state.user = null;
       state.token = null;
+      state.isDoneGettingUser = false;
       removeUserFromLocalStorage();
       removeTokenFromLocalStorage();
       if (payload) {
         toast.success(payload);
       }
     },
-    clearAllUsersState: (state) => initialState,
+    clearAllUsersState: (state) => {
+      removeUserFromLocalStorage()
+      removeTokenFromLocalStorage()
+      removeCaptchaFromLocalStorage()
+      state.user = null;
+      state.token = null;
+      state.isUserLoading = false;
+      state.isDoneGettingUser = false;
+      // state.isUserRoleDoneUpdating = false;
+      state.email = "";
+      state.password = "";
+    },
     clearUserLoginValues: (state) => {
       return { ...state, email: "", password: "" };
     },
@@ -85,14 +99,17 @@ const userSlice = createSlice({
     },
     [getUser.pending]: (state) => {
       state.isUserLoading = true;
+      state.isDoneGettingUser = false;
     },
     [getUser.fulfilled]: (state, { payload }) => {
       state.isUserLoading = false;
+      state.isDoneGettingUser = true
       state.user = payload;
       addUserToLocalStorage(payload);
     },
     [getUser.rejected]: (state, { payload }) => {
       state.isUserLoading = false;
+      state.isDoneGettingUser = false;
       toast.error(payload);
     },
     [updateUserRole.pending]: (state) => {

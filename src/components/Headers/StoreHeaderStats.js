@@ -47,7 +47,7 @@ export default function StoreHeaderStats({ cardStats }) {
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="ĐƠN HÀNG HOÀNH THÀNH"
+                  statSubtitle="ĐƠN HÀNG HOÀN THÀNH"
                   statTitle={cardStats?.currentMonthTotalCompletedOrder}
                   statArrow={
                     cardStats?.sinceLastMonthTotalCompletedOrder > 0
