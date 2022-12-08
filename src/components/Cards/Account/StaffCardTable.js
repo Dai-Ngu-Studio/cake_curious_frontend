@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllAccounts,
+  addStaff,
   handleAccountChange,
   updateAccount,
   updateAccountRole,
@@ -16,6 +17,7 @@ import {
 } from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
+import Swal from "sweetalert2";
 
 export const StaffCardTable = () => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -87,7 +89,23 @@ export const StaffCardTable = () => {
     });
     return smallestRoleID;
   }
-  console.log(accounts);
+  async function test() {
+    const { value: email } = await Swal.fire({
+      title: "Enter your IP address",
+      input: "text",
+      inputLabel: "Your IP address",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write something!";
+        }
+      },
+    });
+    dispatch(addStaff({ email: email }));
+    if (email) {
+      Swal.fire(`Your IP address is ${email}`);
+    }
+  }
   return (
     <>
       <div
@@ -95,6 +113,13 @@ export const StaffCardTable = () => {
           "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
         }
       >
+        <div
+          onClick={() => {
+            test();
+          }}
+        >
+          Thêm tài khoản nhân viên kiểm duyệt
+        </div>
         {accounts.length === 0 ? (
           <div className="block w-full overflow-x-auto">
             <h2 className="text-center pb-3">No accounts to display...</h2>
