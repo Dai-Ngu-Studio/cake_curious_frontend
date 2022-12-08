@@ -16,11 +16,8 @@ export default function LandingNavbar() {
             to="/"
           >
             <img src={logo} className="h-12" />
-            <div className="flex h-12 pl-2 text-sm items-center">
-              <div>
-                <p className="">Dành cho</p>
-                <p className="">cửa hàng</p>
-              </div>
+            <div className="flex h-12 pl-2 items-center">
+              <div>Kênh quản lý</div>
             </div>
           </Link>
           <button
