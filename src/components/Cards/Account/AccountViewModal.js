@@ -76,12 +76,12 @@ export default function AccountViewModal({ id }) {
               {user.gender || <div className="text-gray-500">Unknown</div>}
             </div>
           </div>
-          <div className="flex items-center gap-5">
+          {/* <div className="flex items-center gap-5">
             <div className="w-20 text-right">Mã số</div>
             <div className="w-96 p-2 rounded-md border-gray-300 border">
               {user.id || <div className="text-gray-500">Unknown</div>}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -35,12 +35,12 @@ export default function StoreViewModal({ store }) {
               <td>{store.rating}</td>
             </tr>
           </table> */}
-          <div className="flex items-center gap-5 mb-3">
+          {/* <div className="flex items-center gap-5 mb-3">
             <div className="w-28 text-right">Mã số </div>
             <div className="w-96 p-2 rounded-md border-gray-300 border">
               {store.id}
             </div>
-          </div>
+          </div> */}
           <div className="flex items-center gap-5 ">
             <div className="w-28 text-right">Tên cửa hàng </div>
             <div className="w-96 p-2 rounded-md border-gray-300 border">
