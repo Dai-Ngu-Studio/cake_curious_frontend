@@ -22,7 +22,7 @@ export default function CardBarChart({ barChart, role }) {
   }
   
   const config = {
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+    labels: barChart?.week,
     datasets: [
       {
         label: moment().month(new Date().getMonth()).format("MMMM"),

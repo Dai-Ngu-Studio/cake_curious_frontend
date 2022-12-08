@@ -95,11 +95,11 @@ export const ReportStatus = [
 
 export const DiscountTypeOptions = [
   {
-    name: "PercentOff",
+    name: "Giảm theo %",
     value: 0,
   },
   {
-    name: "FixedDecrease",
+    name: "Giảm cố định",
     value: 1,
   },
 ];

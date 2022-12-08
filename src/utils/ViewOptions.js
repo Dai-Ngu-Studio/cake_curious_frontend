@@ -103,10 +103,10 @@ export const AccountFilterOptions = [
   //   name: "Quản trị viên",
   //   value: "Administrator",
   // },
-  {
-    name: "Nhân viên",
-    value: "Staff",
-  },
+  // {
+  //   name: "Nhân viên",
+  //   value: "Staff",
+  // },
   {
     name: "Chủ cửa hàng",
     value: "StoreOwner",
