@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { getImageThunk } from "./imageThunk";
 
 const initialState = {
-  isGetImageLoading: false,
+  isDoneGettingImage: false,
   image: "",
 };
 
@@ -17,14 +17,14 @@ const imageSlice = createSlice({
   },
   extraReducers: {
     [getImage.pending]: (state) => {
-      state.isGetImageLoading = true;
+      state.isDoneGettingImage = false;
     },
     [getImage.fulfilled]: (state, { payload }) => {
-      state.isGetImageLoading = false;
+      state.isDoneGettingImage = true;
       state.image = payload;
     },
     [getImage.rejected]: (state, { payload }) => {
-      state.isGetImageLoading = false;
+      state.isDoneGettingImage = false;
       toast.error(payload);
     },
   },

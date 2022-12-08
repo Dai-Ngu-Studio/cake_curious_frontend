@@ -22,7 +22,7 @@ export default function CardBarChart({ barChart, role }) {
   }
   
   const config = {
-    labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
+    labels: barChart?.week,
     datasets: [
       {
         label: moment().month(new Date().getMonth()).format("MMMM"),
@@ -113,7 +113,7 @@ export default function CardBarChart({ barChart, role }) {
                 Performance
               </h6>
               <h2 className="text-blueGray-700 text-xl font-semibold">
-                {role === 0 || role === 1 ? "User report" : "Week sales"}
+                {role === 0 || role === 1 ? "Lượng báo cáo người dùng" : "Sản phẩm bán được trong tuần"}
               </h2>
             </div>
           </div>

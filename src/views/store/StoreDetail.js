@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -24,13 +24,31 @@ export default function StoreDetail() {
     rating,
     isStoreLoading,
   } = useSelector((selector) => selector.store);
-  const { image } = useSelector((store) => store.image);
+  const { image, isDoneGettingImage } = useSelector((store) => store.image);
   const dispatch = useDispatch();
+  const [choseImage, setChosenImage] = useState("")
 
   useEffect(() => {
     dispatch(getUserStore());
   }, []);
 
+  useEffect(() => {
+    if (isDoneGettingImage) {
+      dispatch(
+        updateStore({
+          storeId: editStoreId,
+          store: {
+            id: editStoreId,
+            address: storeAddress,
+            name,
+            description,
+            photoUrl: image || null,
+          },
+        })
+      );
+    }
+  }, [isDoneGettingImage])
+  
   if (isStoreLoading) {
     return <Loading />;
   }
@@ -57,7 +75,7 @@ export default function StoreDetail() {
     const name = e.target.name;
     const value = await convertToBase64(file);
     dispatch(handleStoreChange({ name, value }));
-    dispatch(getImage({ tmpImage: file }));
+    setChosenImage(file);
   };
 
   const handleStoreDetailSubmit = (e) => {
@@ -66,19 +84,7 @@ export default function StoreDetail() {
       toast.error("Please fill out all fields");
       return;
     }
-
-    dispatch(
-      updateStore({
-        storeId: editStoreId,
-        store: {
-          id: editStoreId,
-          address: storeAddress,
-          name,
-          description,
-          photoUrl: image || null,
-        },
-      })
-    );
+    dispatch(getImage({ tmpImage: choseImage }));
   };
 
   return (

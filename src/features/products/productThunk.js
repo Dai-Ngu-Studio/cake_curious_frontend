@@ -40,7 +40,7 @@ export const updateProductThunk = async ({ productId, product }, thunkAPI) => {
   try {
     const resp = await customFetch.put(`/api/products/${productId}`, product);
     // thunkAPI.dispatch(clearProductValues());
-    // thunkAPI.dispatch(clearImageValues());
+    thunkAPI.dispatch(clearImageValues());
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);

@@ -7,60 +7,36 @@ export default function CardLineChart({ lineChart, role }) {
   let currentYearData = null;
   let lastYearData = null;
   let label = "";
-  // const months = [];
-  // for (let index = 0; index < lineChart?.currentYearActiveUser?.length; index++) {
-  //   const element =  lineChart?.currentYearActiveUser[index];
-  //   if (element > 0) {
-  //     // console.log(element);
-  //      months.push(moment().year(new Date().getFullYear()).month(index+1).date(0).startOf("month").format("MMM"))
-  //   }
-  //   // months.push(moment().year(2022).month(index+1).date(0).startOf("month"))
-  //   // console.log(element)
-  // }
-  // console.log(months)
   switch (role) {
     case 0:
       currentYearData = lineChart?.currentYearActiveUser
       lastYearData = lineChart?.lastYearActiveUser
-      label = "Active user"
+      label = "Lượng người truy cập"
       break;
     case 1:
       currentYearData = lineChart?.currentYearProcessedReports
       lastYearData = lineChart?.currentYearUnprocessedReports
-      label = "Reports"
+      label = "Lượng báo cáo"
       break;
     case 2:
       currentYearData = lineChart?.currentYearStoreVisit
       lastYearData = lineChart?.lastYearStoreVisit
-      label = "Store visit"
+      label = "Lượng truy cập cửa hàng"
       break;
   }
 
   const config = {
-    labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
+    labels: lineChart?.month,
     datasets: [
       {
-        label: role === 0 ? new Date().getFullYear() : "Processed Reports",
+        label: role === 0 ? new Date().getFullYear() : "Báo cáo đã xử lý",
         backgroundColor: "#4c51bf",
         borderColor: "#4c51bf",
         data: currentYearData,
         fill: false,
       },
       {
-        label: role === 0 ? new Date().getFullYear() - 1 : "Unprocessed Reports",
+        label: role === 0 ? new Date().getFullYear() - 1 : "Báo cáo chưa xử lý",
         fill: false,
         backgroundColor: "#fff",
         borderColor: "#fff",
