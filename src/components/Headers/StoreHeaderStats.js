@@ -13,7 +13,7 @@ export default function StoreHeaderStats({ cardStats }) {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="PRODUCT SOLD"
+                  statSubtitle="SẢN PHẨM BÁN ĐƯỢC"
                   statTitle={cardStats?.currentMonthProductSold}
                   statArrow={
                     cardStats?.sinceLastMonthProductSold > 0 ? "up" : "down"
@@ -24,14 +24,14 @@ export default function StoreHeaderStats({ cardStats }) {
                       ? "text-emerald-500"
                       : "text-red-500"
                   }
-                  statDescripiron="Since last month"
+                  statDescripiron="Từ tháng trước"
                   statIconName="far fa-chart-bar"
                   statIconColor="bg-red-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="SALES"
+                  statSubtitle="DOANH THU"
                   statTitle={cardStats?.currentWeekSales}
                   statArrow={cardStats?.sinceLastWeekSales > 0 ? "up" : "down"}
                   statPercent={cardStats?.sinceLastWeekSales}
@@ -40,14 +40,14 @@ export default function StoreHeaderStats({ cardStats }) {
                       ? "text-emerald-500"
                       : "text-red-500"
                   }
-                  statDescripiron="Since last week"
+                  statDescripiron="Từ tuần trước"
                   statIconName="fas fa-chart-pie"
                   statIconColor="bg-orange-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="COMPLETE ORDERS"
+                  statSubtitle="ĐƠN HÀNG HOÀN THÀNH"
                   statTitle={cardStats?.currentMonthTotalCompletedOrder}
                   statArrow={
                     cardStats?.sinceLastMonthTotalCompletedOrder > 0
@@ -60,14 +60,14 @@ export default function StoreHeaderStats({ cardStats }) {
                       ? "text-emerald-500"
                       : "text-red-500"
                   }
-                  statDescripiron="Since last month"
+                  statDescripiron="Từ tuần trước"
                   statIconName="fas fa-users"
                   statIconColor="bg-pink-500"
                 />
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardStats
-                  statSubtitle="STORE VISIT"
+                  statSubtitle="LƯỢNG TRUY CẬP CỬA HÀNG"
                   statTitle={cardStats?.currentWeekStoreVisit}
                   statArrow={
                     cardStats?.sinceLastWeekStoreVisit > 0 ? "up" : "down"
@@ -78,7 +78,7 @@ export default function StoreHeaderStats({ cardStats }) {
                       ? "text-emerald-500"
                       : "text-red-500"
                   }
-                  statDescripiron="Since last week"
+                  statDescripiron="Từ tuần trước"
                   statIconName="fas fa-percent"
                   statIconColor="bg-lightBlue-500"
                 />

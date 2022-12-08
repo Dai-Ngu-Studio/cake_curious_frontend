@@ -29,14 +29,14 @@ export default function CardLineChart({ lineChart, role }) {
     labels: lineChart?.month,
     datasets: [
       {
-        label: role === 0 ? new Date().getFullYear() : "Báo cáo đã xử lý",
+        label: role === 0 || role === 2 ? new Date().getFullYear() : "Báo cáo đã xử lý",
         backgroundColor: "#4c51bf",
         borderColor: "#4c51bf",
         data: currentYearData,
         fill: false,
       },
       {
-        label: role === 0 ? new Date().getFullYear() - 1 : "Báo cáo chưa xử lý",
+        label: role === 0 || role === 2 ? new Date().getFullYear() - 1 : "Báo cáo chưa xử lý",
         fill: false,
         backgroundColor: "#fff",
         borderColor: "#fff",
@@ -122,7 +122,7 @@ export default function CardLineChart({ lineChart, role }) {
           <div className="flex flex-wrap items-center">
             <div className="relative w-full max-w-full flex-grow flex-1">
               <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-                Overview
+                Tổng quan
               </h6>
               <h2 className="text-white text-xl font-semibold">
                 {label}

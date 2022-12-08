@@ -36,7 +36,7 @@ export const AdminLinks = {
 };
 
 export const StoreLinks = {
-  title: "Store Pages",
+  title: "Cửa hàng",
   dashboardLink: "/store/store-dashboard",
   links: [
     {
@@ -73,7 +73,7 @@ export const StoreLinks = {
 };
 
 export const StaffLinks = {
-  title: "Staff Pages",
+  title: "Nhân viên",
   dashboardLink: "/staff/staff-dashboard",
   links: [
     {
