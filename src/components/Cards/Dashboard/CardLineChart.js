@@ -21,7 +21,7 @@ export default function CardLineChart({ lineChart, role }) {
     case 2:
       currentYearData = lineChart?.currentYearStoreVisit
       lastYearData = lineChart?.lastYearStoreVisit
-      label = "Lượng truy cập của hàng"
+      label = "Lượng truy cập cửa hàng"
       break;
   }
 

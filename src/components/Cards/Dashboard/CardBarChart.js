@@ -113,7 +113,7 @@ export default function CardBarChart({ barChart, role }) {
                 Performance
               </h6>
               <h2 className="text-blueGray-700 text-xl font-semibold">
-                {role === 0 || role === 1 ? "User report" : "Week sales"}
+                {role === 0 || role === 1 ? "Lượng báo cáo người dùng" : "Sản phẩm bán được trong tuần"}
               </h2>
             </div>
           </div>

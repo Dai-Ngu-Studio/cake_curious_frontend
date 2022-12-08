@@ -33,10 +33,11 @@ export const ProductForm = () => {
   const { isProductCategoryLoading, categories } = useSelector(
     (store) => store.productCategory
   );
-  const { image } = useSelector((store) => store.image);
+  const { image, isDoneGettingImage } = useSelector((store) => store.image);
   const dispatch = useDispatch();
   const { editProductId } = useParams();
   const [isProductEditing, setIsProductEditing] = useState(false);
+  const [choseImage, setChosenImage] = useState("")
 
   useEffect(() => {
     dispatch(getAllProductCategories());
@@ -45,6 +46,45 @@ export const ProductForm = () => {
       setIsProductEditing(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (isDoneGettingImage) {
+      if (isProductEditing) {
+        dispatch(
+          updateProduct({
+            productId: editProductId,
+            product: {
+              id: editProductId,
+              productType: parseInt(productType),
+              productCategoryId: parseInt(productCategoryId),
+              name,
+              description,
+              quantity: parseInt(quantity),
+              price: parseFloat(price),
+              photoUrl: image || null,
+              status: parseInt(status),
+            },
+          })
+        );
+        return;
+      }
+      dispatch(
+        addProduct({
+          productType,
+          productCategoryId:
+            parseInt(productCategoryId) === 0
+              ? categories[0].id
+              : parseInt(productCategoryId),
+          name,
+          description,
+          quantity,
+          price,
+          photoUrl: image || null,
+          status,
+        })
+      );
+    }
+  }, [isDoneGettingImage])
 
   if (isProductCategoryLoading && isProductLoading) {
     return <Loading />;
@@ -72,7 +112,7 @@ export const ProductForm = () => {
     const name = e.target.name;
     const value = await convertToBase64(file);
     dispatch(handleProductChange({ name, value }));
-    dispatch(getImage({ tmpImage: file }));
+    setChosenImage(file)
   };
 
   const handleProductSubmit = (e) => {
@@ -81,43 +121,8 @@ export const ProductForm = () => {
       toast.error("Please fill out all fields");
       return;
     }
-
-    if (isProductEditing) {
-      dispatch(
-        updateProduct({
-          productId: editProductId,
-          product: {
-            id: editProductId,
-            productType: parseInt(productType),
-            productCategoryId: parseInt(productCategoryId),
-            name,
-            description,
-            quantity: parseInt(quantity),
-            price: parseFloat(price),
-            photoUrl: image || null,
-            status: parseInt(status),
-          },
-        })
-      );
-      return;
-    }
-    dispatch(
-      addProduct({
-        productType,
-        productCategoryId:
-          parseInt(productCategoryId) === 0
-            ? categories[0].id
-            : parseInt(productCategoryId),
-        name,
-        description,
-        quantity,
-        price,
-        photoUrl: image || null,
-        status,
-      })
-    );
+    dispatch(getImage({tmpImage: choseImage}))
   };
-
   return (
     <div className="relative bg-gray-100 md:pt-32 pb-32 pt-12">
       <div className="px-4 md:px-10 mx-auto w-full">
