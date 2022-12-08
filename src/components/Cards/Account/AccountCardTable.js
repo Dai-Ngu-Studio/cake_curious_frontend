@@ -10,9 +10,8 @@ import User from "../../../assets/img/user.png";
 import StatusCard from "../StatusCard";
 import {
   BsEyeFill,
-  BsPersonXFill,
-  BsFillCaretDownFill,
-  BsFillCaretUpFill,
+  BsFileEarmarkExcelFill,
+  BsFileCheckFill,
 } from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
@@ -123,142 +122,146 @@ export const AccountCardTable = () => {
               </thead>
               <tbody>
                 {accounts.map((account, index) => {
-                  return (
-                    <tr
-                      key={account.id}
-                      className={
-                        "hover:bg-green-50 " +
-                        (index % 2 === 1 ? "bg-gray-50" : "bg-white")
-                      }
-                    >
-                      <th className="pl-6 align-middle p-2 text-left flex justify-center">
-                        <img
-                          src={account.photoUrl || User}
-                          className="w-24 bg-white rounded-full border"
-                          referrerPolicy="no-referrer"
-                        ></img>
-                      </th>
-                      <td className="pl-6 align-middle">
-                        {(() => {
-                          if (smallestRoleID(account.roles) === 3) {
-                            return (
-                              <StatusCard
-                                text="Thợ bánh"
-                                backgroundColor="bg-orange-200"
-                                dotColor="bg-orange-600"
-                              />
-                            );
-                          } else if (smallestRoleID(account.roles) === 2) {
-                            return (
-                              <StatusCard
-                                text="Chủ cửa hàng"
-                                backgroundColor="bg-blue-200"
-                                dotColor="bg-blue-600"
-                              />
-                            );
-                          } else if (smallestRoleID(account.roles) === 1) {
-                            return (
-                              <StatusCard
-                                text="Nhân viên"
-                                backgroundColor="bg-yellow-200"
-                                dotColor="bg-yellow-600"
-                              />
-                            );
-                          } else if (smallestRoleID(account.roles) === 0) {
-                            return (
-                              <StatusCard
-                                text="Quản trị viên"
-                                backgroundColor="bg-red-200"
-                                dotColor="bg-red-600"
-                              />
-                            );
-                          }
-                        })()}
-                      </td>
-                      <td className="pl-6 align-middle p-4">
-                        {account.displayName || "Annoymous"}
-                      </td>
-                      <td className="pl-6 align-middle p-4">
-                        <div className="flex">{account.email}</div>
-                      </td>
-                      <td className="pl-6 align-middle p-4">
-                        <div className="flex items-center">
-                          <span
-                            className="mr-2 cursor-pointer"
-                            onClick={() => {
-                              // let storeEditing = {
-
-                              // }
-                              setModalAccount({
-                                id: account.id,
-                                status: account.status,
-                              });
-                              setOpenModal(true);
-                              setIsConfirmModal(true);
-                              // changeStoreStatus(store.id, store.status);
-                            }}
-                          >
-                            {account.status === 0 ? (
-                              <StatusCard
-                                text="Hoạt động"
-                                backgroundColor="bg-green-200"
-                                dotColor="bg-green-600"
-                              />
-                            ) : (
-                              <StatusCard
-                                text="Dừng hoạt động"
-                                backgroundColor="bg-gray-200"
-                                dotColor="bg-gray-600"
-                              />
-                            )}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <div className="flex">
-                          <BsEyeFill
-                            onClick={() => {
-                              setModalAccount(account.id);
-                              setOpenModal(true);
-                              setIsConfirmModal(false);
-                            }}
-                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
-                          />
+                  if (smallestRoleID(account.roles) !== 1)
+                    return (
+                      <tr
+                        key={account.id}
+                        className={
+                          "hover:bg-green-50 " +
+                          (index % 2 === 1 ? "bg-gray-50" : "bg-white")
+                        }
+                      >
+                        <th className="pl-6 align-middle p-2 text-left flex justify-center">
+                          <img
+                            src={account.photoUrl || User}
+                            className="w-24 bg-white rounded-full border"
+                            referrerPolicy="no-referrer"
+                          ></img>
+                        </th>
+                        <td className="pl-6 align-middle">
                           {(() => {
-                            if (smallestRoleID(account.roles) === 1) {
+                            if (smallestRoleID(account.roles) === 3) {
                               return (
-                                <div
-                                  className="flex items-center justify-center  bg-slate-500 hover:bg-slate-500/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
-                                  onClick={() => {
-                                    changeAccountRole(account.id, 3);
-                                  }}
-                                >
-                                  <div className="m-1 font-bold">Hạ chức</div>
-                                  <BsPersonXFill className="" />
-                                  <BsFillCaretDownFill className="" />
-                                </div>
+                                <StatusCard
+                                  text="Thợ bánh"
+                                  backgroundColor="bg-orange-50"
+                                  dotColor="bg-orange-600"
+                                />
                               );
-                            } else if (smallestRoleID(account.roles) === 3) {
+                            } else if (smallestRoleID(account.roles) === 2) {
                               return (
-                                <div
-                                  className="flex items-center justify-center bg-orange-400 hover:bg-orange-400/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
-                                  onClick={() => {
-                                    changeAccountRole(account.id, 1);
-                                  }}
-                                >
-                                  <div className="m-1 font-bold">
-                                    Thăng chức
-                                  </div>
-                                  <BsPersonXFill className="" />
-                                  <BsFillCaretUpFill className="" />
-                                </div>
+                                <StatusCard
+                                  text="Chủ cửa hàng"
+                                  backgroundColor="bg-blue-50"
+                                  dotColor="bg-blue-600"
+                                />
+                              );
+                            } else if (smallestRoleID(account.roles) === 1) {
+                              return (
+                                <StatusCard
+                                  text="Nhân viên"
+                                  backgroundColor="bg-yellow-50"
+                                  dotColor="bg-yellow-600"
+                                />
+                              );
+                            } else if (smallestRoleID(account.roles) === 0) {
+                              return (
+                                <StatusCard
+                                  text="Quản trị viên"
+                                  backgroundColor="bg-red-50"
+                                  dotColor="bg-red-600"
+                                />
                               );
                             }
                           })()}
-                        </div>
-                      </td>
-                    </tr>
-                  );
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          {account.displayName || "Annoymous"}
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          <div className="flex">{account.email}</div>
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          <div className="flex items-center">
+                            <span className="mr-2">
+                              {account.status === 0 ? (
+                                <StatusCard
+                                  text="Hoạt động"
+                                  backgroundColor="bg-green-50"
+                                  dotColor="bg-green-600"
+                                />
+                              ) : (
+                                <StatusCard
+                                  text="Dừng hoạt động"
+                                  backgroundColor="bg-gray-50"
+                                  dotColor="bg-gray-600"
+                                />
+                              )}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                          <div className="flex">
+                            <BsEyeFill
+                              onClick={() => {
+                                setModalAccount(account.id);
+                                setOpenModal(true);
+                                setIsConfirmModal(false);
+                              }}
+                              className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                            />
+                            {account.status === 0 && (
+                              <BsFileEarmarkExcelFill
+                                onClick={() => {
+                                  // let storeEditing = {
+
+                                  // }
+                                  setModalAccount({
+                                    id: account.id,
+                                    status: account.status,
+                                  });
+                                  setOpenModal(true);
+                                  setIsConfirmModal(true);
+                                  // changeStoreStatus(store.id, store.status);
+                                }}
+                                className="p-2 ml-2 w-10 h-10 text-red-500 border border-red-600 hover:bg-red-600 hover:text-white rounded-md cursor-pointer"
+                              />
+                            )}
+                            {/* {(() => {
+                              if (smallestRoleID(account.roles) === 1) {
+                                return (
+                                  <div
+                                    className="flex items-center justify-center  bg-slate-500 hover:bg-slate-500/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
+                                    onClick={() => {
+                                      changeAccountRole(account.id, 3);
+                                    }}
+                                  >
+                                    <div className="m-1 font-bold">Hạ chức</div>
+                                    <BsPersonXFill className="" />
+                                    <BsFillCaretDownFill className="" />
+                                  </div>
+                                );
+                              } else if (smallestRoleID(account.roles) === 3) {
+                                return (
+                                  <div
+                                    className="flex items-center justify-center bg-orange-400 hover:bg-orange-400/80 ml-2 rounded p-2 cursor-pointer text-white w-32"
+                                    onClick={() => {
+                                      changeAccountRole(account.id, 1);
+                                    }}
+                                  >
+                                    <div className="m-1 font-bold">
+                                      Thăng chức
+                                    </div>
+                                    <BsPersonXFill className="" />
+                                    <BsFillCaretUpFill className="" />
+                                  </div>
+                                );
+                              }
+                            })()} */}
+                          </div>
+                        </td>
+                      </tr>
+                    );
                 })}
               </tbody>
             </table>
