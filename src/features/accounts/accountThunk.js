@@ -40,7 +40,6 @@ export const changeRoleAccountThunk = async ({ userId, user }, thunkAPI) => {
 
 export const addStaffAccountThunk = async (email, thunkAPI) => {
   try {
-    console.log(JSON.stringify(email));
     const resp = await customFetch.post(`/api//users/staff`, email);
     return resp.data;
   } catch (error) {

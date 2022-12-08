@@ -106,7 +106,7 @@ const accountSlice = createSlice({
     [updateAccount.fulfilled]: (state, { payload }) => {
       state.isAccountLoading = false;
       state.isAccountDoneUpdating = true;
-      toast.success("Account Updated...");
+      toast.success("Cập nhật thông tin tài khoản thành công");
     },
     [updateAccount.rejected]: (state, { payload }) => {
       state.isAccountLoading = false;
@@ -122,6 +122,19 @@ const accountSlice = createSlice({
       toast.success("Chỉnh sửa chức vụ thành công");
     },
     [updateAccountRole.rejected]: (state, { payload }) => {
+      state.isAccountLoading = false;
+      toast.error(payload);
+    },
+    [addStaff.pending]: (state) => {
+      state.isAccountLoading = true;
+      state.isAccountDoneUpdating = false;
+    },
+    [addStaff.fulfilled]: (state, { payload }) => {
+      state.isAccountLoading = false;
+      state.isAccountDoneUpdating = true;
+      toast.success("Chỉnh sửa chức vụ thành công");
+    },
+    [addStaff.rejected]: (state, { payload }) => {
       state.isAccountLoading = false;
       toast.error(payload);
     },
