@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllAccounts,
+  handleAccountChange,
   updateAccount,
   updateAccountRole,
 } from "../../../features/accounts/accountSlice";
@@ -30,11 +31,12 @@ export const AccountCardTable = () => {
     isAccountDoneUpdating,
   } = useSelector((store) => store.account);
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    dispatch(handleAccountChange({ name: "filter", value: "All" }));
+  }, []);
   useEffect(() => {
     dispatch(getAllAccounts());
   }, [page, search, filter, sort, isAccountDoneUpdating]);
-
   if (isAccountLoading) {
     return <Loading />;
   }
@@ -210,7 +212,7 @@ export const AccountCardTable = () => {
                               }}
                               className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
                             />
-                            {account.status === 0 && (
+                            {account.status === 0 ? (
                               <BsFileEarmarkExcelFill
                                 onClick={() => {
                                   // let storeEditing = {
@@ -225,6 +227,19 @@ export const AccountCardTable = () => {
                                   // changeStoreStatus(store.id, store.status);
                                 }}
                                 className="p-2 ml-2 w-10 h-10 text-red-500 border border-red-600 hover:bg-red-600 hover:text-white rounded-md cursor-pointer"
+                              />
+                            ) : (
+                              <BsFileCheckFill
+                                onClick={() => {
+                                  setModalAccount({
+                                    id: account.id,
+                                    status: account.status,
+                                  });
+                                  setOpenModal(true);
+                                  setIsConfirmModal(true);
+                                  // changeStoreStatus(store.id, store.status);
+                                }}
+                                className="p-2 ml-2 w-10 h-10 text-green-500 border border-green-600 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
                               />
                             )}
                             {/* {(() => {
