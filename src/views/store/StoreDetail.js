@@ -194,7 +194,7 @@ export default function StoreDetail() {
                       Loading...
                     </>
                   ) : (
-                    "Save"
+                    "Lưu"
                   )}
                 </button>
               </div>
