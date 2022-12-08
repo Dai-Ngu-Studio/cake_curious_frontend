@@ -5,6 +5,7 @@ import {
   getAllAccountsThunk,
   updateAccountThunk,
   changeRoleAccountThunk,
+  addStaffAccountThunk,
 } from "./accountThunk";
 
 const initialState = {
@@ -49,7 +50,10 @@ export const updateAccountRole = createAsyncThunk(
   "account/changeRoleAccountThunk",
   changeRoleAccountThunk
 );
-
+export const addStaff = createAsyncThunk(
+  "account/addStaff",
+  addStaffAccountThunk
+);
 const accountSlice = createSlice({
   name: "account",
   initialState,

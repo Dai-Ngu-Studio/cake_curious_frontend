@@ -5,13 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../utils/Loading";
 import { getAllReportedRecipes } from "../../../features/recipes/recipeSlice";
 export default function ReportRecipeCardTable() {
-  const {
-    isRecipesLoading,
-    reportedRecipes,
-    page,
-    search,
-    sort,
-  } = useSelector((selector) => selector.recipe);
+  const { isRecipesLoading, reportedRecipes, page, search, sort } = useSelector(
+    (selector) => selector.recipe
+  );
   const { user } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
@@ -78,9 +74,9 @@ export default function ReportRecipeCardTable() {
                         (index % 2 === 1 ? "bg-gray-50" : "bg-white")
                       }
                     >
-                      <th className="pl-6 align-middle p-1 text-left flex justify-center">
+                      <th className="pl-6 align-middle p-1 text-left flex justify-center max-h-52">
                         <img
-                          className="rounded-lg"
+                          className="rounded-lg object-cover"
                           src={recipe.photoUrl || NoImg}
                         ></img>
                       </th>
