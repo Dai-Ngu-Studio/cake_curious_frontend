@@ -19,22 +19,22 @@ export const ProductSortingOptions = [
 
 export const AccountSortingOptions = [
   {
-    name: "a-z",
-    value: "AscDisplayName",
+    name: "Ngày tạo mới nhẩt",
+    value: "AscCreatedDate",
   },
   {
-    name: "z-a",
-    value: "DescDisplayName",
+    name: "Ngày tạo cũ nhất",
+    value: "DescCreatedDate",
   },
 ];
 
 export const StoreSortingOptions = [
   {
-    name: "Ngày mới nhất",
+    name: "Ngày tạo mới nhất",
     value: "AscCreatedDate",
   },
   {
-    name: "Ngày cũ nhất",
+    name: "Ngày tạo cũ nhất",
     value: "DescCreatedDate",
   },
 ];
