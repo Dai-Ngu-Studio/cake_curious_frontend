@@ -1,19 +1,19 @@
 export const OrderStatus = [
   {
     id: 0,
-    name: "Pending",
+    name: "Chờ xác nhận",
   },
   {
     id: 1,
-    name: "Completed",
+    name: "Đã giao",
   },
   {
     id: 2,
-    name: "Cancelled",
+    name: "Đã hủy",
   },
   {
     id: 3,
-    name: "Processing",
+    name: "Đang xử lý",
   },
 ];
 

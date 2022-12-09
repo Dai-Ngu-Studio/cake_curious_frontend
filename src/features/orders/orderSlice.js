@@ -16,7 +16,7 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  filterOptions: ["Pending", "Completed", "Cancelled", "Processing"],
+  // filterOptions: ["Pending", "Completed", "Cancelled", "Processing"],
   isOrderDoneUpdating: false,
   status: 0,
   orderDate: null,

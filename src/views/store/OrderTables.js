@@ -23,7 +23,7 @@ export default function OrderTables() {
             sort={sort}
             filter={filter}
             search={search}
-            filterOptions={filterOptions}
+            // filterOptions={filterOptions}
             handleChange={handleOrderChange}
             sortOptions={OrderSortingOptions}
           />
