@@ -7,7 +7,7 @@ import {
   changeCouponPage,
   handleCouponChange,
 } from "../../features/coupons/couponSlice";
-import { CouponSortingOptions } from "../../utils/ViewOptions";
+import { CouponFilterOptions, CouponSortingOptions } from "../../utils/ViewOptions";
 
 // components
 
@@ -23,7 +23,7 @@ export default function CouponTables() {
             sort={sort}
             filter={filter}
             search={search}
-            // filterOptions={}
+            filterOptions={CouponFilterOptions}
             handleChange={handleCouponChange}
             sortOptions={CouponSortingOptions}
           />

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
-  deleteOrderThunk,
   getAllOrdersThunk,
   GetOrderThunk,
   updateOrderThunk,
@@ -16,7 +15,6 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  // filterOptions: ["Pending", "Completed", "Cancelled", "Processing"],
   isOrderDoneUpdating: false,
   status: 0,
   orderDate: null,
@@ -39,10 +37,6 @@ export const getSingleOrder = createAsyncThunk(
 export const updateOrder = createAsyncThunk(
   "order/updateOrders",
   updateOrderThunk
-);
-export const deleteOrder = createAsyncThunk(
-  "order/deleteOrders",
-  deleteOrderThunk
 );
 
 const orderSlice = createSlice({
@@ -95,20 +89,9 @@ const orderSlice = createSlice({
     [updateOrder.fulfilled]: (state, { payload }) => {
       state.isOrderLoading = false;
       state.isOrderDoneUpdating = true;
-      toast.success("Order Updated...");
+      toast.success("Đơn hàng cập nhật thành công");
     },
     [updateOrder.rejected]: (state, { payload }) => {
-      state.isOrderLoading = false;
-      toast.error(payload);
-    },
-    [deleteOrder.pending]: (state) => {
-      state.isOrderLoading = true;
-    },
-    [deleteOrder.fulfilled]: (state, { payload }) => {
-      state.isOrderLoading = false;
-      toast.success("Order Deleted...");
-    },
-    [deleteOrder.rejected]: (state, { payload }) => {
       state.isOrderLoading = false;
       toast.error(payload);
     },

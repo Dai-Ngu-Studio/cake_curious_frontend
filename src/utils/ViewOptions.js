@@ -8,37 +8,34 @@ export const ProductSortingOptions = [
     value: "DescName",
   },
   {
-    name: "lowest",
+    name: "Giá thấp nhất",
     value: "AscPrice",
   },
   {
-    name: "highest",
+    name: "Giá cao nhất",
     value: "DescPrice",
   },
 ];
-
 export const AccountSortingOptions = [
   {
     name: "Ngày tạo mới nhẩt",
-    value: "AscCreatedDate",
+    value: "DescCreatedDate",
   },
   {
     name: "Ngày tạo cũ nhất",
-    value: "DescCreatedDate",
+    value: "AscCreatedDate",
   },
 ];
-
 export const StoreSortingOptions = [
   {
     name: "Ngày tạo mới nhất",
-    value: "AscCreatedDate",
+    value: "DescCreatedDate",
   },
   {
     name: "Ngày tạo cũ nhất",
-    value: "DescCreatedDate",
+    value: "AscCreatedDate",
   },
 ];
-
 export const CouponSortingOptions = [
   {
     name: "a-z",
@@ -49,7 +46,6 @@ export const CouponSortingOptions = [
     value: "DescName",
   },
 ];
-
 export const ReportedItemSortingOptions = [
   {
     name: "Số báo cáo thấp nhất",
@@ -60,18 +56,28 @@ export const ReportedItemSortingOptions = [
     value: "DescPendingReport",
   },
 ];
-
 export const OrderSortingOptions = [
   {
-    name: "newest",
+    name: "Đơn hàng mới nhất",
     value: "DescOrderDate",
   },
   {
-    name: "oldest",
+    name: "Đơn hàng cũ nhất",
     value: "AscOrderDate",
   },
 ];
-//["Inactive", "Active"];
+export const ReportSortingOptions = [
+  {
+    name: "Ngày cũ nhất",
+    value: "AscDate",
+  },
+  {
+    name: "Ngày mới nhất",
+    value: "DescDate",
+  },
+];
+
+// FILTER OPTION
 export const StoreFilterOptions = [
   {
     name: "Tất cả",
@@ -99,14 +105,6 @@ export const AccountFilterOptions = [
     name: "Đang hoạt động",
     value: "Active",
   },
-  // {
-  //   name: "Quản trị viên",
-  //   value: "Administrator",
-  // },
-  // {
-  //   name: "Nhân viên",
-  //   value: "Staff",
-  // },
   {
     name: "Chủ cửa hàng",
     value: "StoreOwner",
@@ -116,7 +114,6 @@ export const AccountFilterOptions = [
     value: "Baker",
   },
 ];
-
 export const ReportFilterStatusOptions = [
   {
     name: "Tất cả",
@@ -126,22 +123,54 @@ export const ReportFilterStatusOptions = [
     name: "Đang chờ xử lý",
     value: "Pending",
   },
-  // {
-  //   name: "Đã xử lý",
-  //   value: "Censored",
-  // },
   {
     name: "Không vấn đề",
     value: "Rejected",
   },
 ];
-export const ReportSortingOptions = [
+export const ProductTypeFilterOptions = [
   {
-    name: "Ngày cũ nhất",
-    value: "AscDate",
+    name: "Nguyên liệu",
+    value: "Ingredient",
   },
   {
-    name: "Ngày mới nhất",
-    value: "DescDate",
+    name: "Dụng cụ nhà bếp",
+    value: "Tool",
+  },
+];
+export const CouponFilterOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Đã dừng hoạt động",
+    value: "Inactive",
+  },
+  {
+    name: "Đang hoạt động",
+    value: "Active",
+  },
+]; 
+export const OrderFilterOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Chờ xác nhận",
+    value: "Pending",
+  },
+  {
+    name: "Đã giao",
+    value: "Completed",
+  },
+  {
+    name: "Đã hủy",
+    value: "Cancelled",
+  },
+  {
+    name: "Đang xử lý",
+    value: "Processing",
   },
 ];

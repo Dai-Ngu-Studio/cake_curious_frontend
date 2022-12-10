@@ -15,7 +15,7 @@ import {
 } from "../../utils/ViewOptions";
 
 export default function ReportRecipeTables() {
-  const { totalPage, page, search, type, status, sort } = useSelector(
+  const { totalPage, page, search, status, sort } = useSelector(
     (store) => store.recipe
   );
   return (
@@ -24,7 +24,6 @@ export default function ReportRecipeTables() {
         <div className="w-full mb-12 px-4">
           <CardSearch
             sort={sort}
-            type={type}
             status={status}
             search={search}
             sortOptions={ReportedItemSortingOptions}

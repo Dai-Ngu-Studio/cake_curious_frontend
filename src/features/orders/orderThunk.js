@@ -31,12 +31,3 @@ export const updateOrderThunk = async ({ orderId, order }, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
-
-export const deleteOrderThunk = async ({ orderId }, thunkAPI) => {
-  try {
-    const resp = await customFetch.delete(`/api/orders/${orderId}`);
-    return resp.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
-};

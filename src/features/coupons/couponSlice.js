@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   isCouponLoading: false,
+  isCouponDoneUpdating: false,
   coupons: [],
   totalCouponPages: 1,
   page: 1,
@@ -16,7 +17,6 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  // filterOptions: ["Ingredient", "Tool"],
   name: "",
   code: "",
   storeId: "",
@@ -90,25 +90,23 @@ const couponSlice = createSlice({
       toast.error(payload);
     },
     [addCoupon.pending]: (state) => {
-      state.isCouponLoading = true;
+      
     },
-    [addCoupon.fulfilled]: (state, { payload }) => {
-      state.isCouponLoading = false;
-      toast.success("Coupon Added");
+    [addCoupon.fulfilled]: (state, { payload }) => {     
+      toast.success("Tạo phiếu giảm giá thành công");
     },
     [addCoupon.rejected]: (state, { payload }) => {
-      state.isCouponLoading = false;
       toast.error(payload);
     },
     [updateCoupon.pending]: (state) => {
-      state.isCouponLoading = true;
+      state.isCouponDoneUpdating = false;
     },
     [updateCoupon.fulfilled]: (state, { payload }) => {
-      state.isCouponLoading = false;
-      toast.success("Coupon Updated...");
+      state.isCouponDoneUpdating = true;
+      toast.success("Phiếu giảm giá cập nhật thành công");
     },
     [updateCoupon.rejected]: (state, { payload }) => {
-      state.isCouponLoading = false;
+      state.isCouponDoneUpdating = false;
       toast.error(payload);
     },
   },

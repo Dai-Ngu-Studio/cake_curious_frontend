@@ -10,8 +10,7 @@ import {
 import FormRowSelect from "../../components/Inputs/FormRowSelect";
 import { ProductStatus, ProductTypeOptions } from "../../utils/StatusOptions";
 import FormRowArea from "../../components/Inputs/FormRowArea";
-import FormRowFile from "../../components/Inputs/FormRowFile";
-import { getImage } from "../../features/images/imageSlice";
+import { changeImageGettingState, getImage } from "../../features/images/imageSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Loading from "../../utils/Loading";
@@ -29,6 +28,7 @@ export const ProductForm = () => {
     price,
     photoUrl,
     status,
+    isProductDoneUpdating
   } = useSelector((store) => store.product);
   const { isProductCategoryLoading, categories } = useSelector(
     (store) => store.productCategory
@@ -37,7 +37,8 @@ export const ProductForm = () => {
   const dispatch = useDispatch();
   const { editProductId } = useParams();
   const [isProductEditing, setIsProductEditing] = useState(false);
-  const [choseImage, setChosenImage] = useState("")
+  const [chosenImage, setChosenImage] = useState("");
+  const [initialQuantity, setInitialQuantity] = useState("");
 
   useEffect(() => {
     dispatch(getAllProductCategories());
@@ -45,11 +46,18 @@ export const ProductForm = () => {
       dispatch(getSingleProduct({ productId: editProductId }));
       setIsProductEditing(true);
     }
-  }, []);
-
+  }, [isProductDoneUpdating]);
+  useEffect(() => {
+    if (editProductId) {
+      setInitialQuantity(quantity)
+    }
+  }, [isProductLoading])
+  
   useEffect(() => {
     if (isDoneGettingImage) {
       if (isProductEditing) {
+        // nếu có chọn hình ảnh thì sẽ lấy ảnh đã chọn (image)
+        // còn ko chọn thì sẽ lấy ảnh hiện tại (photoUrl)
         dispatch(
           updateProduct({
             productId: editProductId,
@@ -59,9 +67,9 @@ export const ProductForm = () => {
               productCategoryId: parseInt(productCategoryId),
               name,
               description,
-              quantity: parseInt(quantity),
+              quantity: parseInt(quantity) === parseInt(initialQuantity) ? 0 : quantity,
               price: parseFloat(price),
-              photoUrl: image || null,
+              photoUrl: image || photoUrl,
               status: parseInt(status),
             },
           })
@@ -118,10 +126,26 @@ export const ProductForm = () => {
   const handleProductSubmit = (e) => {
     e.preventDefault();
     if (!name || !quantity || !price) {
-      toast.error("Please fill out all fields");
+      toast.warning("Xin hãy điền đầy đủ thông tin");
       return;
     }
-    dispatch(getImage({tmpImage: choseImage}))
+    if (photoUrl === "") {
+      toast.warning("Xin hãy chọn ảnh cho sản phẩm")
+      return;
+    }
+    if (!isProductEditing && chosenImage) {
+      dispatch(getImage({tmpImage: chosenImage}))
+      setChosenImage("")
+    }
+    if (isProductEditing) {
+      if (chosenImage) {
+        dispatch(getImage({tmpImage: chosenImage}))
+        setChosenImage("")
+      } else {
+        // để khi update ko muốn thay đổi ảnh
+        dispatch(changeImageGettingState())
+      }
+    }
   };
   return (
     <div className="relative bg-gray-100 md:pt-32 pb-32 pt-12">
@@ -174,14 +198,14 @@ export const ProductForm = () => {
             <div className="grid grid-cols-2 gap-5 py-2">
               <FormRowSelect
                 name="productType"
-                labelText="Type"
+                labelText="Loại sản phẩm"
                 value={productType}
                 list={ProductTypeOptions}
                 handleChange={handleProductInput}
               />
               <FormRowSelect
                 name="productCategoryId"
-                labelText="Category"
+                labelText="Danh mục sản phẩm"
                 value={productCategoryId}
                 list={categories}
                 handleChange={handleProductInput}
@@ -190,7 +214,7 @@ export const ProductForm = () => {
             <div className="py-4">
               <FormRowArea
                 name="description"
-                labelText="Description"
+                labelText="Miêu tả"
                 value={description}
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 handleChange={handleProductInput}
@@ -200,7 +224,7 @@ export const ProductForm = () => {
               <FormRow
                 type="number"
                 name="quantity"
-                labelText="Quantity"
+                labelText="Số lượng"
                 value={quantity}
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 handleChange={handleProductInput}
@@ -208,7 +232,7 @@ export const ProductForm = () => {
               <FormRow
                 type="number"
                 name="price"
-                labelText="Price"
+                labelText="Giá tiền"
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 value={price}
                 handleChange={handleProductInput}
@@ -254,7 +278,7 @@ export const ProductForm = () => {
                     Đang xử lý
                   </>
                 ) : (
-                  "Save"
+                  "Lưu"
                 )}
               </button>
             </div>

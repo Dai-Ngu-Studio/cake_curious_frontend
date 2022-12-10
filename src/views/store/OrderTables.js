@@ -7,12 +7,12 @@ import {
   changeOrderPage,
   handleOrderChange,
 } from "../../features/orders/orderSlice";
-import { OrderSortingOptions } from "../../utils/ViewOptions";
+import { OrderFilterOptions, OrderSortingOptions } from "../../utils/ViewOptions";
 
 // components
 
 export default function OrderTables() {
-  const { totalOrderPages, page, search, filter, sort, filterOptions } =
+  const { totalOrderPages, page, search, filter, sort } =
     useSelector((store) => store.order);
 
   return (
@@ -23,7 +23,7 @@ export default function OrderTables() {
             sort={sort}
             filter={filter}
             search={search}
-            // filterOptions={filterOptions}
+            filterOptions={OrderFilterOptions}
             handleChange={handleOrderChange}
             sortOptions={OrderSortingOptions}
           />

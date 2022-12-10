@@ -50,28 +50,6 @@ export const CouponStatus = [
   },
 ];
 
-export const AccountStatus = [
-  {
-    id: 0,
-    name: "Active",
-  },
-  {
-    id: 1,
-    name: "Inactive",
-  },
-];
-
-export const StoreStatusOptions = [
-  {
-    id: 0,
-    name: "Active",
-  },
-  {
-    id: 1,
-    name: "Inactive",
-  },
-];
-
 export const ReportStatus = [
   {
     id: 0,

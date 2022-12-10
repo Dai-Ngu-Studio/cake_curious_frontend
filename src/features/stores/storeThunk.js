@@ -24,15 +24,6 @@ export const userStoreThunk = async (_, thunkAPI) => {
   }
 };
 
-export const addStoreThunk = async (store, thunkAPI) => {
-  try {
-    const resp = await customFetch.post("/api/stores", store);
-    return resp.data;
-  } catch (error) {
-    return checkForUnauthorizedResponse(error, thunkAPI);
-  }
-};
-
 export const updateStoreThunk = async ({ storeId, store }, thunkAPI) => {
   try {
     const resp = await customFetch.put(`/api/stores/${storeId}`, store);

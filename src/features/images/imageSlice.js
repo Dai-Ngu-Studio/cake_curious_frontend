@@ -14,6 +14,9 @@ const imageSlice = createSlice({
   initialState,
   reducers: {
     clearImageValues: () => initialState,
+    changeImageGettingState: (state) => {
+      state.isDoneGettingImage = true
+    }
   },
   extraReducers: {
     [getImage.pending]: (state) => {
@@ -30,5 +33,5 @@ const imageSlice = createSlice({
   },
 });
 
-export const { clearImageValues } = imageSlice.actions;
+export const { clearImageValues, changeImageGettingState } = imageSlice.actions;
 export default imageSlice.reducer;

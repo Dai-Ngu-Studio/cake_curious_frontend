@@ -26,6 +26,7 @@ export const CouponForm = () => {
     maxUses,
     storeId,
     status,
+    isCouponDoneUpdating
   } = useSelector((store) => store.coupon);
   const { user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ export const CouponForm = () => {
       dispatch(getSingleCoupon({ couponId: editCouponId }));
       setIsCouponEditing(true);
     }
-  }, []);
+  }, [isCouponDoneUpdating]);
 
   if (isCouponLoading) {
     return <Loading />;
@@ -52,18 +53,34 @@ export const CouponForm = () => {
   const handleCouponSubmit = (e) => {
     e.preventDefault();
     if (!name || !code || !discount || !maxUses || !expiryDate) {
-      toast.error("Please fill out all fields");
+      toast.warning("Xin hãy điền đầy đủ thông tin");
       return;
     }
     if (parseInt(maxUses) < 0) {
-      toast.error("Max uses aren't allowed to go below 0");
+      toast.warning("Tổng số lần sử dụng không được dưới 0");
+      return;
     }
     if (parseInt(discount) < 0) {
-      toast.error("Discount aren't allowed to go below 0");
+      toast.warning("Lượng giảm giá không được dưới 0");
+      return;
     }
     if (parseInt(discountType) === 0) {
-      if (parseInt(discount) > 100) {
-        toast.error("Percentage discount aren't allowed to go above 100");
+      if (parseInt(discount) > 50) {
+        toast.warning("Giảm giá theo % không được quá 50%");
+        return;
+      }
+    }
+    if (!isCouponEditing) {
+      // tạo mới phiếu giảm giá
+      if (moment(expiryDate).format("DD-MM-YYYY") <= moment().format("DD-MM-YYYY")) {
+        toast.warning("Ngày hết hạn sử dụng không được trong hôm nay hoặc trước ngày hôm nay");
+        return;
+      }
+    } else {
+      // update phiếu giảm giá
+      if (moment(expiryDate).format("DD-MM-YYYY") < moment().format("DD-MM-YYYY")) {
+        toast.warning("Ngày hết hạn sử dụng không được trước ngày hôm nay");
+        return;
       }
     }
 
@@ -99,18 +116,16 @@ export const CouponForm = () => {
       })
     );
   };
-
   return (
     <div className="relative bg-gray-100 md:pt-32 pb-32 pt-12">
       <div className="px-4 md:px-10 mx-auto w-full">
         <div className="flex items-center justify-center ">
           <form className="bg-white shadow-xl p-7 rounded-lg">
             <div className="grid grid-cols-2 gap-5 py-2">
-              {" "}
               <FormRow
                 type="text"
                 name="name"
-                labelText="Coupon Name"
+                labelText="Tên phiếu giảm giá"
                 value={name}
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 handleChange={handleCouponInput}
@@ -118,7 +133,7 @@ export const CouponForm = () => {
               <FormRow
                 type="text"
                 name="code"
-                labelText="Discount Code"
+                labelText="Mã giảm giá"
                 value={code}
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 handleChange={handleCouponInput}
@@ -128,15 +143,15 @@ export const CouponForm = () => {
               <FormRow
                 type="number"
                 name="discount"
-                labelText="Discount"
+                labelText="Giảm giá"
                 value={discount}
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 handleChange={handleCouponInput}
-              />{" "}
+              />
               <FormRow
                 type="number"
                 name="maxUses"
-                labelText="Max Uses"
+                labelText="Tổng số lần sử dụng"
                 style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 value={maxUses}
                 handleChange={handleCouponInput}
@@ -145,7 +160,7 @@ export const CouponForm = () => {
             <div className="grid grid-cols-2 gap-5 py-2 items-center">
               <FormRowSelect
                 name="discountType"
-                labelText="Type"
+                labelText="Loại phiếu giảm giá"
                 value={discountType}
                 list={DiscountTypeOptions}
                 handleChange={handleCouponInput}
@@ -153,7 +168,7 @@ export const CouponForm = () => {
               <FormRow
                 type="date"
                 name="expiryDate"
-                labelText="Expiry Date"
+                labelText="Ngày hết hạn"
                 value={
                   expiryDate === ""
                     ? expiryDate
@@ -164,7 +179,6 @@ export const CouponForm = () => {
               />
             </div>
             <div className="flex justify-between items-center pt-10">
-              {" "}
               <FormRowSelect
                 name="status"
                 labelText="Trạng thái phiếu giảm giá sau khi tạo"
@@ -203,7 +217,7 @@ export const CouponForm = () => {
                     Đang xử lý
                   </>
                 ) : (
-                  "Save"
+                  "Lưu"
                 )}
               </button>
             </div>

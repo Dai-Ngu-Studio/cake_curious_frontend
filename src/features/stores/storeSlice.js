@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import {
-  addStoreThunk,
   getAllStoresThunk,
   updateStoreThunk,
   userStoreThunk,
@@ -35,7 +34,6 @@ export const getUserStore = createAsyncThunk(
   "store/getUserStore",
   userStoreThunk
 );
-export const addStore = createAsyncThunk("store/addStore", addStoreThunk);
 export const updateStore = createAsyncThunk(
   "store/updateStore",
   updateStoreThunk
@@ -84,17 +82,6 @@ const storeSlice = createSlice({
       state.isStoreLoading = false;
       toast.error(payload);
     },
-    [addStore.pending]: (state) => {
-      state.isStoreLoading = true;
-    },
-    [addStore.fulfilled]: (state, { payload }) => {
-      state.isStoreLoading = false;
-      toast.success("Store Added");
-    },
-    [addStore.rejected]: (state, { payload }) => {
-      state.isStoreLoading = false;
-      toast.error(payload);
-    },
     [updateStore.pending]: (state) => {
       state.isStoreLoading = true;
       state.isStoreDoneUpdating = false;
@@ -102,7 +89,7 @@ const storeSlice = createSlice({
     [updateStore.fulfilled]: (state, { payload }) => {
       state.isStoreLoading = false;
       state.isStoreDoneUpdating = true;
-      toast.success("Store Updated...");
+      toast.success("Cửa hàng cập nhật thành công");
     },
     [updateStore.rejected]: (state, { payload }) => {
       state.isStoreLoading = false;

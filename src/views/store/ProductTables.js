@@ -9,10 +9,10 @@ import {
   changeProductPage,
   handleProductChange,
 } from "../../features/products/productSlice";
-import { ProductSortingOptions } from "../../utils/ViewOptions";
+import { ProductTypeFilterOptions, ProductSortingOptions } from "../../utils/ViewOptions";
 
 export default function ProductTables() {
-  const { totalProductPages, page, search, filter, sort, filterOptions } =
+  const { totalProductPages, page, search, filter, sort } =
     useSelector((store) => store.product);
   return (
     <>
@@ -22,7 +22,7 @@ export default function ProductTables() {
             sort={sort}
             filter={filter}
             search={search}
-            filterOptions={filterOptions}
+            filterOptions={ProductTypeFilterOptions}
             handleChange={handleProductChange}
             sortOptions={ProductSortingOptions}
           />
