@@ -12,18 +12,17 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import FormRow from "../../components/Inputs/FormRow";
 import FormRowArea from "../../components/Inputs/FormRowArea";
-import FormRowFile from "../../components/Inputs/FormRowFile";
 import { handleAccountChange } from "../../features/accounts/accountSlice";
 import { getImage } from "../../features/images/imageSlice";
 import { handleStoreChange } from "../../features/stores/storeSlice";
-import { getUser, updateUserRole } from "../../features/users/userSlice";
+import { getUser, handleUserChange, updateUserRole } from "../../features/users/userSlice";
 import { auth } from "../../utils/firebase";
 import { removeCaptchaFromLocalStorage } from "../../utils/localStorage";
 import LeftSvg from "./LeftSvg";
 import Swal from "sweetalert2";
 
 export default function Register() {
-  const { user, isUserRoleDoneUpdating } = useSelector((store) => store.user);
+  const { user, token, isUserRoleDoneUpdating } = useSelector((store) => store.user);
 
   const { phoneNumber, OTP } = useSelector((store) => store.account);
   const { name, description, photoUrl, storeAddress } = useSelector(
@@ -31,7 +30,10 @@ export default function Register() {
   );
   const [step, setStep] = useState(1);
 
-  const { image } = useSelector((store) => store.image);
+  const { image, isDoneGettingImage } = useSelector((store) => store.image);
+  const [verifier, setVerifier] = useState("") 
+  const [provider, setProvider] = useState("");
+  const [chosenImage, setChosenImage] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isVerifying, setIsVerifying] = useState(false);
@@ -70,9 +72,17 @@ export default function Register() {
     const name = e.target.name;
     const value = await convertToBase64(file);
     dispatch(handleStoreChange({ name, value }));
-    dispatch(getImage({ tmpImage: file }));
+    setChosenImage(file);
   };
 
+  useEffect(() => {
+    // call this useEffect to set isDoneGettingUser state back to it default state
+    dispatch(handleUserChange({name: "isDoneGettingUser", value: false}))
+    // navigate back to login page if token is not found and user decide to forward to next page
+    if (!token) {
+      navigate("/auth/login");
+    }
+  }, []);
   useEffect(() => {
     if (isUserRoleDoneUpdating) {
       dispatch(getUser());
@@ -99,7 +109,7 @@ export default function Register() {
     e.preventDefault();
 
     if (phoneNumber.length < 12) {
-      toast.warning("Required phone number to be 12 digits");
+      toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
     if (
@@ -112,10 +122,9 @@ export default function Register() {
       !name ||
       !storeAddress
     ) {
-      toast.warning("Please fill out all fields");
+      toast.warning("Xin hãy điền đầy đủ thông tin");
       return;
     }
-    // const appVerifier = window.recaptchaVerifier;
     const appVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
@@ -123,6 +132,7 @@ export default function Register() {
       },
       auth
     );
+    setVerifier(appVerifier)
     try {
       const result = await signInWithPhoneNumber(
         auth,
@@ -130,12 +140,10 @@ export default function Register() {
         appVerifier
       );
       setVerificationId(result.verificationId);
-      setIsVerifying(true);
-      appVerifier.clear();
+      setIsVerifying(true);   
     } catch (error) {
-      // appVerifier.clear();
       if (error.code === "auth/too-many-requests") {
-        toast.error("You requested too many time. Please try again later");
+        toast.warning("Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau");
       }
       removeCaptchaFromLocalStorage();
     }
@@ -148,48 +156,115 @@ export default function Register() {
           auth.currentUser,
           phoneCredential
         );
-        if (resp.providerId === "phone") {
-          dispatch(
-            updateUserRole({
-              request: {
-                name,
-                description,
-                photoUrl: image || null,
-                storeAddress,
-                fullName: result.fullName,
-                gender: result.gender,
-                dateOfBirth: moment(result.dateOfBirth).toISOString(),
-                address: result.address,
-                citizenshipNumber: result.citizenshipNumber,
-                citizenshipDate: moment(result.citizenshipDate).toISOString(),
-                phoneNumber: resp.user.phoneNumber,
-              },
-            })
-          );
-        }
+        setProvider(resp.providerId)
+        // if (resp.providerId === "phone") {
+        //   dispatch(
+        //     updateUserRole({
+        //       request: {
+        //         name,
+        //         description,
+        //         photoUrl: image || null,
+        //         storeAddress,
+        //         fullName: result.fullName,
+        //         gender: result.gender,
+        //         dateOfBirth: moment(result.dateOfBirth).toISOString(),
+        //         address: result.address,
+        //         citizenshipNumber: result.citizenshipNumber,
+        //         citizenshipDate: moment(result.citizenshipDate).toISOString(),
+        //         phoneNumber: resp.user.phoneNumber,
+        //       },
+        //     })
+        //   );
+        // }
       } catch (error) {
         if (error.code === "auth/provider-already-linked") {
-          toast.error("Tài khoản bạn đăng nhập đã có sđt");
+          toast.warning("Tài khoản bạn đăng nhập đã có số điện thoại");
         } else if (error.code === "auth/invalid-verification-code") {
-          toast.error("Mã OTP không hợp lệ");
+          toast.warning("Mã OTP không hợp lệ");
         } else if (
           error.code === "auth/account-exists-with-different-credential"
         ) {
-          toast.error(
+          toast.warning(
             "Số điện thoại này đang được dùng ở 1 cửa hàng khác. Vui lòng nhập số khác hoặc kiểm tra lại"
           );
         } else if (error.code === "auth/code-expired") {
-          toast.error("Mã OTP hết hạn");
+          toast.warning("Mã OTP hết hạn");
         }
         removeCaptchaFromLocalStorage();
       }
     }
   };
+
+  // dùng để gọi gửi lại OTP
+  const handleResendOTP = async (e) => {
+    e.preventDefault();
+    if (phoneNumber.length < 12) {
+      toast.warning("Yêu cầu số điện thoại là 11 chữ số");
+      return;
+    }
+    if (
+      !result.fullName ||
+      !result.gender ||
+      !result.dateOfBirth ||
+      !result.address ||
+      !result.citizenshipNumber ||
+      !result.citizenshipDate ||
+      !name ||
+      !storeAddress
+    ) {
+      toast.warning("Xin hãy điền đầy đủ thông tin");
+      return;
+    }
+    try {
+      const result = await signInWithPhoneNumber(
+        auth,
+        phoneNumber,
+        verifier
+      );
+      setVerificationId(result.verificationId);
+      setIsVerifying(true);
+    } catch (error) {
+      if (error.code === "auth/too-many-requests") {
+        toast.error("Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau");
+      }
+      removeCaptchaFromLocalStorage();
+    }
+  };
+
+  // tách ra gọi api ở chỗ này //
+  const handleFieldSubmit = (e) => {
+    if (provider === "phone") {
+      dispatch(getImage({ tmpImage: chosenImage }));
+    }
+  }
+  useEffect(() => {
+    if (isDoneGettingImage) {
+      dispatch(
+        updateUserRole({
+          request: {
+            name,
+            description,
+            photoUrl: image || null,
+            storeAddress,
+            fullName: result.fullName,
+            gender: result.gender,
+            dateOfBirth: moment(result.dateOfBirth).toISOString(),
+            address: result.address,
+            citizenshipNumber: result.citizenshipNumber,
+            citizenshipDate: moment(result.citizenshipDate).toISOString(),
+          },
+        })
+      );
+    }
+  }, [isDoneGettingImage]);
+  // ----------------------------------- //
+
   const handleFileInput = (e) => {
     const file = e.target.files[0];
     processFile(file);
   };
 
+  // đã xử lý trường hợp cccd mới chứa số cccd/cmnd cũ
   const processFile = async (file) => {
     setError("");
     try {
@@ -201,24 +276,49 @@ export default function Register() {
         );
         return;
       }
-      const [
-        citizenshipNumber,
-        fullName,
-        dateOfBirth,
-        gender,
-        address,
-        citizenshipDate,
-      ] = qrCode.replaceAll("||", "|").split("|");
-      setResult((prevState) => ({
-        fullName: fullName,
-        gender: gender,
-        dateOfBirth: moment(dateOfBirth, "DDMMYYYY").format("DD/MM/YYYY"),
-        address: address,
-        citizenshipNumber: citizenshipNumber,
-        citizenshipDate: moment(citizenshipDate, "DDMMYYYY").format(
-          "DD/MM/YYYY"
-        ),
-      }));
+      const length = qrCode.replaceAll("||", "|").split("|").length;
+      console.log(length)
+      if (length === 7) {
+        const [
+          citizenshipNumber,
+          oldCitizenshipNumber,
+          fullName,
+          dateOfBirth,
+          gender,
+          address,
+          citizenshipDate,
+        ] = qrCode.replaceAll("||", "|").split("|");
+        setResult((prevState) => ({
+          fullName: fullName,
+          gender: gender,
+          dateOfBirth: moment(dateOfBirth, "DDMMYYYY").format("MM-DD-YYYY"),
+          address: address,
+          citizenshipNumber: citizenshipNumber,
+          citizenshipDate: moment(citizenshipDate, "DDMMYYYY").format(
+            "MM-DD-YYYY"
+          ),
+        }));
+      } else if (length === 6) {
+        const [
+          citizenshipNumber,
+          fullName,
+          dateOfBirth,
+          gender,
+          address,
+          citizenshipDate,
+        ] = qrCode.replaceAll("||", "|").split("|");
+        console.log(citizenshipNumber)
+        setResult((prevState) => ({
+          fullName: fullName,
+          gender: gender,
+          dateOfBirth: moment(dateOfBirth, "DDMMYYYY").format("MM-DD-YYYY"),
+          address: address,
+          citizenshipNumber: citizenshipNumber,
+          citizenshipDate: moment(citizenshipDate, "DDMMYYYY").format(
+            "MM-DD-YYYY"
+          ),
+        }));
+      }
       Swal.fire(
         "Nhận thông tin CCCD thành công!",
         "Thông tin CCCD của bạn đã được nhập!",
@@ -226,6 +326,7 @@ export default function Register() {
       );
       setStep(2);
     } catch (e) {
+      console.log(e)
       if (e instanceof Event) {
         setError("Vui lòng thử lại với ảnh rõ ràng hơn");
       } else {
@@ -428,9 +529,31 @@ export default function Register() {
                         type="button"
                         onClick={handleSubmit}
                       >
+                        Xác minh
+                      </button>
+                    </div>
+                    {/* tui tạo thêm nút gửi lại OTP */}
+                    <div className="text-center mt-6">
+                      <button
+                        className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={handleResendOTP}
+                      >
+                        Gửi lại OTP
+                      </button>
+                    </div>
+                    {/* -------------------------- */}
+                    {/* tạo thêm nút lưu để tách việc gọi xác minh sđt và gọi api */}
+                    <div className="text-center mt-6">
+                      <button
+                        className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={handleFieldSubmit}
+                      >
                         Lưu
                       </button>
                     </div>
+                    {/* -------------------------------------- */}
                     <div id="recaptcha-container"></div>
 
                     {isVerifying && (
