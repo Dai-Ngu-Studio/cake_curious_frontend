@@ -38,7 +38,7 @@ export default function ReportRecipeCardTable() {
       >
         {reportedRecipes.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">No reports to display...</h2>
+            <h2 className="text-center pb-3">Không có báo cáo để hiển thị...</h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto pb-5">

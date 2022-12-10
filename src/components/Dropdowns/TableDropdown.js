@@ -40,7 +40,7 @@ const TableDropdown = ({ link, userChatLink, role }) => {
           className="m-1 p-2  flex text-blueGray-700 justify-center items-center gap-2 rounded hover:bg-sky-100"
         >
           <FaEdit className="flex justify-center items-center" />
-          Update
+          Cập nhật
         </a>
         {role === 2 && (
           <a

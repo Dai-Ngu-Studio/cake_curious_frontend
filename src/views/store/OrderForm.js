@@ -102,39 +102,39 @@ const OrderForm = () => {
       <div className="px-4 md:px-10 mx-auto w-full">
         <div>
           <div>
-            <label>User: </label>
+            <label>Tên người đặt đơn: </label>
             {user?.displayName}
           </div>
           <div>
-            <label>Address: </label>
+            <label>Địa chỉ đơn: </label>
             {address}
           </div>
           <div>
-            <label>Order Date: </label>
+            <label>Ngày đặt đơn hàng: </label>
             {orderDate
               ? moment.utc(orderDate).local().format("MMM Do, YYYY")
-              : "Unknown"}
+              : "Chưa biết"}
           </div>
           <div>
-            <label>Processed Date: </label>
+            <label>Ngày xử lý đơn hàng: </label>
             {processedDate
               ? moment.utc(processedDate).local().format("MMM Do, YYYY")
-              : "Unknown"}
+              : "Chưa biết"}
           </div>
           <div>
-            <label>Completed Date: </label>
+            <label>Ngày hoàn thành đơn hàng: </label>
             {completedDate
               ? moment.utc(completedDate).local().format("MMM Do, YYYY")
-              : "Unknown"}
+              : "Chưa biết"}
           </div>
           <div>
-            <label>Discounted: </label>
+            <label>Sô giảm giá: </label>
             {discountedTotal}
           </div>
           <form>
             <FormRowSelect
               name="status"
-              labelText="Status"
+              labelText="Trạng thái"
               disabledSelection={disableSelectStatus}
               disabledOption={disableOptionStatus}
               value={status}
@@ -169,10 +169,10 @@ const OrderForm = () => {
                       fill="currentColor"
                     />
                   </svg>
-                  Loading...
+                  Đang xử lý...
                 </>
               ) : (
-                "Save"
+                "Lưu"
               )}
             </button>
           </form>

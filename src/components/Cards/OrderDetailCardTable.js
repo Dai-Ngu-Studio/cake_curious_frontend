@@ -26,7 +26,7 @@ export const OrderDetailCardTable = ({ orderId }) => {
       >
         {orderDetails.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">No order details to display...</h2>
+            <h2 className="text-center pb-3">Không có chi tiết đơn hàng để hiển thị...</h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
@@ -35,25 +35,19 @@ export const OrderDetailCardTable = ({ orderId }) => {
               <thead>
                 <tr>
                   <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
+                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"                   
                   >
-                    Product Name
+                    Tên sản phẩm
                   </th>
                   <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
+                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                   >
-                    Quantity
+                    Số lượng sản phẩm
                   </th>
                   <th
-                    className={
-                      "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                    }
+                    className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                   >
-                    Price
+                    Giá sản phẩm
                   </th>
                 </tr>
               </thead>
@@ -80,7 +74,7 @@ export const OrderDetailCardTable = ({ orderId }) => {
                     scope="row"
                     className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                   >
-                    Total
+                    Tổng cộng
                   </th>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 bg-blueGray-50 border-blueGray-100"></td>
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4 bg-blueGray-50 border-blueGray-100">

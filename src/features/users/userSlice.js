@@ -117,14 +117,14 @@ const userSlice = createSlice({
     },
     [updateUserRole.fulfilled]: (state, { payload }) => {
       state.isUserRoleDoneUpdating = true;
-      toast.success("Role updated!");
+      toast.success("Đăng kí cửa hàng thành công!");
     },
     [updateUserRole.rejected]: (state, { payload }) => {
       state.isUserRoleDoneUpdating = false;
       toast.error(payload);
     },
     [clearStore.rejected]: () => {
-      toast.error("There was an error...");
+      toast.error("Có lỗi xảy ra...");
     },
   },
 });

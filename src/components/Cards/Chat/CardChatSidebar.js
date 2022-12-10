@@ -215,7 +215,7 @@ const CardChatSidebar = () => {
           </span>
           <FormRow
             type="text"
-            placeholder="Search"
+            placeholder="Tìm kiếm"
             value={username}
             style="block w-full py-2 pl-10 bg-gray-100 rounded outline-none"
             name="username"

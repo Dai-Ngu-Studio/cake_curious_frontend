@@ -69,7 +69,7 @@ export default function RecipeCard({ recipe, handleDeleteRecipe }) {
             controls
           ></video>
           <div className="flex items-center justify-center p-5">
-            <div className="font-bold text-2xl">Step {getCurrentStep()}</div>
+            <div className="font-bold text-2xl">Bước {getCurrentStep()}</div>
           </div>
           <div className="px-10 text-xl">
             {recipe.recipeSteps[getCurrentStep() - 1].recipeStepMaterials.map(

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 
 // components
 import TableDropdown from "../Dropdowns/TableDropdown";
@@ -41,7 +40,7 @@ export default function CouponCardTable() {
         </div>
         {coupons.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">No coupons to display...</h2>
+            <h2 className="text-center pb-3">Không có phiếu giảm để hiển thị...</h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
@@ -50,19 +49,19 @@ export default function CouponCardTable() {
               <thead>
                 <tr>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Code
+                    Mã
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Name
+                    Tên 
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Expiry Date
+                    Ngày hết hạn
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Max Uses
+                    Tổng số lần sử dụng
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Status
+                    Trạng thái
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"></th>
                 </tr>
@@ -89,16 +88,8 @@ export default function CouponCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {coupon.status === 0 ? "Active" : "Inactive"}
+                            {coupon.status === 0 ? "Đang hoạt động" : "Dừng hoạt động"}
                           </span>
-                          {/* <div className="relative w-full">
-                          <div className="overflow-hidden h-2 text-xs flex rounded bg-red-200">
-                            <div
-                              style={{ width: "60%" }}
-                              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500"
-                            ></div>
-                          </div>
-                        </div> */}
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
@@ -117,11 +108,3 @@ export default function CouponCardTable() {
     </>
   );
 }
-
-// CardTable.defaultProps = {
-//   color: "light",
-// };
-
-// CardTable.propTypes = {
-//   color: PropTypes.oneOf(["light", "dark"]),
-// };

@@ -138,7 +138,7 @@ export default function StoreDetail() {
               <div>
                 <label>Tên chủ cửa hàng: </label>
                 <label className="text-gray-500">
-                  {user?.fullName === null ? "Annoymous" : user.fullName}
+                  {user?.fullName === null ? "Người dùng" : user.fullName}
                 </label>
               </div>
               <div>
@@ -197,7 +197,7 @@ export default function StoreDetail() {
                           fill="currentColor"
                         />
                       </svg>
-                      Loading...
+                      Đang xử lý...
                     </>
                   ) : (
                     "Lưu"

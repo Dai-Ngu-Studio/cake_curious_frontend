@@ -118,9 +118,8 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                 <th className="px-6 py-3 text-xs font-semibold text-left max-w-200-px">
                   Tựa đề
                 </th>
-
                 <th className="px-6 py-3 text-xs font-semibold text-left">
-                  Status
+                  Trạng thái
                 </th>
                 <th className="px-6 py-3 text-xs font-semibold text-left"></th>
               </tr>

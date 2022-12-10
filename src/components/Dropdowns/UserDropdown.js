@@ -65,15 +65,15 @@ const UserDropdown = () => {
           // onClick={() => setToggleDropDown(false)}
         >
           <FaUser className="flex justify-center items-center" />
-          <p>Profile</p>
+          <p>Hồ sơ</p>
         </Link>
         <div className="h-0 my-1 border border-solid" />
         <div
           className="text-sm m-1 p-2 flex justify-center items-center gap-2 hover:bg-green-300 rounded-md cursor-pointer"
-          onClick={() => dispatch(clearStore("Logging out..."))}
+          onClick={() => dispatch(clearStore("Đã đăng xuất..."))}
         >
           <FaSignOutAlt className="flex justify-center items-center" />
-          Logout
+          Đăng xuất
         </div>
       </div>
     </>
