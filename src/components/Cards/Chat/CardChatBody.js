@@ -40,7 +40,7 @@ const CardChatBody = () => {
     await updateDoc(doc(db, "rooms", chatId), {
       lastMessage: text,
       lastMessageTime: serverTimestamp(),
-      lastMessageName: user.displayName,
+      lastMessageName: user?.store?.name,
       updatedAt: serverTimestamp(),
     });
     setText("");
