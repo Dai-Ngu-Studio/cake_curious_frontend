@@ -18,7 +18,7 @@ export const ProductSortingOptions = [
 ];
 export const AccountSortingOptions = [
   {
-    name: "Ngày tạo mới nhẩt",
+    name: "Ngày tạo mới nhất",
     value: "DescCreatedDate",
   },
   {
@@ -151,7 +151,7 @@ export const CouponFilterOptions = [
     name: "Đang hoạt động",
     value: "Active",
   },
-]; 
+];
 export const OrderFilterOptions = [
   {
     name: "Tất cả",
