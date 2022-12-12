@@ -9,11 +9,7 @@ import {
 import Loading from "../../../utils/Loading";
 import User from "../../../assets/img/user.png";
 import StatusCard from "../StatusCard";
-import {
-  BsEyeFill,
-  BsFileEarmarkExcelFill,
-  BsFileCheckFill,
-} from "react-icons/bs";
+import { BsEyeFill, BsFileExcelFill, BsFileCheckFill } from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
 
@@ -213,7 +209,7 @@ export const AccountCardTable = () => {
                               className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
                             />
                             {account.status === 0 ? (
-                              <BsFileEarmarkExcelFill
+                              <BsFileExcelFill
                                 onClick={() => {
                                   // let storeEditing = {
 

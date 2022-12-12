@@ -15,14 +15,21 @@ import FormRowArea from "../../components/Inputs/FormRowArea";
 import { handleAccountChange } from "../../features/accounts/accountSlice";
 import { getImage } from "../../features/images/imageSlice";
 import { handleStoreChange } from "../../features/stores/storeSlice";
-import { getUser, handleUserChange, updateUserRole } from "../../features/users/userSlice";
+import {
+  getUser,
+  handleUserChange,
+  updateUserRole,
+} from "../../features/users/userSlice";
 import { auth } from "../../utils/firebase";
 import { removeCaptchaFromLocalStorage } from "../../utils/localStorage";
 import LeftSvg from "./LeftSvg";
 import Swal from "sweetalert2";
+import OtpInput from "react-otp-input-2";
 
 export default function Register() {
-  const { user, token, isUserRoleDoneUpdating } = useSelector((store) => store.user);
+  const { user, token, isUserRoleDoneUpdating } = useSelector(
+    (store) => store.user
+  );
 
   const { phoneNumber, OTP } = useSelector((store) => store.account);
   const { name, description, photoUrl, storeAddress } = useSelector(
@@ -31,7 +38,7 @@ export default function Register() {
   const [step, setStep] = useState(1);
 
   const { image, isDoneGettingImage } = useSelector((store) => store.image);
-  const [verifier, setVerifier] = useState("") 
+  const [verifier, setVerifier] = useState("");
   const [provider, setProvider] = useState("");
   const [chosenImage, setChosenImage] = useState("");
   const dispatch = useDispatch();
@@ -47,8 +54,12 @@ export default function Register() {
     citizenshipDate: "",
   });
   const [error, setError] = useState("");
+  const [code, setCode] = useState("");
+
+  const handleChangeOTPCode = (code) => setCode(code);
 
   const handleUserInput = (e) => {
+    console.log(e.target);
     const name = e.target.name;
     const value = e.target.value;
     dispatch(handleAccountChange({ name, value }));
@@ -77,7 +88,7 @@ export default function Register() {
 
   useEffect(() => {
     // call this useEffect to set isDoneGettingUser state back to it default state
-    dispatch(handleUserChange({name: "isDoneGettingUser", value: false}))
+    dispatch(handleUserChange({ name: "isDoneGettingUser", value: false }));
     // navigate back to login page if token is not found and user decide to forward to next page
     if (!token) {
       navigate("/auth/login");
@@ -104,27 +115,30 @@ export default function Register() {
       }
     }
   }, [user]);
+  useEffect(() => {
+    dispatch(handleAccountChange({ name: "OTP", value: code }));
+  }, [code]);
   useEffect(() => {}, [step]);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(phoneNumber);
     if (phoneNumber.length < 12) {
       toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
-    if (
-      !result.fullName ||
-      !result.gender ||
-      !result.dateOfBirth ||
-      !result.address ||
-      !result.citizenshipNumber ||
-      !result.citizenshipDate ||
-      !name ||
-      !storeAddress
-    ) {
-      toast.warning("Xin hãy điền đầy đủ thông tin");
-      return;
-    }
+    // if (
+    //   !result.fullName ||
+    //   !result.gender ||
+    //   !result.dateOfBirth ||
+    //   !result.address ||
+    //   !result.citizenshipNumber ||
+    //   !result.citizenshipDate ||
+    //   !name ||
+    //   !storeAddress
+    // ) {
+    //   toast.warning("Xin hãy điền đầy đủ thông tin");
+    //   return;
+    // }
     const appVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
@@ -132,7 +146,7 @@ export default function Register() {
       },
       auth
     );
-    setVerifier(appVerifier)
+    setVerifier(appVerifier);
     try {
       const result = await signInWithPhoneNumber(
         auth,
@@ -140,15 +154,18 @@ export default function Register() {
         appVerifier
       );
       setVerificationId(result.verificationId);
-      setIsVerifying(true);   
+      setIsVerifying(true);
     } catch (error) {
       if (error.code === "auth/too-many-requests") {
-        toast.warning("Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau");
+        toast.warning(
+          "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
+        );
       }
       removeCaptchaFromLocalStorage();
     }
   };
   const ValidateOtp = async () => {
+    console.log(OTP);
     if (OTP.length === 6) {
       const phoneCredential = PhoneAuthProvider.credential(verificationId, OTP);
       try {
@@ -156,7 +173,8 @@ export default function Register() {
           auth.currentUser,
           phoneCredential
         );
-        setProvider(resp.providerId)
+        setProvider(resp.providerId);
+        setStep(3);
         // if (resp.providerId === "phone") {
         //   dispatch(
         //     updateUserRole({
@@ -202,30 +220,28 @@ export default function Register() {
       toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
-    if (
-      !result.fullName ||
-      !result.gender ||
-      !result.dateOfBirth ||
-      !result.address ||
-      !result.citizenshipNumber ||
-      !result.citizenshipDate ||
-      !name ||
-      !storeAddress
-    ) {
-      toast.warning("Xin hãy điền đầy đủ thông tin");
-      return;
-    }
+    // if (
+    //   !result.fullName ||
+    //   !result.gender ||
+    //   !result.dateOfBirth ||
+    //   !result.address ||
+    //   !result.citizenshipNumber ||
+    //   !result.citizenshipDate ||
+    //   !name ||
+    //   !storeAddress
+    // ) {
+    //   toast.warning("Xin hãy điền đầy đủ thông tin");
+    //   return;
+    // }
     try {
-      const result = await signInWithPhoneNumber(
-        auth,
-        phoneNumber,
-        verifier
-      );
+      const result = await signInWithPhoneNumber(auth, phoneNumber, verifier);
       setVerificationId(result.verificationId);
       setIsVerifying(true);
     } catch (error) {
       if (error.code === "auth/too-many-requests") {
-        toast.error("Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau");
+        toast.error(
+          "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
+        );
       }
       removeCaptchaFromLocalStorage();
     }
@@ -236,7 +252,7 @@ export default function Register() {
     if (provider === "phone") {
       dispatch(getImage({ tmpImage: chosenImage }));
     }
-  }
+  };
   useEffect(() => {
     if (isDoneGettingImage) {
       dispatch(
@@ -277,7 +293,7 @@ export default function Register() {
         return;
       }
       const length = qrCode.replaceAll("||", "|").split("|").length;
-      console.log(length)
+      console.log(length);
       if (length === 7) {
         const [
           citizenshipNumber,
@@ -307,7 +323,7 @@ export default function Register() {
           address,
           citizenshipDate,
         ] = qrCode.replaceAll("||", "|").split("|");
-        console.log(citizenshipNumber)
+        console.log(citizenshipNumber);
         setResult((prevState) => ({
           fullName: fullName,
           gender: gender,
@@ -326,7 +342,7 @@ export default function Register() {
       );
       setStep(2);
     } catch (e) {
-      console.log(e)
+      console.log(e);
       if (e instanceof Event) {
         setError("Vui lòng thử lại với ảnh rõ ràng hơn");
       } else {
@@ -448,6 +464,106 @@ export default function Register() {
 
                 {step === 2 && (
                   <>
+                    {/* -------------------------------------- */}
+                    <div id="recaptcha-container"></div>
+
+                    {!isVerifying ? (
+                      <>
+                        <div className="flex justify-center items-center">
+                          <hr className="w-10" />
+                          <div className="text-gray-400">
+                            Vui lòng nhập thông tin số điện thoại của bạn
+                          </div>
+                          <hr className="w-10" />
+                        </div>
+
+                        <div>
+                          <input
+                            type="text"
+                            value={phoneNumber}
+                            name="phoneNumber"
+                            onChange={handleUserInput}
+                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="Số điện thoại"
+                          />
+                        </div>
+                        <div></div>
+                        <div className="text-center mt-6">
+                          <button
+                            className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={handleSubmit}
+                          >
+                            Xác minh
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex justify-center items-center">
+                          <hr className="w-10" />
+                          <div className="text-gray-400">
+                            Mã xác minh sẽ được bằng tin nhắn đến {phoneNumber}
+                          </div>
+                          <hr className="w-10" />
+                        </div>
+                        <div className="py-10 flex justify-center">
+                          <OtpInput
+                            value={code}
+                            onChange={handleChangeOTPCode}
+                            numInputs={6}
+                            separator={<span style={{ width: "8px" }}></span>}
+                            isInputNum={true}
+                            shouldAutoFocus={true}
+                            inputStyle={{
+                              border: "9px solid transparent",
+                              borderRadius: "8px",
+                              width: "54px",
+                              height: "54px",
+                              fontSize: "24px",
+                              color: "#000",
+                              fontWeight: "400",
+                              caretColor: "green",
+                            }}
+                            focusStyle={{
+                              border: "2px solid #03fc30",
+                              outline: "none",
+                            }}
+                          />
+                        </div>
+                        <input
+                          type="text"
+                          name="OTP"
+                          value={OTP}
+                          className="hidden"
+                          placeholder="OTP"
+                          onChange={handleUserInput}
+                        />
+
+                        <div className="text-center mt-6">
+                          <button
+                            className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={ValidateOtp}
+                          >
+                            Xác nhận mã OTP này!
+                          </button>
+                        </div>
+                        <div className="text-center mt-6">
+                          <button
+                            className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                            type="button"
+                            onClick={handleResendOTP}
+                          >
+                            Gửi lại OTP
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+                {step === 3 && (
+                  <>
                     <div className="flex justify-center items-center">
                       <hr className="w-10" />
                       <div className="text-gray-400">Thông tin cửa hàng</div>
@@ -456,18 +572,17 @@ export default function Register() {
                     <div className="grid grid-cols-2 gap-5 py-2">
                       <FormRow
                         type="text"
-                        labelText="Số điện thoại"
-                        name="phoneNumber"
-                        value={phoneNumber}
+                        labelText="Tên cửa hàng"
+                        name="name"
+                        value={name}
                         style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        placeholder="Phone Number"
                         handleChange={handleUserInput}
                       />
                       <FormRow
                         type="text"
-                        labelText="Tên cửa hàng"
-                        name="name"
-                        value={name}
+                        labelText="Địa chỉ cửa hàng"
+                        name="storeAddress"
+                        value={storeAddress}
                         style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         handleChange={handleUserInput}
                       />
@@ -505,14 +620,7 @@ export default function Register() {
                           onChange={handleFileUpload}
                         />
                       </label>
-                      <FormRow
-                        type="text"
-                        labelText="Địa chỉ cửa hàng"
-                        name="storeAddress"
-                        value={storeAddress}
-                        style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        handleChange={handleUserInput}
-                      />
+
                       <FormRowArea
                         type="text"
                         labelText="Mô tả cho cửa hàng"
@@ -523,25 +631,6 @@ export default function Register() {
                       />
                     </div>
 
-                    <div className="text-center mt-6">
-                      <button
-                        className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={handleSubmit}
-                      >
-                        Xác minh
-                      </button>
-                    </div>
-                    {/* tui tạo thêm nút gửi lại OTP */}
-                    <div className="text-center mt-6">
-                      <button
-                        className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={handleResendOTP}
-                      >
-                        Gửi lại OTP
-                      </button>
-                    </div>
                     {/* -------------------------- */}
                     {/* tạo thêm nút lưu để tách việc gọi xác minh sđt và gọi api */}
                     <div className="text-center mt-6">
@@ -553,36 +642,6 @@ export default function Register() {
                         Lưu
                       </button>
                     </div>
-                    {/* -------------------------------------- */}
-                    <div id="recaptcha-container"></div>
-
-                    {isVerifying && (
-                      <>
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Mã xác nhận OTP
-                        </label>
-                        <input
-                          type="text"
-                          name="OTP"
-                          value={OTP}
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="OTP"
-                          onChange={handleUserInput}
-                        />
-                        <div className="text-center mt-6">
-                          <button
-                            className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                            type="button"
-                            onClick={ValidateOtp}
-                          >
-                            Xác nhận mã OTP này!
-                          </button>
-                        </div>
-                      </>
-                    )}
                   </>
                 )}
               </div>
