@@ -15,9 +15,8 @@ import {
 } from "../../features/users/userSlice";
 
 export default function Login() {
-  const { token, email, password, isUserLoading, user, isDoneGettingUser } = useSelector(
-    (store) => store.user
-  );
+  const { token, email, password, isUserLoading, user, isDoneGettingUser } =
+    useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,22 +63,26 @@ export default function Login() {
   }, [token]);
   useEffect(() => {
     if (isDoneGettingUser) {
-      let priorityRole = 99;
-      for (let i = 0; i < user.hasRoles.length; i++) {
-        var roleId = user.hasRoles[i].roleId;
-        if (roleId < priorityRole) {
-          priorityRole = roleId;
+      if (user?.status === 0) {
+        let priorityRole = 99;
+        for (let i = 0; i < user.hasRoles.length; i++) {
+          var roleId = user.hasRoles[i].roleId;
+          if (roleId < priorityRole) {
+            priorityRole = roleId;
+          }
         }
-      }
-
-      if (priorityRole === 0) {
-        navigate("/admin/admin-dashboard");
-      } else if (priorityRole === 1) {
-        navigate("/staff/staff-dashboard");
-      } else if (priorityRole === 2) {
-        navigate("/store/store-dashboard");
-      } else if (priorityRole === 3) {
-        navigate("/auth/register");
+        if (priorityRole === 0) {
+          navigate("/admin/admin-dashboard");
+        } else if (priorityRole === 1) {
+          navigate("/staff/staff-dashboard");
+        } else if (priorityRole === 2) {
+          navigate("/store/store-dashboard");
+        } else if (priorityRole === 3) {
+          navigate("/auth/register");
+        }
+      } else {
+        dispatch(clearAllUsersState());
+        //code modal ở dưới dispatch
       }
     }
   }, [user]);

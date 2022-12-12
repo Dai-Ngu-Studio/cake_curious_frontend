@@ -57,9 +57,9 @@ const userSlice = createSlice({
       }
     },
     clearAllUsersState: (state) => {
-      removeUserFromLocalStorage()
-      removeTokenFromLocalStorage()
-      removeCaptchaFromLocalStorage()
+      removeUserFromLocalStorage();
+      removeTokenFromLocalStorage();
+      removeCaptchaFromLocalStorage();
       state.user = null;
       state.token = null;
       state.isUserLoading = false;
@@ -103,7 +103,7 @@ const userSlice = createSlice({
     },
     [getUser.fulfilled]: (state, { payload }) => {
       state.isUserLoading = false;
-      state.isDoneGettingUser = true
+      state.isDoneGettingUser = true;
       state.user = payload;
       addUserToLocalStorage(payload);
     },
@@ -129,6 +129,10 @@ const userSlice = createSlice({
   },
 });
 
-export const { handleUserChange, logoutUser, clearUserLoginValues, clearAllUsersState } =
-  userSlice.actions;
+export const {
+  handleUserChange,
+  logoutUser,
+  clearUserLoginValues,
+  clearAllUsersState,
+} = userSlice.actions;
 export default userSlice.reducer;

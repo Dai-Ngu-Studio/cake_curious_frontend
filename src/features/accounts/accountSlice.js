@@ -19,19 +19,26 @@ const initialState = {
   sort: "All",
   filter: "All",
   isAccountDoneUpdating: false,
-  editAccountId: null,
-  email: "",
-  displayName: "",
-  photoUrl: null,
-  gender: "",
   roles: [],
   status: 0,
-  phoneNumber: "+84",
+  account: null,
+  verifyPhoneNumber: "+84",
   OTP: "",
   /* --- only for getting user info when chatting ---- */
   isUserChatting: false,
   /* ---------------------- */
-  user: null,
+  /* ---- update user profile ----- */
+  // email: "",
+  displayName: "",
+  fullName: "",
+  photoUrl: "",
+  gender: "",
+  profilePhoneNumber: "",
+  address: "",
+  citizenshipDate: "",
+  citizenshipNumber: "",
+  dateOfBirth: "",
+  /* ---------------- */
 };
 
 export const getAllAccounts = createAsyncThunk(
@@ -40,6 +47,10 @@ export const getAllAccounts = createAsyncThunk(
 );
 export const getSingleAccount = createAsyncThunk(
   "account/getSingleAccount",
+  getAccountThunk
+);
+export const getAccountForUpdating = createAsyncThunk(
+  "account/getAccountForUpdating",
   getAccountThunk
 );
 export const updateAccount = createAsyncThunk(
@@ -68,7 +79,7 @@ const accountSlice = createSlice({
     clearGetUserChatState: (state) => {
       return {
         ...state,
-        user: null,
+        account: null,
       };
     },
     clearAllAccountsState: (state) => initialState,
@@ -93,23 +104,41 @@ const accountSlice = createSlice({
     [getSingleAccount.fulfilled]: (state, { payload }) => {
       state.isModalAccountLoading = false;
       state.isUserChatting = true;
-      state.user = payload;
+      state.account = payload;
     },
     [getSingleAccount.rejected]: (state, { payload }) => {
       state.isModalAccountLoading = false;
-      state.isUserChatting = false;
+    },
+    [getAccountForUpdating.pending]: (state) => {
+      state.isAccountLoading = true;
+    },
+    [getAccountForUpdating.fulfilled]: (state, { payload }) => {
+      state.isAccountLoading = false;
+      state.displayName = payload.displayName;
+      state.fullName = payload.fullName;
+      state.photoUrl = payload.photoUrl;
+      state.gender = payload.gender;
+      state.profilePhoneNumber = payload.phoneNumber;
+      state.address = payload.address;
+      state.citizenshipDate = payload.citizenshipDate;
+      state.citizenshipNumber = payload.citizenshipNumber;
+      state.dateOfBirth = payload.dateOfBirth;
+      // gọi state.account = payload để khi update xong
+      // trang profile có thể ghi đè vào user trong local storage
+      state.account = payload;
+    },
+    [getAccountForUpdating.rejected]: (state, { payload }) => {
+      state.isAccountLoading = false;
     },
     [updateAccount.pending]: (state) => {
-      state.isAccountLoading = true;
       state.isAccountDoneUpdating = false;
     },
     [updateAccount.fulfilled]: (state, { payload }) => {
-      state.isAccountLoading = false;
       state.isAccountDoneUpdating = true;
       toast.success("Cập nhật thông tin tài khoản thành công");
     },
     [updateAccount.rejected]: (state, { payload }) => {
-      state.isAccountLoading = false;
+      state.isAccountDoneUpdating = false;
       toast.error(payload);
     },
     [updateAccountRole.pending]: (state) => {
