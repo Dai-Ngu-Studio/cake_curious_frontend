@@ -10,9 +10,7 @@ import {
   changeRecipePage,
   handleRecipeChange,
 } from "../../features/recipes/recipeSlice";
-import {
-  ReportedItemSortingOptions
-} from "../../utils/ViewOptions";
+import { ReportedItemSortingOptions } from "../../utils/ViewOptions";
 
 export default function ReportRecipeTables() {
   const { totalPage, page, search, status, sort } = useSelector(
@@ -23,10 +21,8 @@ export default function ReportRecipeTables() {
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardSearch
-            sort={sort}
             status={status}
             search={search}
-            sortOptions={ReportedItemSortingOptions}
             handleChange={handleRecipeChange}
           />
           <ReportRecipeCardTable />

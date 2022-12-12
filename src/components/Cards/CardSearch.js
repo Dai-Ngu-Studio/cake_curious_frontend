@@ -18,24 +18,26 @@ const CardSearch = ({
   };
 
   return (
-    <div className="flex justify-between items-center mt-40 bg-white p-3">     
+    <div className="flex justify-between items-center mt-40 bg-white p-3">
       <div className="relative">
-          <FormRadioSelect
-            name="filter"
-            value={filter}
-            list={filterOptions}
-            handleChange={handleInputChange}
-          />
-        </div>  
-      <div className="inline-flex justify-center items-center">
-        <p className="pr-2">Sắp xếp theo</p>
         <FormRadioSelect
-          name="sort"
-          value={sort}
-          list={sortOptions}
+          name="filter"
+          value={filter}
+          list={filterOptions}
           handleChange={handleInputChange}
         />
       </div>
+      {sort && (
+        <div className="inline-flex justify-center items-center">
+          <p className="pr-2">Sắp xếp theo</p>
+          <FormRadioSelect
+            name="sort"
+            value={sort}
+            list={sortOptions}
+            handleChange={handleInputChange}
+          />
+        </div>
+      )}
 
       <div className="relative">
         <div className="bg-green-200 flex absolute inset-y-0 left-0 items-center px-2 pointer-events-none rounded-lg">

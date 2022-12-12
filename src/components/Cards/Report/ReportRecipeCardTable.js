@@ -3,7 +3,12 @@ import NoImg from "../../../assets/img/no-store.png";
 import TableDropdown from "../../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../utils/Loading";
-import { getAllReportedRecipes } from "../../../features/recipes/recipeSlice";
+import {
+  getAllReportedRecipes,
+  handleRecipeChange,
+} from "../../../features/recipes/recipeSlice";
+import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
+
 export default function ReportRecipeCardTable() {
   const { isRecipesLoading, reportedRecipes, page, search, sort } = useSelector(
     (selector) => selector.recipe
@@ -29,6 +34,16 @@ export default function ReportRecipeCardTable() {
     });
     return smallestRoleID;
   }
+  //DescPendingReport
+  function updateFilter() {
+    if (sort === "AscPendingReport") {
+      dispatch(
+        handleRecipeChange({ name: "sort", value: "DescPendingReport" })
+      );
+    } else {
+      dispatch(handleRecipeChange({ name: "sort", value: "AscPendingReport" }));
+    }
+  }
   return (
     <>
       <div
@@ -38,7 +53,9 @@ export default function ReportRecipeCardTable() {
       >
         {reportedRecipes.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">Không có báo cáo để hiển thị...</h2>
+            <h2 className="text-center pb-3">
+              Không có báo cáo để hiển thị...
+            </h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto pb-5">
@@ -58,8 +75,18 @@ export default function ReportRecipeCardTable() {
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Ngày tạo
                   </th>
-                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                    Báo cáo chờ giải quyết
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={() => {
+                      updateFilter();
+                    }}
+                  >
+                    <div>Báo cáo chờ giải quyết</div>
+                    {sort === "AscPendingReport" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
