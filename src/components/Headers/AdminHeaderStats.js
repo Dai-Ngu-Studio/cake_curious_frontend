@@ -17,7 +17,7 @@ export default function AdminHeaderStats({ cardStats }) {
                   statSubtitle="BÁO CÁO"
                   statTitle={cardStats?.currentWeekReport}
                   statArrow={cardStats?.sinceLastWeekReport > 0 ? "up" : "down"}
-                  statPercent={cardStats?.sinceLastWeekReport}
+                  statPercent={cardStats?.sinceLastWeekReport * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekReport > 0
                       ? "text-red-500"
@@ -35,7 +35,7 @@ export default function AdminHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastMonthNewBaker > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastMonthNewBaker}
+                  statPercent={cardStats?.sinceLastMonthNewBaker * 100}
                   statPercentColor={
                     cardStats?.sinceLastMonthNewBaker > 0
                       ? "text-emerald-500"
@@ -53,7 +53,7 @@ export default function AdminHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastWeekActiveUser > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastWeekActiveUser}
+                  statPercent={cardStats?.sinceLastWeekActiveUser * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekActiveUser > 0
                       ? "text-emerald-500"
@@ -71,7 +71,7 @@ export default function AdminHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastMonthNewStore > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastMonthNewStore}
+                  statPercent={cardStats?.sinceLastMonthNewStore * 100}
                   statPercentColor={
                     cardStats?.sinceLastMonthNewStore > 0
                       ? "text-emerald-500"

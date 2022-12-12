@@ -18,7 +18,7 @@ export default function StoreHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastMonthProductSold > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastMonthProductSold}
+                  statPercent={cardStats?.sinceLastMonthProductSold * 100}
                   statPercentColor={
                     cardStats?.sinceLastMonthProductSold > 0
                       ? "text-emerald-500"
@@ -34,7 +34,7 @@ export default function StoreHeaderStats({ cardStats }) {
                   statSubtitle="DOANH THU"
                   statTitle={cardStats?.currentWeekSales}
                   statArrow={cardStats?.sinceLastWeekSales > 0 ? "up" : "down"}
-                  statPercent={cardStats?.sinceLastWeekSales}
+                  statPercent={cardStats?.sinceLastWeekSales * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekSales > 0
                       ? "text-emerald-500"
@@ -54,7 +54,7 @@ export default function StoreHeaderStats({ cardStats }) {
                       ? "up"
                       : "down"
                   }
-                  statPercent={cardStats?.sinceLastMonthTotalCompletedOrder}
+                  statPercent={cardStats?.sinceLastMonthTotalCompletedOrder * 100}
                   statPercentColor={
                     cardStats?.sinceLastMonthTotalCompletedOrder > 0
                       ? "text-emerald-500"
@@ -72,7 +72,7 @@ export default function StoreHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastWeekStoreVisit > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastWeekStoreVisit}
+                  statPercent={cardStats?.sinceLastWeekStoreVisit * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekStoreVisit > 0
                       ? "text-emerald-500"
