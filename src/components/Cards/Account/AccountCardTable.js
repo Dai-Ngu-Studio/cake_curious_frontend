@@ -9,7 +9,13 @@ import {
 import Loading from "../../../utils/Loading";
 import User from "../../../assets/img/user.png";
 import StatusCard from "../StatusCard";
-import { BsEyeFill, BsFileExcelFill, BsFileCheckFill } from "react-icons/bs";
+import {
+  BsEyeFill,
+  BsFileExcelFill,
+  BsFileCheckFill,
+  BsCaretDownFill,
+  BsCaretUpFill,
+} from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
 
@@ -36,7 +42,14 @@ export const AccountCardTable = () => {
   if (isAccountLoading) {
     return <Loading />;
   }
-
+  function updateFilter() {
+    console.log(sort);
+    if (sort === "DescCreatedDate") {
+      dispatch(handleAccountChange({ name: "sort", value: "AscCreatedDate" }));
+    } else {
+      dispatch(handleAccountChange({ name: "sort", value: "DescCreatedDate" }));
+    }
+  }
   const changeAccountStatus = (accountId, accountStatus) => {
     if (accountId) {
       if (accountStatus === 0) {
@@ -83,6 +96,7 @@ export const AccountCardTable = () => {
     });
     return smallestRoleID;
   }
+  console.log(accounts);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -107,6 +121,19 @@ export const AccountCardTable = () => {
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Email
+                  </th>
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={() => {
+                      updateFilter();
+                    }}
+                  >
+                    <div>Thời điểm đăng ký</div>
+                    {sort === "DescCreatedDate" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left whitespace-nowrap max-w-full">
                     Trạng thái tài khoản
@@ -174,6 +201,26 @@ export const AccountCardTable = () => {
                         </td>
                         <td className="pl-6 align-middle p-4">
                           <div className="flex">{account.email}</div>
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          <div className="flex">
+                            {(() => {
+                              if (account.createdDate) {
+                                let a = new Date(account.createdDate + "Z");
+                                return (
+                                  a.getDate() +
+                                  " Tháng " +
+                                  a.getMonth() +
+                                  ", " +
+                                  a.getFullYear() +
+                                  " lúc " +
+                                  a.getHours() +
+                                  ":" +
+                                  a.getMinutes()
+                                );
+                              } else return "Không có dữ liệu";
+                            })()}
+                          </div>
                         </td>
                         <td className="pl-6 align-middle p-4">
                           <div className="flex items-center">

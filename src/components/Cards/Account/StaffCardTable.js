@@ -15,6 +15,8 @@ import {
   BsFileExcelFill,
   BsFileCheckFill,
   BsFillPersonPlusFill,
+  BsCaretDownFill,
+  BsCaretUpFill,
 } from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
@@ -79,6 +81,14 @@ export const StaffCardTable = () => {
         },
       })
     );
+  }
+  function updateFilter() {
+    console.log(sort);
+    if (sort === "DescCreatedDate") {
+      dispatch(handleAccountChange({ name: "sort", value: "AscCreatedDate" }));
+    } else {
+      dispatch(handleAccountChange({ name: "sort", value: "DescCreatedDate" }));
+    }
   }
   function smallestRoleID(roles) {
     // console.log(roles);
@@ -147,6 +157,20 @@ export const StaffCardTable = () => {
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Email
                   </th>
+
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={() => {
+                      updateFilter();
+                    }}
+                  >
+                    <div>Thời điểm đăng ký</div>
+                    {sort === "DescCreatedDate" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
+                  </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left whitespace-nowrap max-w-full">
                     Trạng thái tài khoản
                   </th>
@@ -212,6 +236,26 @@ export const StaffCardTable = () => {
                       </td>
                       <td className="pl-6 align-middle p-4">
                         <div className="flex">{account.email}</div>
+                      </td>
+                      <td className="pl-6 align-middle p-4">
+                        <div className="flex">
+                          {(() => {
+                            if (account.createdDate) {
+                              let a = new Date(account.createdDate + "Z");
+                              return (
+                                a.getDate() +
+                                " Tháng " +
+                                a.getMonth() +
+                                ", " +
+                                a.getFullYear() +
+                                " lúc " +
+                                a.getHours() +
+                                ":" +
+                                a.getMinutes()
+                              );
+                            } else return "Không có dữ liệu";
+                          })()}
+                        </div>
                       </td>
                       <td className="pl-6 align-middle p-4">
                         <div className="flex items-center">

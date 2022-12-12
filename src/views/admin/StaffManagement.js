@@ -22,11 +22,9 @@ export default function StaffManagement() {
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardSearch
-            sort={sort}
             filter={filter}
             search={search}
             filterOptions={AccountFilterOptions}
-            sortOptions={AccountSortingOptions}
             handleChange={handleAccountChange}
           />
           <StaffCardTable />
