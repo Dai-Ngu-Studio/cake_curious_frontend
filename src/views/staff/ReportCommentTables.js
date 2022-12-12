@@ -9,7 +9,6 @@ import {
 } from "../../features/comments/commentSlice";
 
 // components
-import { ReportedItemSortingOptions } from "../../utils/ViewOptions";
 
 export default function ReportCommentTables() {
   const { totalPage, page, search, sort } = useSelector(

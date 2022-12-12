@@ -67,7 +67,6 @@ const dashboardSlice = createSlice({
       state.isDashboardLoading = true;
     },
     [getStaffDashboard.fulfilled]: (state, { payload }) => {
-      console.log(payload)
       state.isDashboardLoading = false;
       state.cardStats = payload.cardStats;
       state.barChart = payload.barChart;

@@ -17,8 +17,7 @@ import { OrderStatus } from "../../utils/StatusOptions";
 const OrderForm = () => {
   const {
     isOrderLoading,
-    // isOrderEditting,
-    // editOrderId,
+    total,
     status,
     orderDate,
     discountedTotal,
@@ -113,22 +112,26 @@ const OrderForm = () => {
             <label>Ngày đặt đơn hàng: </label>
             {orderDate
               ? moment.utc(orderDate).local().format("MMM Do, YYYY")
-              : "Chưa biết"}
+              : "Không có dữ liệu"}
           </div>
           <div>
             <label>Ngày xử lý đơn hàng: </label>
             {processedDate
               ? moment.utc(processedDate).local().format("MMM Do, YYYY")
-              : "Chưa biết"}
+              : "Không có dữ liệu"}
           </div>
           <div>
             <label>Ngày hoàn thành đơn hàng: </label>
             {completedDate
               ? moment.utc(completedDate).local().format("MMM Do, YYYY")
-              : "Chưa biết"}
+              : "Không có dữ liệu"}
           </div>
           <div>
-            <label>Sô giảm giá: </label>
+            <label>Tổng giá tiền: </label>
+            {total}
+          </div>
+          <div>
+            <label>Tổng giá tiền sau giảm giá: </label>
             {discountedTotal}
           </div>
           <form>

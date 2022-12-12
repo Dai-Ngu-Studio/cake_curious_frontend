@@ -7,15 +7,12 @@ import {
   changeStorePage,
   handleStoreChange,
 } from "../../features/stores/storeSlice";
-import {
-  StoreSortingOptions,
-  StoreFilterOptions,
-} from "../../utils/ViewOptions";
+import { StoreFilterOptions } from "../../utils/ViewOptions";
 
 // components
 
 export default function StoreTables() {
-  const { totalStorePages, page, search, filter, sort } = useSelector(
+  const { totalStorePages, page, search, filter } = useSelector(
     (selector) => selector.store
   );
   return (
@@ -23,11 +20,9 @@ export default function StoreTables() {
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardSearch
-            sort={sort}
             filter={filter}
             search={search}
             filterOptions={StoreFilterOptions}
-            sortOptions={StoreSortingOptions}
             handleChange={handleStoreChange}
           />
           <StoreCardTable />

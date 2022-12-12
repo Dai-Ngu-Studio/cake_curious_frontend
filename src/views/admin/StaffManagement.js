@@ -7,14 +7,11 @@ import {
   changeAccountPage,
   handleAccountChange,
 } from "../../features/accounts/accountSlice";
-import {
-  AccountSortingOptions,
-  AccountFilterOptions,
-} from "../../utils/ViewOptions";
+import { StaffAccountFilterOptions } from "../../utils/ViewOptions";
 // components
 
 export default function StaffManagement() {
-  const { totalAccountPages, page, search, filter, sort } = useSelector(
+  const { totalAccountPages, page, search, filter } = useSelector(
     (store) => store.account
   );
   return (
@@ -24,7 +21,7 @@ export default function StaffManagement() {
           <CardSearch
             filter={filter}
             search={search}
-            filterOptions={AccountFilterOptions}
+            filterOptions={StaffAccountFilterOptions}
             handleChange={handleAccountChange}
           />
           <StaffCardTable />

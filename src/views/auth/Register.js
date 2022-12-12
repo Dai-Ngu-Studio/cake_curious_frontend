@@ -31,7 +31,7 @@ export default function Register() {
     (store) => store.user
   );
 
-  const { phoneNumber, OTP } = useSelector((store) => store.account);
+  const { verifyPhoneNumber, OTP } = useSelector((store) => store.account);
   const { name, description, photoUrl, storeAddress } = useSelector(
     (selector) => selector.store
   );
@@ -60,7 +60,6 @@ export default function Register() {
   const handleChangeOTPCode = (code) => setCode(code);
 
   const handleUserInput = (e) => {
-    console.log(e.target);
     const name = e.target.name;
     const value = e.target.value;
     dispatch(handleAccountChange({ name, value }));
@@ -126,27 +125,13 @@ export default function Register() {
   useEffect(() => {
     dispatch(handleAccountChange({ name: "OTP", value: code }));
   }, [code]);
-  useEffect(() => {}, [step]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(phoneNumber);
-    if (phoneNumber.length < 12) {
+    if (verifyPhoneNumber.length < 12) {
       toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
-    // if (
-    //   !result.fullName ||
-    //   !result.gender ||
-    //   !result.dateOfBirth ||
-    //   !result.address ||
-    //   !result.citizenshipNumber ||
-    //   !result.citizenshipDate ||
-    //   !name ||
-    //   !storeAddress
-    // ) {
-    //   toast.warning("Xin hãy điền đầy đủ thông tin");
-    //   return;
-    // }
     const appVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       {
@@ -158,7 +143,7 @@ export default function Register() {
     try {
       const result = await signInWithPhoneNumber(
         auth,
-        phoneNumber,
+        verifyPhoneNumber,
         appVerifier
       );
       setVerificationId(result.verificationId);
@@ -172,8 +157,8 @@ export default function Register() {
       removeCaptchaFromLocalStorage();
     }
   };
-  const ValidateOtp = async () => {
-    console.log(OTP);
+  const ValidateOtp = async (e) => {
+    e.preventDefault();
     if (OTP.length === 6) {
       const phoneCredential = PhoneAuthProvider.credential(verificationId, OTP);
       try {
@@ -183,25 +168,6 @@ export default function Register() {
         );
         setProvider(resp.providerId);
         setStep(3);
-        // if (resp.providerId === "phone") {
-        //   dispatch(
-        //     updateUserRole({
-        //       request: {
-        //         name,
-        //         description,
-        //         photoUrl: image || null,
-        //         storeAddress,
-        //         fullName: result.fullName,
-        //         gender: result.gender,
-        //         dateOfBirth: moment(result.dateOfBirth).toISOString(),
-        //         address: result.address,
-        //         citizenshipNumber: result.citizenshipNumber,
-        //         citizenshipDate: moment(result.citizenshipDate).toISOString(),
-        //         phoneNumber: resp.user.phoneNumber,
-        //       },
-        //     })
-        //   );
-        // }
       } catch (error) {
         if (error.code === "auth/provider-already-linked") {
           toast.warning("Tài khoản bạn đăng nhập đã có số điện thoại");
@@ -224,25 +190,16 @@ export default function Register() {
   // dùng để gọi gửi lại OTP
   const handleResendOTP = async (e) => {
     e.preventDefault();
-    if (phoneNumber.length < 12) {
+    if (verifyPhoneNumber.length < 12) {
       toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
-    // if (
-    //   !result.fullName ||
-    //   !result.gender ||
-    //   !result.dateOfBirth ||
-    //   !result.address ||
-    //   !result.citizenshipNumber ||
-    //   !result.citizenshipDate ||
-    //   !name ||
-    //   !storeAddress
-    // ) {
-    //   toast.warning("Xin hãy điền đầy đủ thông tin");
-    //   return;
-    // }
     try {
-      const result = await signInWithPhoneNumber(auth, phoneNumber, verifier);
+      const result = await signInWithPhoneNumber(
+        auth,
+        verifyPhoneNumber,
+        verifier
+      );
       setVerificationId(result.verificationId);
       setIsVerifying(true);
     } catch (error) {
@@ -257,6 +214,11 @@ export default function Register() {
 
   // tách ra gọi api ở chỗ này //
   const handleFieldSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !storeAddress) {
+      toast.warning("Xin hãy điền đầy đủ thông tin");
+      return;
+    }
     if (provider === "phone") {
       dispatch(getImage({ tmpImage: chosenImage }));
     }
@@ -490,8 +452,8 @@ export default function Register() {
                         <div>
                           <input
                             type="text"
-                            value={phoneNumber}
-                            name="phoneNumber"
+                            value={verifyPhoneNumber}
+                            name="verifyPhoneNumber"
                             onChange={handleUserInput}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             placeholder="Số điện thoại"
@@ -513,7 +475,8 @@ export default function Register() {
                         <div className="flex justify-center items-center">
                           <hr className="w-10" />
                           <div className="text-gray-400">
-                            Mã xác minh sẽ được bằng tin nhắn đến {phoneNumber}
+                            Mã xác minh sẽ được bằng tin nhắn đến{" "}
+                            {verifyPhoneNumber}
                           </div>
                           <hr className="w-10" />
                         </div>
@@ -541,14 +504,6 @@ export default function Register() {
                             }}
                           />
                         </div>
-                        <input
-                          type="text"
-                          name="OTP"
-                          value={OTP}
-                          className="hidden"
-                          placeholder="OTP"
-                          onChange={handleUserInput}
-                        />
 
                         <div className="text-center mt-6">
                           <button

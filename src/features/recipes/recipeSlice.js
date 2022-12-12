@@ -29,18 +29,6 @@ export const deleteRecipe = createAsyncThunk(
   "recipe/deleteRecipe",
   deleteRecipeThunk
 );
-// export const getSingleAccount = createAsyncThunk(
-//   "account/getSingleAccount",
-//   getAccountThunk
-// );
-// export const updateAccount = createAsyncThunk(
-//   "account/updateAccount",
-//   updateAccountThunk
-// );
-// export const updateAccountRole = createAsyncThunk(
-//   "account/changeRoleAccountThunk",
-//   changeRoleAccountThunk
-// );
 
 const recipeSlice = createSlice({
   name: "recipe",

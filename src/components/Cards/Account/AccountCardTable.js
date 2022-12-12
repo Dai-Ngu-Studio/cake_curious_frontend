@@ -43,7 +43,6 @@ export const AccountCardTable = () => {
     return <Loading />;
   }
   function updateFilter() {
-    console.log(sort);
     if (sort === "DescCreatedDate") {
       dispatch(handleAccountChange({ name: "sort", value: "AscCreatedDate" }));
     } else {
@@ -96,7 +95,6 @@ export const AccountCardTable = () => {
     });
     return smallestRoleID;
   }
-  console.log(accounts);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -197,7 +195,7 @@ export const AccountCardTable = () => {
                           })()}
                         </td>
                         <td className="pl-6 align-middle p-4">
-                          {account.displayName || "Annoymous"}
+                          {account.displayName || "Không có dữ liệu"}
                         </td>
                         <td className="pl-6 align-middle p-4">
                           <div className="flex">{account.email}</div>

@@ -4,8 +4,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import customFetch from "../../utils/axios";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
 import { firebaseAuthError } from "../../utils/firebaseError";
 import { clearAllAccountsState } from "../accounts/accountSlice";
 import { clearAllProductsState } from "../products/productSlice";
@@ -35,15 +34,6 @@ export const loginGoogleThunk = async (thunkAPI) => {
   try {
     const googleAuth = new GoogleAuthProvider();
     const authGoogle = await signInWithPopup(auth, googleAuth);
-    // const res = await getDoc(doc(db, "users", authGoogle.user.uid));
-    // if (!res.exists()) {
-    //   await setDoc(doc(db, "users", authGoogle.user.uid), {
-    //     uid: authGoogle.user.uid,
-    //     displayName: authGoogle.user.displayName,
-    //     email: authGoogle.user.email,
-    //     photoUrl: authGoogle.user.photoURL,
-    //   });
-    // }
     return authGoogle.user.toJSON();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);

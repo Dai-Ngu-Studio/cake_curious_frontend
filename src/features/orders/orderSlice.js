@@ -17,6 +17,7 @@ const initialState = {
   filter: "All",
   isOrderDoneUpdating: false,
   status: 0,
+  total: 0,
   orderDate: null,
   processedDate: null,
   completedDate: null,
@@ -73,6 +74,7 @@ const orderSlice = createSlice({
       state.status = payload.status;
       state.orderDate = payload.orderDate;
       state.discountedTotal = payload.discountedTotal;
+      state.total = payload.total;
       state.address = payload.address;
       state.user = payload.user;
       state.processedDate = payload.processedDate;

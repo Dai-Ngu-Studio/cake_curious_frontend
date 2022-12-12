@@ -10,21 +10,14 @@ import {
   changeRecipePage,
   handleRecipeChange,
 } from "../../features/recipes/recipeSlice";
-import { ReportedItemSortingOptions } from "../../utils/ViewOptions";
 
 export default function ReportRecipeTables() {
-  const { totalPage, page, search, status, sort } = useSelector(
-    (store) => store.recipe
-  );
+  const { totalPage, page, search } = useSelector((store) => store.recipe);
   return (
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <CardSearch
-            status={status}
-            search={search}
-            handleChange={handleRecipeChange}
-          />
+          <CardSearch search={search} handleChange={handleRecipeChange} />
           <ReportRecipeCardTable />
           {totalPage > 1 && (
             <CardPaging

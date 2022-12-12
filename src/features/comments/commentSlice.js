@@ -31,18 +31,6 @@ export const deleteComment = createAsyncThunk(
   "comment/deleteComment",
   deleteCommentThunk
 );
-// export const getSingleAccount = createAsyncThunk(
-//   "account/getSingleAccount",
-//   getAccountThunk
-// );
-// export const updateAccount = createAsyncThunk(
-//   "account/updateAccount",
-//   updateAccountThunk
-// );
-// export const updateAccountRole = createAsyncThunk(
-//   "account/changeRoleAccountThunk",
-//   changeRoleAccountThunk
-// );
 
 const commentSlice = createSlice({
   name: "comment",

@@ -45,6 +45,9 @@ const orderDetailSlice = createSlice({
   },
 });
 
-export const { handleOrderDetailChange, changeOrderDetailPage, clearAllOrderDetailsState } =
-  orderDetailSlice.actions;
+export const {
+  handleOrderDetailChange,
+  changeOrderDetailPage,
+  clearAllOrderDetailsState,
+} = orderDetailSlice.actions;
 export default orderDetailSlice.reducer;

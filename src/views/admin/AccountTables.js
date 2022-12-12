@@ -7,14 +7,11 @@ import {
   changeAccountPage,
   handleAccountChange,
 } from "../../features/accounts/accountSlice";
-import {
-  AccountSortingOptions,
-  AccountFilterOptions,
-} from "../../utils/ViewOptions";
+import { AccountFilterOptions } from "../../utils/ViewOptions";
 // components
 
 export default function AccountTables() {
-  const { totalAccountPages, page, search, filter, sort } = useSelector(
+  const { totalAccountPages, page, search, filter } = useSelector(
     (store) => store.account
   );
   return (

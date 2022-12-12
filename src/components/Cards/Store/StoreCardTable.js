@@ -6,10 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../utils/Loading";
 import {
   getAllStores,
+  handleStoreChange,
   updateStore,
 } from "../../../features/stores/storeSlice";
 import ModalWrapper from "../ModalWrapper";
-import { BsStarFill, BsEyeFill } from "react-icons/bs";
+import {
+  BsStarFill,
+  BsEyeFill,
+  BsCaretDownFill,
+  BsCaretUpFill,
+} from "react-icons/bs";
 import StoreViewModal from "./StoreViewModal";
 export default function StoreCardTable() {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -32,6 +38,14 @@ export default function StoreCardTable() {
 
   if (isStoreLoading) {
     return <Loading />;
+  }
+
+  function updateFilter() {
+    if (sort === "DescCreatedDate") {
+      dispatch(handleStoreChange({ name: "sort", value: "AscCreatedDate" }));
+    } else {
+      dispatch(handleStoreChange({ name: "sort", value: "DescCreatedDate" }));
+    }
   }
 
   const changeStoreStatus = (storeId, storeStatus) => {
@@ -94,10 +108,22 @@ export default function StoreCardTable() {
                       <BsStarFill className="ml-2 text-yellow-400 text-base" />
                     </div>
                   </th>
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={() => {
+                      updateFilter();
+                    }}
+                  >
+                    <div>Thời điểm đăng ký</div>
+                    {sort === "DescCreatedDate" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
+                  </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Trạng thái
                   </th>
-                  {/* <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th> */}
                 </tr>
               </thead>
               <tbody>
@@ -131,6 +157,26 @@ export default function StoreCardTable() {
                       </td>
                       <td className="pl-6 align-middle p-4">
                         <div className="flex">{store.rating}</div>
+                      </td>
+                      <td className="pl-6 align-middle p-4">
+                        <div className="flex">
+                          {(() => {
+                            if (store.createdDate) {
+                              let a = new Date(store.createdDate + "Z");
+                              return (
+                                a.getDate() +
+                                " Tháng " +
+                                a.getMonth() +
+                                ", " +
+                                a.getFullYear() +
+                                " lúc " +
+                                a.getHours() +
+                                ":" +
+                                a.getMinutes()
+                              );
+                            } else return "Không có dữ liệu";
+                          })()}
+                        </div>
                       </td>
                       <td className="pl-6 align-middle p-4">
                         <div className="flex items-center">

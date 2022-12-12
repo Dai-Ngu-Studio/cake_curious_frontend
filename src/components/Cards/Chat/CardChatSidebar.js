@@ -24,9 +24,7 @@ import { getSingleAccount } from "../../../features/accounts/accountSlice";
 
 const CardChatSidebar = () => {
   const { user } = useSelector((store) => store.user);
-  const { user: account, isUserChatting } = useSelector(
-    (store) => store.account
-  );
+  const { account, isUserChatting } = useSelector((store) => store.account);
   const { username, userData } = useSelector((store) => store.chat);
   const [userChattings, setUserChattings] = useState([]);
   const [chats, setChats] = useState([]);

@@ -16,44 +16,14 @@ export const ProductSortingOptions = [
     value: "DescPrice",
   },
 ];
-export const AccountSortingOptions = [
-  {
-    name: "Ngày tạo mới nhất",
-    value: "DescCreatedDate",
-  },
-  {
-    name: "Ngày tạo cũ nhất",
-    value: "AscCreatedDate",
-  },
-];
-export const StoreSortingOptions = [
-  {
-    name: "Ngày tạo mới nhất",
-    value: "DescCreatedDate",
-  },
-  {
-    name: "Ngày tạo cũ nhất",
-    value: "AscCreatedDate",
-  },
-];
 export const CouponSortingOptions = [
   {
-    name: "a-z",
-    value: "AscName",
+    name: "Ngày hết hạn tăng dần",
+    value: "AscExpireDate",
   },
   {
-    name: "z-a",
-    value: "DescName",
-  },
-];
-export const ReportedItemSortingOptions = [
-  {
-    name: "Số báo cáo thấp nhất",
-    value: "AscPendingReport",
-  },
-  {
-    name: "Số báo cáo nhiều nhất",
-    value: "DescPendingReport",
+    name: "Ngày hết hạn giảm nhất",
+    value: "DescExpireDate",
   },
 ];
 export const OrderSortingOptions = [
@@ -112,6 +82,20 @@ export const AccountFilterOptions = [
   {
     name: "Thợ bánh",
     value: "Baker",
+  },
+];
+export const StaffAccountFilterOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Đã dừng hoạt động",
+    value: "Inactive",
+  },
+  {
+    name: "Đang hoạt động",
+    value: "Active",
   },
 ];
 export const ReportFilterStatusOptions = [
