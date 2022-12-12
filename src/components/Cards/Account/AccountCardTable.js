@@ -85,14 +85,10 @@ export const AccountCardTable = () => {
   }
   return (
     <>
-      <div
-        className={
-          "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"
-        }
-      >
+      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
         {accounts.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">No accounts to display...</h2>
+            <h2 className="text-center pb-3">Không có tài khoản để hiển thị</h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
