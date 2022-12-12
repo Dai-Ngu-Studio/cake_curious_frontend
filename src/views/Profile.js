@@ -219,18 +219,6 @@ export default function Profile() {
       }
     }
   }
-  console.log(
-    displayName,
-    fullName,
-    photoUrl,
-    gender,
-    profilePhoneNumber,
-    address,
-    citizenshipDate,
-    citizenshipNumber,
-    dateOfBirth
-  );
-
   return (
     <>
       <main className="profile-page">
