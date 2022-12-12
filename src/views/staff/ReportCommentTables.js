@@ -3,12 +3,13 @@ import { useSelector } from "react-redux";
 import CardPaging from "../../components/Cards/CardPaging";
 import CardSearch from "../../components/Cards/CardSearch";
 import ReportCommentCardTable from "../../components/Cards/Report/ReportCommentCardTable";
-import { changeCommentPage, handleCommentChange } from "../../features/comments/commentSlice";
+import {
+  changeCommentPage,
+  handleCommentChange,
+} from "../../features/comments/commentSlice";
 
 // components
-import {
-  ReportedItemSortingOptions
-} from "../../utils/ViewOptions";
+import { ReportedItemSortingOptions } from "../../utils/ViewOptions";
 
 export default function ReportCommentTables() {
   const { totalPage, page, search, sort } = useSelector(
@@ -18,12 +19,7 @@ export default function ReportCommentTables() {
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <CardSearch
-            sort={sort}
-            search={search}
-            sortOptions={ReportedItemSortingOptions}
-            handleChange={handleCommentChange}
-          />
+          <CardSearch search={search} handleChange={handleCommentChange} />
           <ReportCommentCardTable />
           {totalPage > 1 && (
             <CardPaging

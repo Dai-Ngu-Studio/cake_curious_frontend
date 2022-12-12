@@ -3,7 +3,11 @@ import NoImg from "../../../assets/img/no-store.png";
 import TableDropdown from "../../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../../utils/Loading";
-import { getAllReportedComments } from "../../../features/comments/commentSlice";
+import {
+  getAllReportedComments,
+  handleCommentChange,
+} from "../../../features/comments/commentSlice";
+import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
 
 export default function ReportCommentCardTable() {
   const { user } = useSelector((store) => store.user);
@@ -14,13 +18,8 @@ export default function ReportCommentCardTable() {
       priorityRole = roleId;
     }
   }
-  const {
-    reportedComments,
-    isCommentsLoading,
-    page,
-    search,
-    sort,
-  } = useSelector((store) => store.comment);
+  const { reportedComments, isCommentsLoading, page, search, sort } =
+    useSelector((store) => store.comment);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,12 +38,25 @@ export default function ReportCommentCardTable() {
     });
     return smallestRoleID;
   }
+  function updateFilter() {
+    if (sort === "AscPendingReport") {
+      dispatch(
+        handleCommentChange({ name: "sort", value: "DescPendingReport" })
+      );
+    } else {
+      dispatch(
+        handleCommentChange({ name: "sort", value: "AscPendingReport" })
+      );
+    }
+  }
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
         {reportedComments.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">Không có báo cáo để hiển thị...</h2>
+            <h2 className="text-center pb-3">
+              Không có báo cáo để hiển thị...
+            </h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto pb-5">
@@ -64,8 +76,18 @@ export default function ReportCommentCardTable() {
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Nội dung
                   </th>
-                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
-                    Báo cáo chờ giải quyết
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={() => {
+                      updateFilter();
+                    }}
+                  >
+                    <div>Báo cáo chờ giải quyết</div>
+                    {sort === "AscPendingReport" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
