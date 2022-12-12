@@ -4,7 +4,7 @@ FROM node:16.17.0-alpine3.16 as build
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY ./package.json /app/
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY . /app
 RUN npm run build
 
