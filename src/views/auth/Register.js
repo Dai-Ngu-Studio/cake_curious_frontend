@@ -38,6 +38,7 @@ export default function Register() {
   const [step, setStep] = useState(1);
 
   const { image, isDoneGettingImage } = useSelector((store) => store.image);
+  const [isSkipOTP, setIsSkipOTP] = useState(false);
   const [verifier, setVerifier] = useState("");
   const [provider, setProvider] = useState("");
   const [chosenImage, setChosenImage] = useState("");
@@ -85,6 +86,13 @@ export default function Register() {
     dispatch(handleStoreChange({ name, value }));
     setChosenImage(file);
   };
+  useEffect(() => {
+    auth.onAuthStateChanged(function (user) {
+      if (user?.auth.currentUser.providerData[1].uid) {
+        setIsSkipOTP(true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     // call this useEffect to set isDoneGettingUser state back to it default state
@@ -340,7 +348,9 @@ export default function Register() {
         "Thông tin CCCD của bạn đã được nhập!",
         "success"
       );
-      setStep(2);
+      if (isSkipOTP) {
+        setStep(3);
+      } else setStep(2);
     } catch (e) {
       console.log(e);
       if (e instanceof Event) {
