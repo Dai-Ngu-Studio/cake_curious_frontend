@@ -17,7 +17,7 @@ export default function StaffHeaderStats({ cardStats }) {
                   statSubtitle="SỐ BÁO CÁO HÔM NAY"
                   statTitle={cardStats?.todayReports}
                   statArrow={cardStats?.sinceYesterdayReports > 0 ? "up" : "down"}
-                  statPercent={cardStats?.sinceYesterdayReports}
+                  statPercent={cardStats?.sinceYesterdayReports * 100}
                   statPercentColor={
                     cardStats?.sinceYesterdayReports > 0
                       ? "text-red-500"
@@ -35,7 +35,7 @@ export default function StaffHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastWeekReportedRecipes > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastWeekReportedRecipes}
+                  statPercent={cardStats?.sinceLastWeekReportedRecipes * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekReportedRecipes > 0
                       ? "text-red-500"
@@ -53,7 +53,7 @@ export default function StaffHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastWeekReportedComments > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastWeekReportedComments}
+                  statPercent={cardStats?.sinceLastWeekReportedComments * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekReportedComments > 0
                       ? "text-red-500"
@@ -71,7 +71,7 @@ export default function StaffHeaderStats({ cardStats }) {
                   statArrow={
                     cardStats?.sinceLastWeekProcessedReports > 0 ? "up" : "down"
                   }
-                  statPercent={cardStats?.sinceLastWeekProcessedReports}
+                  statPercent={cardStats?.sinceLastWeekProcessedReports * 100}
                   statPercentColor={
                     cardStats?.sinceLastWeekProcessedReports > 0
                       ? "text-red-500"
