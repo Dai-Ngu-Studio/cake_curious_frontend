@@ -50,6 +50,7 @@ export const AccountCardTable = () => {
     }
   }
   const changeAccountStatus = (accountId, accountStatus) => {
+    //status 1 disable
     if (accountId) {
       if (accountStatus === 0) {
         dispatch(
