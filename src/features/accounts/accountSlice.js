@@ -161,7 +161,7 @@ const accountSlice = createSlice({
     [addStaff.fulfilled]: (state, { payload }) => {
       state.isAccountLoading = false;
       state.isAccountDoneUpdating = true;
-      toast.success("Chỉnh sửa chức vụ thành công");
+      toast.success(`Đã thêm tài khoản nhân viên thành công`);
     },
     [addStaff.rejected]: (state, { payload }) => {
       state.isAccountLoading = false;
