@@ -10,6 +10,8 @@ import {
 import Loading from "../../../utils/Loading";
 import User from "../../../assets/img/user.png";
 import StatusCard from "../StatusCard";
+import { toast } from "react-toastify";
+
 import {
   BsEyeFill,
   BsFileExcelFill,
@@ -46,18 +48,20 @@ export const StaffCardTable = () => {
     return <Loading />;
   }
 
-  const changeAccountStatus = (accountId, accountStatus) => {
+  const changeAccountStatus = async (accountId, accountStatus) => {
     if (accountId) {
       if (accountStatus === 0) {
-        dispatch(
-          updateAccount({
-            userId: accountId,
-            user: {
-              id: accountId,
-              status: 1,
-            },
-          })
-        );
+        if (await inputReasonModal()) {
+          dispatch(
+            updateAccount({
+              userId: accountId,
+              user: {
+                id: accountId,
+                status: 1,
+              },
+            })
+          );
+        }
       } else {
         dispatch(
           updateAccount({
@@ -100,6 +104,25 @@ export const StaffCardTable = () => {
     });
     return smallestRoleID;
   }
+  async function inputReasonModal() {
+    const { value: reason } = await Swal.fire({
+      title: "Lý do hủy tài khoản",
+      input: "text",
+      showCancelButton: true,
+      inputPlaceholder: "lý do",
+      confirmButtonColor: "rgb(22 163 74)",
+      inputValidator: (value) => {
+        if (!value) {
+          return "Vui lòng nhập lý do";
+        }
+      },
+    });
+
+    if (reason) {
+      // dispatch(addStaff({ email: email }));
+      return reason;
+    }
+  }
   async function addStaffModal() {
     const { value: email } = await Swal.fire({
       title: "Nhập email nhân viên",
@@ -116,7 +139,6 @@ export const StaffCardTable = () => {
 
     if (email) {
       dispatch(addStaff({ email: email }));
-      Swal.fire(`Đã thêm tài khoản nhân viên ${email} thành công`);
     }
   }
   return (
