@@ -33,7 +33,14 @@ import CouponTables from "./views/store/CouponTables";
 import { CouponForm } from "./views/store/CouponForm";
 import AdminCommentReportForm from "./views/admin/AdminCommentReportForm";
 import StaffManagement from "./views/admin/StaffManagement";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./utils/firebase";
+import Loading from "./utils/Loading";
 function App() {
+  const [user, loading, error] = useAuthState(auth);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <BrowserRouter>
       <Routes>

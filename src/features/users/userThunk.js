@@ -66,6 +66,7 @@ export const getUserThunk = async (_, thunkAPI) => {
 
 export const clearStoreThunk = async (message, thunkAPI) => {
   try {
+    auth.signOut();
     thunkAPI.dispatch(logoutUser(message));
     thunkAPI.dispatch(clearAllReportsState());
     thunkAPI.dispatch(clearAllAccountsState());
