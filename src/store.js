@@ -9,6 +9,7 @@ import orderDetailSlice from "./features/order-details/orderDetailSlice";
 import orderSlice from "./features/orders/orderSlice";
 import productCategorySlice from "./features/product-categories/productCategorySlice";
 import productSlice from "./features/products/productSlice";
+import reasonSlice from "./features/reasons/reasonSlice";
 import recipeSlice from "./features/recipes/recipeSlice";
 import reportSlice from "./features/reports/reportSlice";
 import storeSlice from "./features/stores/storeSlice";
@@ -30,5 +31,6 @@ export const store = configureStore({
     dashboard: dashboardSlice,
     recipe: recipeSlice,
     comment: commentSlice,
+    reason: reasonSlice,
   },
 });

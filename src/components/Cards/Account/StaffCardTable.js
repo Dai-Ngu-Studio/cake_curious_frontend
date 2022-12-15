@@ -11,7 +11,7 @@ import Loading from "../../../utils/Loading";
 import User from "../../../assets/img/user.png";
 import StatusCard from "../StatusCard";
 import { toast } from "react-toastify";
-
+import { addReason } from "../../../features/reasons/reasonSlice";
 import {
   BsEyeFill,
   BsFileExcelFill,
@@ -51,7 +51,7 @@ export const StaffCardTable = () => {
   const changeAccountStatus = async (accountId, accountStatus) => {
     if (accountId) {
       if (accountStatus === 0) {
-        if (await inputReasonModal()) {
+        if (await inputReasonModal(accountId)) {
           dispatch(
             updateAccount({
               userId: accountId,
@@ -104,7 +104,7 @@ export const StaffCardTable = () => {
     });
     return smallestRoleID;
   }
-  async function inputReasonModal() {
+  async function inputReasonModal(accountId) {
     const { value: reason } = await Swal.fire({
       title: "Lý do hủy tài khoản",
       input: "text",
@@ -119,7 +119,13 @@ export const StaffCardTable = () => {
     });
 
     if (reason) {
-      // dispatch(addStaff({ email: email }));
+      dispatch(
+        addReason({
+          userId: accountId,
+          reason: reason,
+          itemType: 2,
+        })
+      );
       return reason;
     }
   }
