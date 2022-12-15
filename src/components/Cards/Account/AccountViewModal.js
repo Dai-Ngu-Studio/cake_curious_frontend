@@ -3,16 +3,22 @@ import NoImg from "../../../assets/img/user.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleAccount } from "../../../features/accounts/accountSlice";
 import Loading from "../../../utils/Loading";
-
+import { getReason } from "../../../features/reasons/reasonSlice";
 export default function AccountViewModal({ id }) {
   const { account, isModalAccountLoading } = useSelector(
-    (slice) => slice.account
+    (store) => store.account
   );
+  const { reason, isDoneLoadingReason } = useSelector((store) => store.reason);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSingleAccount({ userId: id }));
   }, []);
-  if (isModalAccountLoading) {
+  useEffect(() => {
+    if (account !== null) {
+      dispatch(getReason({ email: account.email }));
+    }
+  }, [isModalAccountLoading]);
+  if (isModalAccountLoading || isDoneLoadingReason == false) {
     return <Loading />;
   }
   return (
@@ -86,12 +92,6 @@ export default function AccountViewModal({ id }) {
               )}
             </div>
           </div>
-          {/* <div className="flex items-center gap-5">
-            <div className="w-20 text-right">Mã số</div>
-            <div className="w-96 p-2 rounded-md border-gray-300 border">
-              {user.id || <div className="text-gray-500">Unknown</div>}
-            </div>
-          </div> */}
         </div>
       </div>
     </div>
