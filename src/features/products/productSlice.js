@@ -10,6 +10,7 @@ import {
 const initialState = {
   isProductLoading: false,
   isProductDoneUpdating: false,
+  isProductProcessing: false,
   products: [],
   totalProductPages: 1,
   page: 1,
@@ -17,7 +18,6 @@ const initialState = {
   search: "",
   sort: "All",
   filter: "All",
-  // filterOptions: ["Ingredient", "Tool"],
   productType: 0,
   productCategoryId: 0,
   name: "",
@@ -96,22 +96,27 @@ const productSlice = createSlice({
       toast.error(payload);
     },
     [addProduct.pending]: (state) => {
-      
+      state.isProductProcessing = true;
     },
     [addProduct.fulfilled]: (state, { payload }) => {
+      state.isProductProcessing = false;
       toast.success("Tạo sản phẩm thành công");
     },
     [addProduct.rejected]: (state, { payload }) => {
+      state.isProductProcessing = false;
       toast.error(payload);
     },
     [updateProduct.pending]: (state) => {
+      state.isProductProcessing = true;
       state.isProductDoneUpdating = false;
     },
     [updateProduct.fulfilled]: (state, { payload }) => {
+      state.isProductProcessing = false;
       state.isProductDoneUpdating = true;
       toast.success("Cập nhật sản phẩm thành công...");
     },
     [updateProduct.rejected]: (state, { payload }) => {
+      state.isProductProcessing = false;
       toast.error(payload);
     },
   },

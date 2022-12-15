@@ -7,7 +7,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../utils/Loading";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { getAllCoupons } from "../../features/coupons/couponSlice";
+import {
+  getAllCoupons,
+  handleCouponChange,
+} from "../../features/coupons/couponSlice";
+import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
 
 export default function CouponCardTable() {
   const { coupons, isCouponLoading, page, search, filter, sort } = useSelector(
@@ -22,6 +26,14 @@ export default function CouponCardTable() {
   if (isCouponLoading) {
     return <Loading />;
   }
+
+  const filterCoupon = () => {
+    if (sort === "DescExpireDate") {
+      dispatch(handleCouponChange({ name: "sort", value: "AscExpireDate" }));
+    } else {
+      dispatch(handleCouponChange({ name: "sort", value: "DescExpireDate" }));
+    }
+  };
 
   return (
     <>
@@ -40,7 +52,9 @@ export default function CouponCardTable() {
         </div>
         {coupons.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">Không có phiếu giảm để hiển thị...</h2>
+            <h2 className="text-center pb-3">
+              Không có phiếu giảm để hiển thị...
+            </h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
@@ -52,11 +66,22 @@ export default function CouponCardTable() {
                     Mã
                   </th>
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Tên 
+                    Tên
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={filterCoupon}
+                  >
+                    <div>Ngày hết hạn</div>
+                    {sort === "DescExpireDate" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
+                  </th>
+                  {/* <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Ngày hết hạn
-                  </th>
+                  </th> */}
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Tổng số lần sử dụng
                   </th>
@@ -77,10 +102,22 @@ export default function CouponCardTable() {
                         {coupon.name}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
-                        {moment
-                          .utc(coupon.expiryDate)
-                          .local()
-                          .format("MMM Do, YYYY")}
+                        {(() => {
+                          if (coupon.expiryDate) {
+                            let a = new Date(coupon.expiryDate + "Z");
+                            return (
+                              a.getDate() +
+                              " Tháng " +
+                              a.getMonth() +
+                              ", " +
+                              a.getFullYear() +
+                              " lúc " +
+                              a.getHours() +
+                              ":" +
+                              a.getMinutes()
+                            );
+                          } else return "Không có dữ liệu";
+                        })()}
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex">{coupon.maxUses}</div>
@@ -88,7 +125,9 @@ export default function CouponCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {coupon.status === 0 ? "Đang hoạt động" : "Dừng hoạt động"}
+                            {coupon.status === 0
+                              ? "Đang hoạt động"
+                              : "Dừng hoạt động"}
                           </span>
                         </div>
                       </td>

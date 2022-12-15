@@ -17,6 +17,7 @@ import { OrderStatus } from "../../utils/StatusOptions";
 const OrderForm = () => {
   const {
     isOrderLoading,
+    isOrderProcessing,
     total,
     status,
     orderDate,
@@ -52,7 +53,7 @@ const OrderForm = () => {
     } else if (parseInt(status) === 0) {
       setDisableOptionStatus(1);
     }
-  }, [isOrderLoading]);
+  }, [status]);
 
   useEffect(() => {
     if (editOrderId) {
@@ -110,21 +111,60 @@ const OrderForm = () => {
           </div>
           <div>
             <label>Ngày đặt đơn hàng: </label>
-            {orderDate
-              ? moment.utc(orderDate).local().format("MMM Do, YYYY")
-              : "Không có dữ liệu"}
+            {(() => {
+              if (orderDate) {
+                let a = new Date(orderDate + "Z");
+                return (
+                  a.getDate() +
+                  " Tháng " +
+                  a.getMonth() +
+                  ", " +
+                  a.getFullYear() +
+                  " lúc " +
+                  a.getHours() +
+                  ":" +
+                  a.getMinutes()
+                );
+              } else return "Không có dữ liệu";
+            })()}
           </div>
           <div>
             <label>Ngày xử lý đơn hàng: </label>
-            {processedDate
-              ? moment.utc(processedDate).local().format("MMM Do, YYYY")
-              : "Không có dữ liệu"}
+            {(() => {
+              if (processedDate) {
+                let a = new Date(processedDate + "Z");
+                return (
+                  a.getDate() +
+                  " Tháng " +
+                  a.getMonth() +
+                  ", " +
+                  a.getFullYear() +
+                  " lúc " +
+                  a.getHours() +
+                  ":" +
+                  a.getMinutes()
+                );
+              } else return "Không có dữ liệu";
+            })()}
           </div>
           <div>
             <label>Ngày hoàn thành đơn hàng: </label>
-            {completedDate
-              ? moment.utc(completedDate).local().format("MMM Do, YYYY")
-              : "Không có dữ liệu"}
+            {(() => {
+              if (completedDate) {
+                let a = new Date(completedDate + "Z");
+                return (
+                  a.getDate() +
+                  " Tháng " +
+                  a.getMonth() +
+                  ", " +
+                  a.getFullYear() +
+                  " lúc " +
+                  a.getHours() +
+                  ":" +
+                  a.getMinutes()
+                );
+              } else return "Không có dữ liệu";
+            })()}
           </div>
           <div>
             <label>Tổng giá tiền: </label>
@@ -132,7 +172,7 @@ const OrderForm = () => {
           </div>
           <div>
             <label>Tổng giá tiền sau giảm giá: </label>
-            {discountedTotal}
+            {discountedTotal ? discountedTotal : "Chưa có dữ liệu"}
           </div>
           <form>
             <FormRowSelect
@@ -146,15 +186,15 @@ const OrderForm = () => {
             />
             <button
               type="submit"
-              disabled={isOrderLoading}
+              disabled={isOrderProcessing}
               onClick={handleOrderSubmit}
               className={
-                isOrderLoading
+                isOrderProcessing
                   ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
                   : "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               }
             >
-              {isOrderLoading ? (
+              {isOrderProcessing ? (
                 <>
                   <svg
                     role="status"

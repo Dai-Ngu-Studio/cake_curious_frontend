@@ -7,25 +7,24 @@ import {
   changeOrderPage,
   handleOrderChange,
 } from "../../features/orders/orderSlice";
-import { OrderFilterOptions, OrderSortingOptions } from "../../utils/ViewOptions";
+import { OrderFilterOptions } from "../../utils/ViewOptions";
 
 // components
 
 export default function OrderTables() {
-  const { totalOrderPages, page, search, filter, sort } =
-    useSelector((store) => store.order);
+  const { totalOrderPages, page, search, filter } = useSelector(
+    (store) => store.order
+  );
 
   return (
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardSearch
-            sort={sort}
             filter={filter}
             search={search}
             filterOptions={OrderFilterOptions}
             handleChange={handleOrderChange}
-            sortOptions={OrderSortingOptions}
           />
           <OrderCardTable />
           {totalOrderPages > 1 && (

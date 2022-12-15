@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   isOrderLoading: false,
+  isOrderProcessing: false,
   orders: [],
   totalOrderPages: 1,
   page: 1,
@@ -85,16 +86,17 @@ const orderSlice = createSlice({
       toast.error(payload);
     },
     [updateOrder.pending]: (state) => {
-      state.isOrderLoading = true;
+      state.isOrderProcessing = true;
       state.isOrderDoneUpdating = false;
     },
     [updateOrder.fulfilled]: (state, { payload }) => {
-      state.isOrderLoading = false;
+      state.isOrderProcessing = false;
       state.isOrderDoneUpdating = true;
       toast.success("Đơn hàng cập nhật thành công");
     },
     [updateOrder.rejected]: (state, { payload }) => {
-      state.isOrderLoading = false;
+      state.isOrderProcessing = false;
+      state.isOrderDoneUpdating = false;
       toast.error(payload);
     },
   },

@@ -10,7 +10,10 @@ import {
 import FormRowSelect from "../../components/Inputs/FormRowSelect";
 import { ProductStatus, ProductTypeOptions } from "../../utils/StatusOptions";
 import FormRowArea from "../../components/Inputs/FormRowArea";
-import { changeImageGettingState, getImage } from "../../features/images/imageSlice";
+import {
+  changeImageGettingState,
+  getImage,
+} from "../../features/images/imageSlice";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
 import Loading from "../../utils/Loading";
@@ -28,7 +31,8 @@ export const ProductForm = () => {
     price,
     photoUrl,
     status,
-    isProductDoneUpdating
+    isProductDoneUpdating,
+    isProductProcessing,
   } = useSelector((store) => store.product);
   const { isProductCategoryLoading, categories } = useSelector(
     (store) => store.productCategory
@@ -49,10 +53,10 @@ export const ProductForm = () => {
   }, [isProductDoneUpdating]);
   useEffect(() => {
     if (editProductId) {
-      setInitialQuantity(quantity)
+      setInitialQuantity(quantity);
     }
-  }, [isProductLoading])
-  
+  }, [isProductLoading]);
+
   useEffect(() => {
     if (isDoneGettingImage) {
       if (isProductEditing) {
@@ -67,7 +71,8 @@ export const ProductForm = () => {
               productCategoryId: parseInt(productCategoryId),
               name,
               description,
-              quantity: parseInt(quantity) === parseInt(initialQuantity) ? 0 : quantity,
+              quantity:
+                parseInt(quantity) === parseInt(initialQuantity) ? 0 : quantity,
               price: parseFloat(price),
               photoUrl: image || photoUrl,
               status: parseInt(status),
@@ -92,7 +97,7 @@ export const ProductForm = () => {
         })
       );
     }
-  }, [isDoneGettingImage])
+  }, [isDoneGettingImage]);
 
   if (isProductCategoryLoading && isProductLoading) {
     return <Loading />;
@@ -120,7 +125,7 @@ export const ProductForm = () => {
     const name = e.target.name;
     const value = await convertToBase64(file);
     dispatch(handleProductChange({ name, value }));
-    setChosenImage(file)
+    setChosenImage(file);
   };
 
   const handleProductSubmit = (e) => {
@@ -130,20 +135,20 @@ export const ProductForm = () => {
       return;
     }
     if (photoUrl === "") {
-      toast.warning("Xin hãy chọn ảnh cho sản phẩm")
+      toast.warning("Xin hãy chọn ảnh cho sản phẩm");
       return;
     }
     if (!isProductEditing && chosenImage) {
-      dispatch(getImage({tmpImage: chosenImage}))
-      setChosenImage("")
+      dispatch(getImage({ tmpImage: chosenImage }));
+      setChosenImage("");
     }
     if (isProductEditing) {
       if (chosenImage) {
-        dispatch(getImage({tmpImage: chosenImage}))
-        setChosenImage("")
+        dispatch(getImage({ tmpImage: chosenImage }));
+        setChosenImage("");
       } else {
         // để khi update ko muốn thay đổi ảnh
-        dispatch(changeImageGettingState())
+        dispatch(changeImageGettingState());
       }
     }
   };
@@ -249,15 +254,15 @@ export const ProductForm = () => {
               />
               <button
                 type="submit"
-                disabled={isProductLoading}
+                disabled={isProductProcessing}
                 onClick={handleProductSubmit}
                 className={
-                  isProductLoading
+                  isProductProcessing
                     ? "text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center "
                     : "text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 }
               >
-                {isProductLoading ? (
+                {isProductProcessing ? (
                   <>
                     <svg
                       role="status"

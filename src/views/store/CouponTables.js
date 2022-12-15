@@ -7,12 +7,12 @@ import {
   changeCouponPage,
   handleCouponChange,
 } from "../../features/coupons/couponSlice";
-import { CouponFilterOptions, CouponSortingOptions } from "../../utils/ViewOptions";
+import { CouponFilterOptions } from "../../utils/ViewOptions";
 
 // components
 
 export default function CouponTables() {
-  const { totalCouponPages, page, search, filter, sort } = useSelector(
+  const { totalCouponPages, page, search, filter } = useSelector(
     (store) => store.coupon
   );
   return (
@@ -20,12 +20,10 @@ export default function CouponTables() {
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardSearch
-            sort={sort}
             filter={filter}
             search={search}
             filterOptions={CouponFilterOptions}
             handleChange={handleCouponChange}
-            sortOptions={CouponSortingOptions}
           />
           <CouponCardTable />
           {totalCouponPages > 1 && (
