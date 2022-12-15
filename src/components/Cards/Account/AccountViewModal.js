@@ -94,7 +94,9 @@ export default function AccountViewModal({ id }) {
           </div>
           {reason.reason && (
             <div className="flex items-center gap-5">
-              <div className="w-20 text-right">Nguyên nhân hủy kích hoạt</div>
+              <div className="w-20 text-right">
+                Nguyên nhân hủy kích hoạt gần đây nhất
+              </div>
               <div className="w-96 p-2 rounded-md border-red-600 border">
                 {reason.reason || <div className="text-gray-500">Unknown</div>}
               </div>
