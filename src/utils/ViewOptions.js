@@ -1,41 +1,3 @@
-export const ProductSortingOptions = [
-  {
-    name: "a-z",
-    value: "AscName",
-  },
-  {
-    name: "z-a",
-    value: "DescName",
-  },
-  {
-    name: "Giá thấp nhất",
-    value: "AscPrice",
-  },
-  {
-    name: "Giá cao nhất",
-    value: "DescPrice",
-  },
-];
-export const CouponSortingOptions = [
-  {
-    name: "Ngày hết hạn tăng dần",
-    value: "AscExpireDate",
-  },
-  {
-    name: "Ngày hết hạn giảm nhất",
-    value: "DescExpireDate",
-  },
-];
-export const OrderSortingOptions = [
-  {
-    name: "Đơn hàng mới nhất",
-    value: "DescOrderDate",
-  },
-  {
-    name: "Đơn hàng cũ nhất",
-    value: "AscOrderDate",
-  },
-];
 export const ReportSortingOptions = [
   {
     name: "Ngày cũ nhất",
@@ -112,7 +74,19 @@ export const ReportFilterStatusOptions = [
     value: "Rejected",
   },
 ];
-export const ProductTypeFilterOptions = [
+export const ProductFilterOptions = [
+  {
+    name: "Tất cả",
+    value: "All",
+  },
+  {
+    name: "Đã dừng hoạt động",
+    value: "Inactive",
+  },
+  {
+    name: "Đang hoạt động",
+    value: "Active",
+  },
   {
     name: "Nguyên liệu",
     value: "Ingredient",

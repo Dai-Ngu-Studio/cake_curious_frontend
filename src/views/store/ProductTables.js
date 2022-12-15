@@ -9,22 +9,21 @@ import {
   changeProductPage,
   handleProductChange,
 } from "../../features/products/productSlice";
-import { ProductTypeFilterOptions, ProductSortingOptions } from "../../utils/ViewOptions";
+import { ProductFilterOptions } from "../../utils/ViewOptions";
 
 export default function ProductTables() {
-  const { totalProductPages, page, search, filter, sort } =
-    useSelector((store) => store.product);
+  const { totalProductPages, page, search, filter } = useSelector(
+    (store) => store.product
+  );
   return (
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
           <CardSearch
-            sort={sort}
             filter={filter}
             search={search}
-            filterOptions={ProductTypeFilterOptions}
+            filterOptions={ProductFilterOptions}
             handleChange={handleProductChange}
-            sortOptions={ProductSortingOptions}
           />
           <ProductCardTable />
           {totalProductPages > 1 && (

@@ -23,27 +23,29 @@ const CardChatBody = () => {
   const { user } = useSelector((store) => store.user);
   const [messages, setMessages] = useState([]);
   const { userData, chatId } = useSelector((store) => store.chat);
-  const [text, setText] = useState([]);
+  const [text, setText] = useState("");
 
   const handleSend = async () => {
-    await addDoc(collection(db, `rooms/${chatId}/messages`), {
-      author: {
-        firstName: user.store === null ? user.displayName : user.store.name,
-        id: user.store === null ? user.id : user.store.id,
-        imageUrl: user.store === null ? user.photoUrl : user.store.photoUrl,
-      },
-      roomId: chatId,
-      createdAt: serverTimestamp(),
-      text,
-      type: "text",
-    });
-    await updateDoc(doc(db, "rooms", chatId), {
-      lastMessage: text,
-      lastMessageTime: serverTimestamp(),
-      lastMessageName: user?.store?.name,
-      updatedAt: serverTimestamp(),
-    });
-    setText("");
+    if (text) {
+      await addDoc(collection(db, `rooms/${chatId}/messages`), {
+        author: {
+          firstName: user.store === null ? user.displayName : user.store.name,
+          id: user.store === null ? user.id : user.store.id,
+          imageUrl: user.store === null ? user.photoUrl : user.store.photoUrl,
+        },
+        roomId: chatId,
+        createdAt: serverTimestamp(),
+        text,
+        type: "text",
+      });
+      await updateDoc(doc(db, "rooms", chatId), {
+        lastMessage: text,
+        lastMessageTime: serverTimestamp(),
+        lastMessageName: user?.store?.name,
+        updatedAt: serverTimestamp(),
+      });
+      setText("");
+    }
   };
   const handleKey = (e) => {
     e.code === "Enter" && handleSend();

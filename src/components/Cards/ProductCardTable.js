@@ -5,9 +5,13 @@ import Product from "../../assets/img/product.png";
 
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../features/products/productSlice";
+import {
+  getAllProducts,
+  handleProductChange,
+} from "../../features/products/productSlice";
 import Loading from "../../utils/Loading";
 import { Link } from "react-router-dom";
+import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
 
 export default function ProductCardTable() {
   const { products, isProductLoading, page, search, filter, sort } =
@@ -21,6 +25,13 @@ export default function ProductCardTable() {
   if (isProductLoading) {
     return <Loading />;
   }
+  const filterProduct = () => {
+    if (sort === "DescPrice") {
+      dispatch(handleProductChange({ name: "sort", value: "AscPrice" }));
+    } else {
+      dispatch(handleProductChange({ name: "sort", value: "DescPrice" }));
+    }
+  };
 
   return (
     <>
@@ -39,7 +50,9 @@ export default function ProductCardTable() {
         </div>
         {products.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">Không có sản phẩm để hiển thị...</h2>
+            <h2 className="text-center pb-3">
+              Không có sản phẩm để hiển thị...
+            </h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
@@ -56,9 +69,20 @@ export default function ProductCardTable() {
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Số lượng
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Giá cả
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={filterProduct}
+                  >
+                    <div>Giá cả</div>
+                    {sort === "DescPrice" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
                   </th>
+                  {/* <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                    Giá cả
+                  </th> */}
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Trạng thái
                   </th>
@@ -88,7 +112,9 @@ export default function ProductCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {product.status === 0 ? "Đang hoạt động" : "Dừng hoạt động"}
+                            {product.status === 0
+                              ? "Đang hoạt động"
+                              : "Dừng hoạt động"}
                           </span>
                         </div>
                       </td>

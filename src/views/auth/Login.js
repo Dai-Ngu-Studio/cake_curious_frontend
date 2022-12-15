@@ -63,26 +63,21 @@ export default function Login() {
   }, [token]);
   useEffect(() => {
     if (isDoneGettingUser) {
-      if (user?.status === 0) {
-        let priorityRole = 99;
-        for (let i = 0; i < user.hasRoles.length; i++) {
-          var roleId = user.hasRoles[i].roleId;
-          if (roleId < priorityRole) {
-            priorityRole = roleId;
-          }
+      let priorityRole = 99;
+      for (let i = 0; i < user.hasRoles.length; i++) {
+        var roleId = user.hasRoles[i].roleId;
+        if (roleId < priorityRole) {
+          priorityRole = roleId;
         }
-        if (priorityRole === 0) {
-          navigate("/admin/admin-dashboard");
-        } else if (priorityRole === 1) {
-          navigate("/staff/staff-dashboard");
-        } else if (priorityRole === 2) {
-          navigate("/store/store-dashboard");
-        } else if (priorityRole === 3) {
-          navigate("/auth/register");
-        }
-      } else {
-        dispatch(clearAllUsersState());
-        //code modal ở dưới dispatch
+      }
+      if (priorityRole === 0) {
+        navigate("/admin/admin-dashboard");
+      } else if (priorityRole === 1) {
+        navigate("/staff/staff-dashboard");
+      } else if (priorityRole === 2) {
+        navigate("/store/store-dashboard");
+      } else if (priorityRole === 3) {
+        navigate("/auth/register");
       }
     }
   }, [user]);
@@ -97,7 +92,7 @@ export default function Login() {
           <div>
             <div className="text-2xl font-bold">Đăng nhập vào Kênh quản lý</div>
             <div className="text-gray-600 pt-2 text">
-              Please sign in to your account
+              Đăng nhập vào tài khoản của bạn
             </div>
           </div>
           <div className="grid place-items-start pt-10">
@@ -108,7 +103,7 @@ export default function Login() {
                 className="w-full h-full border-none rounded-full"
                 value={email}
                 onChange={handleUserInput}
-                placeholder="E-mail Address"
+                placeholder="E-mail"
               />
             </div>
           </div>
@@ -120,7 +115,7 @@ export default function Login() {
                 className="w-full h-full border-none rounded-full"
                 value={password}
                 onChange={handleUserInput}
-                placeholder="Password"
+                placeholder="Mật khẩu"
               />
             </div>
           </div>
@@ -156,11 +151,11 @@ export default function Login() {
 
           <div className="flex justify-center items-center h-10">
             <hr className="w-10" />
-            <div className="text-gray-400">OR</div>
+            <div className="text-gray-400">Hoặc</div>
             <hr className="w-10" />
           </div>
           <div className="mt-3 mb-5">
-            Hông thích Email và password ?
+            Đăng nhập bằng tài khoản google
             {/* <Link to="/register" className="text-blue-600">
               Register now.
             </Link>{" "} */}

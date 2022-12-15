@@ -10,6 +10,7 @@ import {
 const initialState = {
   isCouponLoading: false,
   isCouponDoneUpdating: false,
+  isCouponProcessing: false,
   coupons: [],
   totalCouponPages: 1,
   page: 1,
@@ -90,23 +91,28 @@ const couponSlice = createSlice({
       toast.error(payload);
     },
     [addCoupon.pending]: (state) => {
-      
+      state.isCouponProcessing = true;
     },
-    [addCoupon.fulfilled]: (state, { payload }) => {     
+    [addCoupon.fulfilled]: (state, { payload }) => {
+      state.isCouponProcessing = false;
       toast.success("Tạo phiếu giảm giá thành công");
     },
     [addCoupon.rejected]: (state, { payload }) => {
+      state.isCouponProcessing = false;
       toast.error(payload);
     },
     [updateCoupon.pending]: (state) => {
       state.isCouponDoneUpdating = false;
+      state.isCouponProcessing = true;
     },
     [updateCoupon.fulfilled]: (state, { payload }) => {
       state.isCouponDoneUpdating = true;
+      state.isCouponProcessing = false;
       toast.success("Phiếu giảm giá cập nhật thành công");
     },
     [updateCoupon.rejected]: (state, { payload }) => {
       state.isCouponDoneUpdating = false;
+      state.isCouponProcessing = false;
       toast.error(payload);
     },
   },

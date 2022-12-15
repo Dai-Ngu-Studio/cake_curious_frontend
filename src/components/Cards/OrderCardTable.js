@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllOrders, setUpdateOrder } from "../../features/orders/orderSlice";
+import {
+  getAllOrders,
+  handleOrderChange,
+} from "../../features/orders/orderSlice";
 import Loading from "../../utils/Loading";
 import User from "../../assets/img/user.png";
-import moment from "moment/moment";
 import TableDropdown from "../Dropdowns/TableDropdown";
 import { OrderStatus } from "../../utils/StatusOptions";
-import { setChatting } from "../../features/chats/chatSlice";
+import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
 
 export const OrderCardTable = () => {
   const { orders, isOrderLoading, page, search, filter, sort } = useSelector(
@@ -22,14 +24,22 @@ export const OrderCardTable = () => {
     return <Loading />;
   }
 
+  const filterOrder = () => {
+    if (sort === "DescOrderDate") {
+      dispatch(handleOrderChange({ name: "sort", value: "AscOrderDate" }));
+    } else {
+      dispatch(handleOrderChange({ name: "sort", value: "DescOrderDate" }));
+    }
+  };
+
   return (
     <>
-      <div
-        className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white"       
-      >
+      <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
         {orders.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">Không có đơn hàng để hiển thị...</h2>
+            <h2 className="text-center pb-3">
+              Không có đơn hàng để hiển thị...
+            </h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
@@ -46,9 +56,20 @@ export const OrderCardTable = () => {
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Địa chỉ đơn hàng
                   </th>
-                  <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
-                    Ngày đặt đơn hàng
+                  <th
+                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    onClick={filterOrder}
+                  >
+                    <div>Ngày đặt đơn hàng</div>
+                    {sort === "DescOrderDate" ? (
+                      <BsCaretDownFill className="text-md ml-2" />
+                    ) : (
+                      <BsCaretUpFill className="text-md ml-2" />
+                    )}
                   </th>
+                  {/* <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
+                    Ngày đặt đơn hàng
+                  </th> */}
                   <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                     Trạng thái
                   </th>
@@ -74,10 +95,22 @@ export const OrderCardTable = () => {
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex">
-                          {moment
-                            .utc(order.orderDate)
-                            .local()
-                            .format("MMM Do, YYYY")}
+                          {(() => {
+                            if (order.orderDate) {
+                              let a = new Date(order.orderDate + "Z");
+                              return (
+                                a.getDate() +
+                                " Tháng " +
+                                a.getMonth() +
+                                ", " +
+                                a.getFullYear() +
+                                " lúc " +
+                                a.getHours() +
+                                ":" +
+                                a.getMinutes()
+                              );
+                            } else return "Không có dữ liệu";
+                          })()}
                         </div>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
