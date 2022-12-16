@@ -64,7 +64,7 @@ export default function AdminCommentReportForm() {
   async function inputReasonModal(itemId) {
     const { value: reason } = await Swal.fire({
       title: "Lý do xóa bỏ bình luận",
-      input: "text",
+      input: "textarea",
       showCancelButton: true,
       inputPlaceholder: "lý do",
       confirmButtonColor: "rgb(22 163 74)",

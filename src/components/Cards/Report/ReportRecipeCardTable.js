@@ -89,7 +89,10 @@ export default function ReportRecipeCardTable() {
                       ) : (
                         <BsCaretUpFill className="text-md ml-2" />
                       )}
-                    </div>{" "}
+                    </div>
+                  </th>
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
+                    Trạng thái
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
