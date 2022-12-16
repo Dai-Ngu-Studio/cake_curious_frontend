@@ -2,7 +2,6 @@ import User from "../../../assets/img/user.png";
 
 import { BsFillExclamationTriangleFill } from "react-icons/bs";
 export default function CommentCard({ comment, handleDeleteComment }) {
-  console.log(comment);
   return (
     <div className="rounded-lg">
       <div className="flex pt-14 pl-2 justify-center shadow-2xl p-4 rounded-xl">
