@@ -16,7 +16,7 @@ const initialState = {
   size: 10,
   search: "",
   sort: "All",
-  filter: "Active",
+  filter: "All",
   totalPage: 1,
 };
 
@@ -71,6 +71,7 @@ const recipeSlice = createSlice({
     },
     [deleteRecipe.fulfilled]: (state, { payload }) => {
       state.isRecipeDoneUpdating = true;
+      toast.success("Xóa bỏ công thức thành công");
     },
     [deleteRecipe.rejected]: (state, { payload }) => {
       state.isRecipeDoneUpdating = true;

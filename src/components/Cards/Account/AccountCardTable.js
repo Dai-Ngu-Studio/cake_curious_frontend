@@ -9,6 +9,8 @@ import {
 import Loading from "../../../utils/Loading";
 import User from "../../../assets/img/user.png";
 import StatusCard from "../StatusCard";
+import { addReason } from "../../../features/reasons/reasonSlice";
+
 import {
   BsEyeFill,
   BsFileExcelFill,
@@ -18,6 +20,7 @@ import {
 } from "react-icons/bs";
 import ModalWrapper from "../ModalWrapper";
 import AccountViewModal from "./AccountViewModal";
+import Swal from "sweetalert2";
 
 export const AccountCardTable = () => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -49,19 +52,46 @@ export const AccountCardTable = () => {
       dispatch(handleAccountChange({ name: "sort", value: "DescCreatedDate" }));
     }
   }
-  const changeAccountStatus = (accountId, accountStatus) => {
+  async function inputReasonModal(accountId) {
+    const { value: reason } = await Swal.fire({
+      title: "Lý do hủy tài khoản",
+      input: "text",
+      showCancelButton: true,
+      inputPlaceholder: "lý do",
+      confirmButtonColor: "rgb(22 163 74)",
+      inputValidator: (value) => {
+        if (!value) {
+          return "Vui lòng nhập lý do";
+        }
+      },
+    });
+
+    if (reason) {
+      dispatch(
+        addReason({
+          userId: accountId,
+          reason: reason,
+          itemType: 2,
+        })
+      );
+      return reason;
+    }
+  }
+  const changeAccountStatus = async (accountId, accountStatus) => {
     //status 1 disable
     if (accountId) {
       if (accountStatus === 0) {
-        dispatch(
-          updateAccount({
-            userId: accountId,
-            user: {
-              id: accountId,
-              status: 1,
-            },
-          })
-        );
+        if (await inputReasonModal(accountId)) {
+          dispatch(
+            updateAccount({
+              userId: accountId,
+              user: {
+                id: accountId,
+                status: 1,
+              },
+            })
+          );
+        }
       } else {
         dispatch(
           updateAccount({
@@ -122,17 +152,19 @@ export const AccountCardTable = () => {
                     Email
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
                     onClick={() => {
                       updateFilter();
                     }}
                   >
-                    <div>Thời điểm đăng ký</div>
-                    {sort === "DescCreatedDate" ? (
-                      <BsCaretDownFill className="text-md ml-2" />
-                    ) : (
-                      <BsCaretUpFill className="text-md ml-2" />
-                    )}
+                    <div className="flex items-center">
+                      <div>Thời điểm đăng ký</div>
+                      {sort === "DescCreatedDate" ? (
+                        <BsCaretDownFill className="text-md ml-2" />
+                      ) : (
+                        <BsCaretUpFill className="text-md ml-2" />
+                      )}
+                    </div>
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left whitespace-nowrap max-w-full">
                     Trạng thái tài khoản

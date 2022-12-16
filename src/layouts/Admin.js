@@ -16,7 +16,7 @@ export default function Admin() {
     <div className="bg-slate-50">
       <Sidebar props={AdminLinks} />
       <div className="relative md:ml-64">
-        <Navbar link={"/admin/admin-dashboard"} />
+        <Navbar />
         {/* Header */}
         {/* <AdminHeaderStats/> */}
         <div className="px-4 md:px-10 mx-auto w-full">

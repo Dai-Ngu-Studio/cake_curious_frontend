@@ -109,17 +109,19 @@ export default function StoreCardTable() {
                     </div>
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
                     onClick={() => {
                       updateFilter();
                     }}
                   >
-                    <div>Thời điểm đăng ký</div>
-                    {sort === "DescCreatedDate" ? (
-                      <BsCaretDownFill className="text-md ml-2" />
-                    ) : (
-                      <BsCaretUpFill className="text-md ml-2" />
-                    )}
+                    <div className="flex items-center">
+                      <div>Thời điểm đăng ký</div>
+                      {sort === "DescCreatedDate" ? (
+                        <BsCaretDownFill className="text-md ml-2" />
+                      ) : (
+                        <BsCaretUpFill className="text-md ml-2" />
+                      )}
+                    </div>
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
                     Trạng thái
@@ -128,101 +130,102 @@ export default function StoreCardTable() {
               </thead>
               <tbody>
                 {stores.map((store, index) => {
-                  return (
-                    <tr
-                      key={store.id}
-                      className={
-                        "hover:bg-green-50 " +
-                        (index % 2 === 1 ? "bg-gray-50" : "bg-white")
-                      }
-                    >
-                      <th className="pl-6 align-middle p-1 text-left flex justify-center w-32">
-                        <img
-                          src={store.photoUrl || StoreImg}
-                          className="rounded-lg"
-                        ></img>
-                      </th>
-                      <td className="pl-6 align-middle p-4">{store.name}</td>
-                      <td className="pl-6 p-4">
-                        <div className="flex items-center">
-                          {store.user.photoUrl && (
-                            <img
-                              src={store.user.photoUrl}
-                              className="mr-2 h-12 w-12 rounded-full border"
-                              referrerPolicy="no-referrer"
-                            ></img>
-                          )}
-                          <div>{store.user.displayName}</div>
-                        </div>
-                      </td>
-                      <td className="pl-6 align-middle p-4">
-                        <div className="flex">{store.rating}</div>
-                      </td>
-                      <td className="pl-6 align-middle p-4">
-                        <div className="flex">
-                          {(() => {
-                            if (store.createdDate) {
-                              let a = new Date(store.createdDate + "Z");
-                              return (
-                                a.getDate() +
-                                " Tháng " +
-                                a.getMonth() +
-                                ", " +
-                                a.getFullYear() +
-                                " lúc " +
-                                a.getHours() +
-                                ":" +
-                                a.getMinutes()
-                              );
-                            } else return "Không có dữ liệu";
-                          })()}
-                        </div>
-                      </td>
-                      <td className="pl-6 align-middle p-4">
-                        <div className="flex items-center">
-                          <span
-                            className="mr-2 cursor-pointer"
-                            onClick={() => {
-                              // let storeEditing = {
-
-                              // }
-                              setModalStore({
-                                id: store.id,
-                                status: store.status,
-                              });
-                              setOpenModal(true);
-                              setIsConfirmModal(true);
-                              // changeStoreStatus(store.id, store.status);
-                            }}
-                          >
-                            {store.status === 0 ? (
-                              <StatusCard
-                                text="Hoạt động"
-                                backgroundColor="bg-green-200"
-                                dotColor="bg-green-600"
-                              />
-                            ) : (
-                              <StatusCard
-                                text="Dừng hoạt động"
-                                backgroundColor="bg-gray-200"
-                                dotColor="bg-gray-600"
-                              />
+                  if (store.user)
+                    return (
+                      <tr
+                        key={store.id}
+                        className={
+                          "hover:bg-green-50 " +
+                          (index % 2 === 1 ? "bg-gray-50" : "bg-white")
+                        }
+                      >
+                        <th className="pl-6 align-middle p-1 text-left flex justify-center w-32">
+                          <img
+                            src={store.photoUrl || StoreImg}
+                            className="rounded-lg"
+                          ></img>
+                        </th>
+                        <td className="pl-6 align-middle p-4">{store.name}</td>
+                        <td className="pl-6 p-4">
+                          <div className="flex items-center">
+                            {store.user.photoUrl && (
+                              <img
+                                src={store.user.photoUrl}
+                                className="mr-2 h-12 w-12 rounded-full border"
+                                referrerPolicy="no-referrer"
+                              ></img>
                             )}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <BsEyeFill
-                          onClick={() => {
-                            setModalStore(store);
-                            setOpenModal(true);
-                            setIsConfirmModal(false);
-                          }}
-                          className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
-                        />
-                      </td>
-                    </tr>
-                  );
+                            <div>{store.user.displayName}</div>
+                          </div>
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          <div className="flex">{store.rating}</div>
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          <div className="flex">
+                            {(() => {
+                              if (store.createdDate) {
+                                let a = new Date(store.createdDate + "Z");
+                                return (
+                                  a.getDate() +
+                                  " Tháng " +
+                                  a.getMonth() +
+                                  ", " +
+                                  a.getFullYear() +
+                                  " lúc " +
+                                  a.getHours() +
+                                  ":" +
+                                  a.getMinutes()
+                                );
+                              } else return "Không có dữ liệu";
+                            })()}
+                          </div>
+                        </td>
+                        <td className="pl-6 align-middle p-4">
+                          <div className="flex items-center">
+                            <span
+                              className="mr-2 cursor-pointer"
+                              onClick={() => {
+                                // let storeEditing = {
+
+                                // }
+                                setModalStore({
+                                  id: store.id,
+                                  status: store.status,
+                                });
+                                setOpenModal(true);
+                                setIsConfirmModal(true);
+                                // changeStoreStatus(store.id, store.status);
+                              }}
+                            >
+                              {store.status === 0 ? (
+                                <StatusCard
+                                  text="Hoạt động"
+                                  backgroundColor="bg-green-200"
+                                  dotColor="bg-green-600"
+                                />
+                              ) : (
+                                <StatusCard
+                                  text="Dừng hoạt động"
+                                  backgroundColor="bg-gray-200"
+                                  dotColor="bg-gray-600"
+                                />
+                              )}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                          <BsEyeFill
+                            onClick={() => {
+                              setModalStore(store);
+                              setOpenModal(true);
+                              setIsConfirmModal(false);
+                            }}
+                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                          />
+                        </td>
+                      </tr>
+                    );
                 })}
               </tbody>
             </table>

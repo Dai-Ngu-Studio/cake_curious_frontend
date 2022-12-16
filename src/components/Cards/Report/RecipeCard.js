@@ -104,7 +104,7 @@ export default function RecipeCard({ recipe, handleDeleteRecipe }) {
       <div className="">
         <button
           type="button"
-          className="absolute ml-44 bottom-0 mb-20 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center mr-2 text-lg"
+          className="flex justify-center w-full text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-5 py-2.5 text-center mr-2 text-lg"
           onClick={() => {
             handleDeleteRecipe();
           }}

@@ -8,3 +8,14 @@ export const addReasonThunk = async (reason, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const getReasonThunk = async (email, thunkAPI) => {
+  try {
+    const resp = await customFetch.post(
+      `/api/deactivate-reasons/by-email`,
+      email
+    );
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

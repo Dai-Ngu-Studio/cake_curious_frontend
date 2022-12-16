@@ -7,7 +7,8 @@ import {
   getAllReportedRecipes,
   handleRecipeChange,
 } from "../../../features/recipes/recipeSlice";
-import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
+import { BsCaretDownFill, BsCaretUpFill, BsEyeFill } from "react-icons/bs";
+import StatusCard from "../StatusCard";
 
 export default function ReportRecipeCardTable() {
   const { isRecipesLoading, reportedRecipes, page, search, sort } = useSelector(
@@ -76,17 +77,19 @@ export default function ReportRecipeCardTable() {
                     Ngày tạo
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
                     onClick={() => {
                       updateFilter();
                     }}
                   >
-                    <div>Báo cáo chờ giải quyết</div>
-                    {sort === "AscPendingReport" ? (
-                      <BsCaretDownFill className="text-md ml-2" />
-                    ) : (
-                      <BsCaretUpFill className="text-md ml-2" />
-                    )}
+                    <div className="flex items-center">
+                      <div>Báo cáo chờ giải quyết</div>
+                      {sort === "AscPendingReport" ? (
+                        <BsCaretDownFill className="text-md ml-2" />
+                      ) : (
+                        <BsCaretUpFill className="text-md ml-2" />
+                      )}
+                    </div>{" "}
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
@@ -131,9 +134,13 @@ export default function ReportRecipeCardTable() {
                               ", " +
                               a.getFullYear() +
                               " lúc " +
-                              a.getHours() +
+                              (a.getHours() < 10
+                                ? "0" + a.getHours()
+                                : a.getHours()) +
                               ":" +
-                              a.getMinutes()
+                              (a.getMinutes() < 10
+                                ? "0" + a.getMinutes()
+                                : a.getMinutes())
                             );
                           })()}
                         </div>
@@ -142,13 +149,38 @@ export default function ReportRecipeCardTable() {
                         {recipe.totalPendingReports}
                       </td>
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown
-                          link={
-                            smallestRoleID(user.hasRoles) === 0
-                              ? `/admin/report-recipe/${recipe.id}`
-                              : `/staff/report-recipe/${recipe.id}`
-                          }
-                        />
+                        <div className="flex items-center">
+                          <span className="mr-2">
+                            {recipe.status === 0 ? (
+                              <StatusCard
+                                text="Hoạt động"
+                                backgroundColor="bg-green-50"
+                                dotColor="bg-green-600"
+                              />
+                            ) : (
+                              <StatusCard
+                                text="Dừng hoạt động"
+                                backgroundColor="bg-gray-50"
+                                dotColor="bg-gray-600"
+                              />
+                            )}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                        <div className="flex items-center">
+                          <BsEyeFill
+                            onClick={() => {}}
+                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                          />
+                          <TableDropdown
+                            link={
+                              smallestRoleID(user.hasRoles) === 0
+                                ? `/admin/report-recipe/${recipe.id}`
+                                : `/staff/report-recipe/${recipe.id}`
+                            }
+                          />
+                        </div>
                       </td>
                     </tr>
                   );

@@ -17,7 +17,7 @@ export default function Staff() {
     <div className="bg-slate-50">
       <Sidebar props={StaffLinks} />
       <div className="relative md:ml-64">
-        <Navbar link={"/staff/staff-dashboard"} />
+        <Navbar />
         {/* Header */}
         {/* <HeaderStats /> */}
         <div className="px-4 md:px-10 mx-auto w-full">
