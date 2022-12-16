@@ -55,7 +55,7 @@ export const AccountCardTable = () => {
   async function inputReasonModal(accountId) {
     const { value: reason } = await Swal.fire({
       title: "Lý do hủy tài khoản",
-      input: "text",
+      input: "textarea",
       showCancelButton: true,
       inputPlaceholder: "lý do",
       confirmButtonColor: "rgb(22 163 74)",

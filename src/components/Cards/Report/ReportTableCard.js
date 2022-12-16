@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import StatusCard from "../StatusCard";
 import { ReportStatus } from "../../../utils/StatusOptions";
-import { BsFillPencilFill } from "react-icons/bs";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+import { BsFillPencilFill, BsEyeFill } from "react-icons/bs";
+import ReportDetails from "./ReportDetails";
 export default function ReportTableCard({ reports, handleUpdateReports }) {
   const [checkedState, setCheckedState] = useState([]);
   const [isHoverCheckboxAll, setIsHoverCheckboxAll] = useState(false);
@@ -40,6 +44,16 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
       if (element === false) return false;
     }
     return true;
+  }
+  const MySwal = withReactContent(Swal);
+
+  function showReportDetailModal(report) {
+    MySwal.fire({
+      title: "Thông tin chi tiết",
+      html: <ReportDetails report={report} />,
+      showConfirmButton: false,
+      showCloseButton: true,
+    });
   }
   return (
     <>
@@ -121,6 +135,9 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                 <th className="px-6 py-3 text-xs font-semibold text-left">
                   Trạng thái
                 </th>
+                <th className="px-6 py-3 text-xs font-semibold text-left">
+                  Thời điểm
+                </th>
                 <th className="px-6 py-3 text-xs font-semibold text-left"></th>
               </tr>
             </thead>
@@ -182,13 +199,35 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                       </div>
                     </td>
                     <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                      {/* <TableDropdown
-                        link={
-                          priorityRole === 0
-                            ? `/admin/report-form/${report.id}`
-                            : `/staff/report-form/${report.id}`
-                        }
-                      /> */}
+                      {" "}
+                      <div className="flex">
+                        {(() => {
+                          let a = new Date(report.submittedDate + "Z");
+                          return (
+                            a.getDate() +
+                            " Tháng " +
+                            a.getMonth() +
+                            ", " +
+                            a.getFullYear() +
+                            " lúc " +
+                            (a.getHours() < 10
+                              ? "0" + a.getHours()
+                              : a.getHours()) +
+                            ":" +
+                            (a.getMinutes() < 10
+                              ? "0" + a.getMinutes()
+                              : a.getMinutes())
+                          );
+                        })()}
+                      </div>
+                    </td>
+                    <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                      <BsEyeFill
+                        onClick={() => {
+                          showReportDetailModal(report);
+                        }}
+                        className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                      />
                     </td>
                   </tr>
                 );
