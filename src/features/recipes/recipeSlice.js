@@ -16,7 +16,7 @@ const initialState = {
   size: 10,
   search: "",
   sort: "All",
-  filter: "Active",
+  filter: "All",
   totalPage: 1,
 };
 

@@ -77,17 +77,19 @@ export default function ReportCommentCardTable() {
                     Nội dung
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
                     onClick={() => {
                       updateFilter();
                     }}
                   >
-                    <div>Báo cáo chờ giải quyết</div>
-                    {sort === "AscPendingReport" ? (
-                      <BsCaretDownFill className="text-md ml-2" />
-                    ) : (
-                      <BsCaretUpFill className="text-md ml-2" />
-                    )}
+                    <div className="flex items-center">
+                      <div>Báo cáo chờ giải quyết</div>
+                      {sort === "AscPendingReport" ? (
+                        <BsCaretDownFill className="text-md ml-2" />
+                      ) : (
+                        <BsCaretUpFill className="text-md ml-2" />
+                      )}
+                    </div>
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>

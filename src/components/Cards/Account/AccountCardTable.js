@@ -152,17 +152,19 @@ export const AccountCardTable = () => {
                     Email
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
                     onClick={() => {
                       updateFilter();
                     }}
                   >
-                    <div>Thời điểm đăng ký</div>
-                    {sort === "DescCreatedDate" ? (
-                      <BsCaretDownFill className="text-md ml-2" />
-                    ) : (
-                      <BsCaretUpFill className="text-md ml-2" />
-                    )}
+                    <div className="flex items-center">
+                      <div>Thời điểm đăng ký</div>
+                      {sort === "DescCreatedDate" ? (
+                        <BsCaretDownFill className="text-md ml-2" />
+                      ) : (
+                        <BsCaretUpFill className="text-md ml-2" />
+                      )}
+                    </div>
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left whitespace-nowrap max-w-full">
                     Trạng thái tài khoản
