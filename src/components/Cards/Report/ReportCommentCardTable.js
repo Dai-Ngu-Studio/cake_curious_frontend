@@ -7,7 +7,8 @@ import {
   getAllReportedComments,
   handleCommentChange,
 } from "../../../features/comments/commentSlice";
-import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
+import { BsCaretDownFill, BsCaretUpFill, BsEyeFill } from "react-icons/bs";
+import StatusCard from "../StatusCard";
 
 export default function ReportCommentCardTable() {
   const { user } = useSelector((store) => store.user);
@@ -49,6 +50,7 @@ export default function ReportCommentCardTable() {
       );
     }
   }
+  console.log(reportedComments);
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -90,6 +92,9 @@ export default function ReportCommentCardTable() {
                         <BsCaretUpFill className="text-md ml-2" />
                       )}
                     </div>
+                  </th>
+                  <th className="px-6 align-middle text-xs uppercase font-semibold text-left ">
+                    Trạng thái
                   </th>
                   <th className="px-6 align-middle text-xs uppercase font-semibold text-left "></th>
                 </tr>
@@ -148,13 +153,38 @@ export default function ReportCommentCardTable() {
                         {comment.totalPendingReports}
                       </td>
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <TableDropdown
-                          link={
-                            smallestRoleID(user.hasRoles) === 0
-                              ? `/admin/report-comment/${comment.id}`
-                              : `/staff/report-comment/${comment.id}`
-                          }
-                        />
+                        <div className="flex items-center">
+                          <span className="mr-2">
+                            {comment.status === 0 ? (
+                              <StatusCard
+                                text="Hoạt động"
+                                backgroundColor="bg-green-50"
+                                dotColor="bg-green-600"
+                              />
+                            ) : (
+                              <StatusCard
+                                text="Dừng hoạt động"
+                                backgroundColor="bg-gray-50"
+                                dotColor="bg-gray-600"
+                              />
+                            )}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                        <div className="flex items-center">
+                          <BsEyeFill
+                            onClick={() => {}}
+                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                          />
+                          <TableDropdown
+                            link={
+                              smallestRoleID(user.hasRoles) === 0
+                                ? `/admin/report-comment/${comment.id}`
+                                : `/staff/report-comment/${comment.id}`
+                            }
+                          />
+                        </div>
                       </td>
                     </tr>
                   );

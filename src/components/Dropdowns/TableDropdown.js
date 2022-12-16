@@ -21,7 +21,7 @@ const TableDropdown = ({ link, userChatLink, role }) => {
           setToggleTableDropDown(false);
         }}
       >
-        <FaEllipsisV className="" />
+        <FaEllipsisV className="w-5 h-5" />
       </div>
       <div
         className={
