@@ -73,6 +73,7 @@ const commentSlice = createSlice({
     },
     [deleteComment.fulfilled]: (state, { payload }) => {
       state.isCommentDoneUpdating = true;
+      toast.success("Xóa bỏ công thức thành công");
     },
     [deleteComment.rejected]: (state, { payload }) => {
       state.isCommentDoneUpdating = true;

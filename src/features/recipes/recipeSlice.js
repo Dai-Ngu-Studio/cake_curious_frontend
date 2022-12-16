@@ -71,6 +71,7 @@ const recipeSlice = createSlice({
     },
     [deleteRecipe.fulfilled]: (state, { payload }) => {
       state.isRecipeDoneUpdating = true;
+      toast.success("Xóa bỏ công thức thành công");
     },
     [deleteRecipe.rejected]: (state, { payload }) => {
       state.isRecipeDoneUpdating = true;
