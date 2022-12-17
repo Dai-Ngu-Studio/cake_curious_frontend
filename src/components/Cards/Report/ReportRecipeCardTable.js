@@ -207,17 +207,19 @@ export default function ReportRecipeCardTable() {
                       </td>
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <div className="flex items-center">
-                          <BsEyeFill
-                            onClick={() => {
-                              dispatch(
-                                handleReasonChange({
-                                  name: "IdRequesting",
-                                  value: recipe.id,
-                                })
-                              );
-                            }}
-                            className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
-                          />
+                          {recipe.status !== 0 && (
+                            <BsEyeFill
+                              onClick={() => {
+                                dispatch(
+                                  handleReasonChange({
+                                    name: "IdRequesting",
+                                    value: recipe.id,
+                                  })
+                                );
+                              }}
+                              className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
+                            />
+                          )}
                           <TableDropdown
                             link={
                               smallestRoleID(user.hasRoles) === 0
