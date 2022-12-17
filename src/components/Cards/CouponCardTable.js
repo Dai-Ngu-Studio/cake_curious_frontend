@@ -112,9 +112,13 @@ export default function CouponCardTable() {
                               ", " +
                               a.getFullYear() +
                               " lúc " +
-                              a.getHours() +
+                              (a.getHours() < 10
+                                ? "0" + a.getHours()
+                                : a.getHours()) +
                               ":" +
-                              a.getMinutes()
+                              (a.getMinutes() < 10
+                                ? "0" + a.getMinutes()
+                                : a.getMinutes())
                             );
                           } else return "Không có dữ liệu";
                         })()}

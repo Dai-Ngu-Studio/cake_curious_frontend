@@ -494,8 +494,13 @@ export default function Register() {
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-5 py-2">
-                        <button onClick={nextStep}>Tiếp theo</button>
+                      <div className="flex float-right">
+                        <button
+                          className="rounded-lg bg-emerald-400 hover:bg-emerald-500 px-3 py-2 mt-10"
+                          onClick={nextStep}
+                        >
+                          Tiếp theo
+                        </button>
                       </div>
                     </div>
                   </>
