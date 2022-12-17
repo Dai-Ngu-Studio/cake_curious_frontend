@@ -5,7 +5,10 @@ import { toast } from "react-toastify";
 import FormRow from "../../components/Inputs/FormRow";
 import FormRowArea from "../../components/Inputs/FormRowArea";
 import FormRowFile from "../../components/Inputs/FormRowFile";
-import { getImage } from "../../features/images/imageSlice";
+import {
+  changeImageGettingState,
+  getImage,
+} from "../../features/images/imageSlice";
 import {
   getUserStore,
   handleStoreChange,
@@ -26,7 +29,7 @@ export default function StoreDetail() {
   } = useSelector((selector) => selector.store);
   const { image, isDoneGettingImage } = useSelector((store) => store.image);
   const dispatch = useDispatch();
-  const [choseImage, setChosenImage] = useState("")
+  const [chosenImage, setChosenImage] = useState("");
 
   useEffect(() => {
     dispatch(getUserStore());
@@ -47,8 +50,8 @@ export default function StoreDetail() {
         })
       );
     }
-  }, [isDoneGettingImage])
-  
+  }, [isDoneGettingImage]);
+
   if (isStoreLoading) {
     return <Loading />;
   }
@@ -84,7 +87,13 @@ export default function StoreDetail() {
       toast.error("Please fill out all fields");
       return;
     }
-    dispatch(getImage({ tmpImage: choseImage }));
+    if (chosenImage) {
+      dispatch(getImage({ tmpImage: chosenImage }));
+      setChosenImage("");
+    } else {
+      // để khi update ko muốn thay đổi ảnh
+      dispatch(changeImageGettingState());
+    }
   };
 
   return (
