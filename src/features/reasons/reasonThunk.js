@@ -19,3 +19,13 @@ export const getReasonThunk = async (email, thunkAPI) => {
     return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };
+export const getReasonForItemThunk = async ({ itemId }, thunkAPI) => {
+  try {
+    const resp = await customFetch.get(
+      `/api/deactivate-reasons/item/${itemId}`
+    );
+    return resp.data;
+  } catch (error) {
+    return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};

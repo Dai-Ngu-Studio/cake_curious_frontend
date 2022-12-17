@@ -60,9 +60,6 @@ export default function AdminCommentReportForm() {
   }
 
   async function handleDeleteComment() {
-    // if (await inputReasonModal(commentId)) {
-    //   dispatch(deleteComment({ id: commentId }));
-    // }
     await inputReasonModal(commentId);
   }
 

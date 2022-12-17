@@ -9,10 +9,19 @@ import {
 } from "../../../features/recipes/recipeSlice";
 import { BsCaretDownFill, BsCaretUpFill, BsEyeFill } from "react-icons/bs";
 import StatusCard from "../StatusCard";
-
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import ReasonModal from "./ReasonModal";
+import {
+  handleReasonChange,
+  getReasonForItem,
+} from "../../../features/reasons/reasonSlice";
 export default function ReportRecipeCardTable() {
   const { isRecipesLoading, reportedRecipes, page, search, sort } = useSelector(
     (selector) => selector.recipe
+  );
+  const { reason, isDoneLoadingReason, IdRequesting } = useSelector(
+    (store) => store.reason
   );
   const { user } = useSelector((store) => store.user);
 
@@ -21,10 +30,36 @@ export default function ReportRecipeCardTable() {
     dispatch(getAllReportedRecipes());
   }, [page, search, sort]);
 
-  if (isRecipesLoading) {
+  useEffect(() => {
+    // console.log(IdRequesting);
+    if (IdRequesting !== "") {
+      dispatch(getReasonForItem({ itemId: IdRequesting }));
+    }
+  }, [IdRequesting]);
+  useEffect(() => {
+    if (isDoneLoadingReason === true && IdRequesting !== "") {
+      ShowModal();
+    }
+  }, [isDoneLoadingReason]);
+
+  if (isRecipesLoading && isDoneLoadingReason === false) {
     return <Loading />;
   }
-
+  async function ShowModal() {
+    const MySwal = withReactContent(Swal);
+    await MySwal.fire({
+      title: "Thông tin chi tiết",
+      html: <ReasonModal reason={reason} />,
+      showConfirmButton: false,
+      showCloseButton: true,
+    });
+    dispatch(
+      handleReasonChange({
+        name: "IdRequesting",
+        value: "",
+      })
+    );
+  }
   function smallestRoleID(roles) {
     // console.log(roles);
     let smallestRoleID = 10;
@@ -156,15 +191,15 @@ export default function ReportRecipeCardTable() {
                           <span className="mr-2">
                             {recipe.status === 0 ? (
                               <StatusCard
-                                text="Hoạt động"
-                                backgroundColor="bg-green-50"
-                                dotColor="bg-green-600"
+                                text="Đang hiển thị"
+                                backgroundColor="bg-yellow-50"
+                                dotColor="bg-yellow-600"
                               />
                             ) : (
                               <StatusCard
-                                text="Dừng hoạt động"
-                                backgroundColor="bg-gray-50"
-                                dotColor="bg-gray-600"
+                                text="Đã bị gỡ bỏ"
+                                backgroundColor="bg-red-50"
+                                dotColor="bg-red-600"
                               />
                             )}
                           </span>
@@ -173,7 +208,14 @@ export default function ReportRecipeCardTable() {
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <div className="flex items-center">
                           <BsEyeFill
-                            onClick={() => {}}
+                            onClick={() => {
+                              dispatch(
+                                handleReasonChange({
+                                  name: "IdRequesting",
+                                  value: recipe.id,
+                                })
+                              );
+                            }}
                             className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
                           />
                           <TableDropdown

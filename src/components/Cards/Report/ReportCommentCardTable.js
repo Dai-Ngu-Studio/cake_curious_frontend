@@ -9,9 +9,22 @@ import {
 } from "../../../features/comments/commentSlice";
 import { BsCaretDownFill, BsCaretUpFill, BsEyeFill } from "react-icons/bs";
 import StatusCard from "../StatusCard";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import ReasonModal from "./ReasonModal";
+
+import {
+  handleReasonChange,
+  getReasonForItem,
+} from "../../../features/reasons/reasonSlice";
 
 export default function ReportCommentCardTable() {
   const { user } = useSelector((store) => store.user);
+  const { reportedComments, isCommentsLoading, page, search, sort } =
+    useSelector((store) => store.comment);
+  const { reason, isDoneLoadingReason, IdRequesting } = useSelector(
+    (store) => store.reason
+  );
   let priorityRole = 99;
   for (let i = 0; i < user.hasRoles.length; i++) {
     var roleId = user.hasRoles[i].roleId;
@@ -19,16 +32,40 @@ export default function ReportCommentCardTable() {
       priorityRole = roleId;
     }
   }
-  const { reportedComments, isCommentsLoading, page, search, sort } =
-    useSelector((store) => store.comment);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllReportedComments());
   }, [page, search, sort]);
-
-  if (isCommentsLoading) {
+  useEffect(() => {
+    // console.log(IdRequesting);
+    if (IdRequesting !== "") {
+      dispatch(getReasonForItem({ itemId: IdRequesting }));
+    }
+  }, [IdRequesting]);
+  useEffect(() => {
+    if (isDoneLoadingReason === true && IdRequesting !== "") {
+      ShowModal();
+    }
+  }, [isDoneLoadingReason]);
+  if (isCommentsLoading && isDoneLoadingReason === false) {
     return <Loading />;
+  }
+  async function ShowModal() {
+    const MySwal = withReactContent(Swal);
+    await MySwal.fire({
+      title: "Thông tin chi tiết",
+      html: <ReasonModal reason={reason} />,
+      showConfirmButton: false,
+      showCloseButton: true,
+    });
+    dispatch(
+      handleReasonChange({
+        name: "IdRequesting",
+        value: "",
+      })
+    );
   }
   function smallestRoleID(roles) {
     let smallestRoleID = 10;
@@ -50,7 +87,7 @@ export default function ReportCommentCardTable() {
       );
     }
   }
-  console.log(reportedComments);
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -161,15 +198,15 @@ export default function ReportCommentCardTable() {
                           <span className="mr-2">
                             {comment.status === 0 ? (
                               <StatusCard
-                                text="Hoạt động"
-                                backgroundColor="bg-green-50"
-                                dotColor="bg-green-600"
+                                text="Đang hiển thị"
+                                backgroundColor="bg-yellow-50"
+                                dotColor="bg-yellow-600"
                               />
                             ) : (
                               <StatusCard
-                                text="Dừng hoạt động"
-                                backgroundColor="bg-gray-50"
-                                dotColor="bg-gray-600"
+                                text="Đã bị gỡ bỏ"
+                                backgroundColor="bg-red-50"
+                                dotColor="bg-red-600"
                               />
                             )}
                           </span>
@@ -178,7 +215,14 @@ export default function ReportCommentCardTable() {
                       <td className="pl-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
                         <div className="flex items-center">
                           <BsEyeFill
-                            onClick={() => {}}
+                            onClick={() => {
+                              dispatch(
+                                handleReasonChange({
+                                  name: "IdRequesting",
+                                  value: comment.id,
+                                })
+                              );
+                            }}
                             className="p-2 w-10 h-10 text-gray-500 border border-gray-600 hover:bg-gray-600 hover:text-white rounded-md cursor-pointer"
                           />
                           <TableDropdown

@@ -165,7 +165,9 @@ export const StaffCardTable = () => {
         </div>
         {accounts.length === 0 ? (
           <div className="block w-full overflow-x-auto">
-            <h2 className="text-center pb-3">No accounts to display...</h2>
+            <h2 className="text-center pb-3">
+              Không có tài khoản nhân viên nào để hiển thị
+            </h2>
           </div>
         ) : (
           <div className="block w-full overflow-x-auto">
@@ -262,7 +264,7 @@ export const StaffCardTable = () => {
                         })()}
                       </td>
                       <td className="pl-6 align-middle p-4">
-                        {account.displayName || "Annoymous"}
+                        {account.displayName || "Không có dữ liệu"}
                       </td>
                       <td className="pl-6 align-middle p-4">
                         <div className="flex">{account.email}</div>
