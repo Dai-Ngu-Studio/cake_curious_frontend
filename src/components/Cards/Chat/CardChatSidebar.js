@@ -9,7 +9,6 @@ import {
 import {
   addDoc,
   collection,
-  doc,
   getDoc,
   getDocs,
   onSnapshot,
@@ -136,7 +135,7 @@ const CardChatSidebar = () => {
       );
       const docSnap = await getDocs(q);
       if (docSnap.empty) {
-        await addDoc(collection(db, "rooms"), {
+        const resp = await addDoc(collection(db, "rooms"), {
           createdAt: serverTimestamp(),
           userInfos: [
             {
@@ -155,7 +154,7 @@ const CardChatSidebar = () => {
         });
         dispatch(
           setChatting({
-            chatId: doc.id,
+            chatId: resp.id,
             userData: {
               displayName: account.displayName,
               photoUrl: account.photoUrl,

@@ -15,13 +15,15 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../../../utils/firebase";
 import CardChatMessage from "./CardChatMessage";
+import { pushChatNotification } from "../../../features/notification/notificationSlice";
 
 const CardChatBody = () => {
   const { user } = useSelector((store) => store.user);
   const [messages, setMessages] = useState([]);
+  const dispatch = useDispatch();
   const { userData, chatId } = useSelector((store) => store.chat);
   const [text, setText] = useState("");
 
@@ -44,6 +46,16 @@ const CardChatBody = () => {
         lastMessageName: user?.store?.name,
         updatedAt: serverTimestamp(),
       });
+      dispatch(
+        pushChatNotification({
+          chat: {
+            receiverId: userData.uid,
+            itemType: 5,
+            title: user?.store?.name,
+            content: text,
+          },
+        })
+      );
       setText("");
     }
   };

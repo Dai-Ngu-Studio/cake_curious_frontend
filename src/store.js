@@ -5,6 +5,7 @@ import commentSlice from "./features/comments/commentSlice";
 import couponSlice from "./features/coupons/couponSlice";
 import dashboardSlice from "./features/dashboards/dashboardSlice";
 import imageSlice from "./features/images/imageSlice";
+import notificationSlice from "./features/notification/notificationSlice";
 import orderDetailSlice from "./features/order-details/orderDetailSlice";
 import orderSlice from "./features/orders/orderSlice";
 import productCategorySlice from "./features/product-categories/productCategorySlice";
@@ -32,5 +33,6 @@ export const store = configureStore({
     recipe: recipeSlice,
     comment: commentSlice,
     reason: reasonSlice,
+    notification: notificationSlice,
   },
 });
