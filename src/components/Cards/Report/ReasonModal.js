@@ -1,5 +1,4 @@
 export default function ReasonModal({ reason }) {
-  console.log(reason);
   return (
     <>
       <div className="flex gap-5 ">

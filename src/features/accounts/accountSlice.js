@@ -108,6 +108,7 @@ const accountSlice = createSlice({
     },
     [getSingleAccount.rejected]: (state, { payload }) => {
       state.isModalAccountLoading = false;
+      state.isUserChatting = false;
     },
     [getAccountForUpdating.pending]: (state) => {
       state.isAccountLoading = true;

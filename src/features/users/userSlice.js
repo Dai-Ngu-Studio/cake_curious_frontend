@@ -23,6 +23,7 @@ const initialState = {
   isUserRoleDoneUpdating: false,
   email: "",
   password: "",
+  error: "",
   user: getUserFromLocalStorage(),
   token: getTokenFromLocalStorage(),
 };
@@ -64,7 +65,7 @@ const userSlice = createSlice({
       state.token = null;
       state.isUserLoading = false;
       state.isDoneGettingUser = false;
-      // state.isUserRoleDoneUpdating = false;
+      state.error = "";
       state.email = "";
       state.password = "";
     },
@@ -95,7 +96,8 @@ const userSlice = createSlice({
     },
     [loginGoogle.rejected]: (state, { payload }) => {
       state.isUserLoading = false;
-      toast.error(payload);
+      state.error = payload.code;
+      state.email = payload.customData.email;
     },
     [getUser.pending]: (state) => {
       state.isUserLoading = true;

@@ -5,9 +5,11 @@ const customFetch = axios.create({
   baseURL: process.env.REACT_APP_BASEAPI_URL,
 });
 customFetch.interceptors.request.use(async (config) => {
-  const token = await auth.currentUser.getIdToken(true);
-  if (token) {
-    config.headers.common["Authorization"] = `Bearer ${token}`;
+  if (auth.currentUser) {
+    const token = await auth.currentUser.getIdToken(true);
+    if (token) {
+      config.headers.common["Authorization"] = `Bearer ${token}`;
+    }
   }
   return config;
 });
