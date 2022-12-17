@@ -206,7 +206,7 @@ export default function ReportTableCard({ reports, handleUpdateReports }) {
                           return (
                             a.getDate() +
                             " Tháng " +
-                            a.getMonth() +
+                            (a.getMonth() + 1) +
                             ", " +
                             a.getFullYear() +
                             " lúc " +

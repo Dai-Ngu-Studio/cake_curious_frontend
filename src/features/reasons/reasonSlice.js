@@ -4,7 +4,7 @@ import { addReasonThunk, getReasonThunk } from "./reasonThunk";
 
 const initialState = {
   isDoneLoadingReason: false,
-  isReasonDoneAdding: true,
+  isReasonDoneAdding: false,
   reason: null,
 };
 

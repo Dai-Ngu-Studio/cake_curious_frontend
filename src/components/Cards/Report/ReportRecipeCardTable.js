@@ -133,7 +133,7 @@ export default function ReportRecipeCardTable() {
                             return (
                               a.getDate() +
                               " Tháng " +
-                              a.getMonth() +
+                              (a.getMonth() + 1) +
                               ", " +
                               a.getFullYear() +
                               " lúc " +

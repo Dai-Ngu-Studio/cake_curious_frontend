@@ -36,6 +36,7 @@ export default function AdminCommentReportForm() {
     sort,
     filter,
   } = useSelector((store) => store.report);
+  const { isReasonDoneAdding } = useSelector((store) => store.reason);
   const dispatch = useDispatch();
   const { commentId } = useParams();
 
@@ -45,7 +46,9 @@ export default function AdminCommentReportForm() {
   useEffect(() => {
     dispatch(getReportsOfAnItem({ itemId: commentId }));
   }, [isReportDoneUpdating, isCommentDoneUpdating, page, sort, filter]);
-
+  useEffect(() => {
+    if (isReasonDoneAdding === true) dispatch(deleteComment({ id: commentId }));
+  }, [isReasonDoneAdding]);
   const handleInputChange = (e) => {
     dispatch(
       handleReportChange({ name: e.target.name, value: e.target.value })
@@ -55,10 +58,12 @@ export default function AdminCommentReportForm() {
   if (isCommentsLoading || isReportLoading) {
     return <Loading />;
   }
+
   async function handleDeleteComment() {
-    if (await inputReasonModal(commentId)) {
-      dispatch(deleteComment({ id: commentId }));
-    }
+    // if (await inputReasonModal(commentId)) {
+    //   dispatch(deleteComment({ id: commentId }));
+    // }
+    await inputReasonModal(commentId);
   }
 
   async function inputReasonModal(itemId) {
