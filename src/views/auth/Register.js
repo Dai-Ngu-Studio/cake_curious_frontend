@@ -31,7 +31,16 @@ export default function Register() {
     (store) => store.user
   );
 
-  const { verifyPhoneNumber, OTP } = useSelector((store) => store.account);
+  const {
+    verifyPhoneNumber,
+    OTP,
+    fullName,
+    gender,
+    dateOfBirth,
+    address,
+    citizenshipNumber,
+    citizenshipDate,
+  } = useSelector((store) => store.account);
   const { name, description, photoUrl, storeAddress } = useSelector(
     (selector) => selector.store
   );
@@ -46,14 +55,14 @@ export default function Register() {
   const navigate = useNavigate();
   const [isVerifying, setIsVerifying] = useState(false);
   const [verificationId, setVerificationId] = useState(null);
-  const [result, setResult] = useState({
-    fullName: "",
-    gender: "",
-    dateOfBirth: "",
-    address: "",
-    citizenshipNumber: "",
-    citizenshipDate: "",
-  });
+  // const [result, setResult] = useState({
+  //   fullName: "",
+  //   gender: "",
+  //   dateOfBirth: "",
+  //   address: "",
+  //   citizenshipNumber: "",
+  //   citizenshipDate: "",
+  // });
   const [error, setError] = useState("");
   const [code, setCode] = useState("");
 
@@ -62,6 +71,7 @@ export default function Register() {
   const handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+    // console.log(name, value);
     dispatch(handleAccountChange({ name, value }));
     dispatch(handleStoreChange({ name, value }));
   };
@@ -87,7 +97,7 @@ export default function Register() {
   };
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
-      if (user?.auth.currentUser.providerData[1].uid) {
+      if (user?.auth.currentUser.providerData[1]?.uid) {
         setIsSkipOTP(true);
       }
     });
@@ -222,9 +232,14 @@ export default function Register() {
     if (provider === "phone") {
       dispatch(getImage({ tmpImage: chosenImage }));
     }
+    if (isSkipOTP) {
+      dispatch(getImage({ tmpImage: chosenImage }));
+    }
   };
   useEffect(() => {
     if (isDoneGettingImage) {
+      console.log(dateOfBirth);
+      console.log(citizenshipDate);
       dispatch(
         updateUserRole({
           request: {
@@ -232,12 +247,16 @@ export default function Register() {
             description,
             photoUrl: image || null,
             storeAddress,
-            fullName: result.fullName,
-            gender: result.gender,
-            dateOfBirth: moment(result.dateOfBirth).toISOString(),
-            address: result.address,
-            citizenshipNumber: result.citizenshipNumber,
-            citizenshipDate: moment(result.citizenshipDate).toISOString(),
+            fullName,
+            gender,
+            dateOfBirth: moment(
+              moment(dateOfBirth, "DDMMYYYY").format("MM-DD-YYYY")
+            ).toISOString(),
+            address,
+            citizenshipNumber,
+            citizenshipDate: moment(
+              moment(citizenshipDate, "DDMMYYYY").format("MM-DD-YYYY")
+            ).toISOString(),
           },
         })
       );
@@ -263,7 +282,6 @@ export default function Register() {
         return;
       }
       const length = qrCode.replaceAll("||", "|").split("|").length;
-      console.log(length);
       if (length === 7) {
         const [
           citizenshipNumber,
@@ -274,16 +292,24 @@ export default function Register() {
           address,
           citizenshipDate,
         ] = qrCode.replaceAll("||", "|").split("|");
-        setResult((prevState) => ({
-          fullName: fullName,
-          gender: gender,
-          dateOfBirth: moment(dateOfBirth, "DDMMYYYY").format("MM-DD-YYYY"),
-          address: address,
-          citizenshipNumber: citizenshipNumber,
-          citizenshipDate: moment(citizenshipDate, "DDMMYYYY").format(
-            "MM-DD-YYYY"
-          ),
-        }));
+        dispatch(handleAccountChange({ name: "fullName", value: fullName }));
+        dispatch(
+          handleAccountChange({
+            name: "citizenshipNumber",
+            value: citizenshipNumber,
+          })
+        );
+        dispatch(
+          handleAccountChange({ name: "dateOfBirth", value: dateOfBirth })
+        );
+        dispatch(handleAccountChange({ name: "gender", value: gender }));
+        dispatch(handleAccountChange({ name: "address", value: address }));
+        dispatch(
+          handleAccountChange({
+            name: "citizenshipDate",
+            value: citizenshipDate,
+          })
+        );
       } else if (length === 6) {
         const [
           citizenshipNumber,
@@ -293,26 +319,33 @@ export default function Register() {
           address,
           citizenshipDate,
         ] = qrCode.replaceAll("||", "|").split("|");
-        console.log(citizenshipNumber);
-        setResult((prevState) => ({
-          fullName: fullName,
-          gender: gender,
-          dateOfBirth: moment(dateOfBirth, "DDMMYYYY").format("MM-DD-YYYY"),
-          address: address,
-          citizenshipNumber: citizenshipNumber,
-          citizenshipDate: moment(citizenshipDate, "DDMMYYYY").format(
-            "MM-DD-YYYY"
-          ),
-        }));
+        dispatch(handleAccountChange({ name: "fullName", value: fullName }));
+        dispatch(
+          handleAccountChange({
+            name: "citizenshipNumber",
+            value: citizenshipNumber,
+          })
+        );
+        dispatch(
+          handleAccountChange({ name: "dateOfBirth", value: dateOfBirth })
+        );
+        dispatch(handleAccountChange({ name: "gender", value: gender }));
+        dispatch(handleAccountChange({ name: "address", value: address }));
+        dispatch(
+          handleAccountChange({
+            name: "citizenshipDate",
+            value: citizenshipDate,
+          })
+        );
       }
       Swal.fire(
         "Nhận thông tin CCCD thành công!",
         "Thông tin CCCD của bạn đã được nhập!",
         "success"
       );
-      if (isSkipOTP) {
-        setStep(3);
-      } else setStep(2);
+      // if (isSkipOTP) {
+      //   setStep(3);
+      // } else setStep(2);
     } catch (e) {
       console.log(e);
       if (e instanceof Event) {
@@ -322,6 +355,24 @@ export default function Register() {
       }
     }
   };
+  const nextStep = (e) => {
+    if (
+      !fullName ||
+      !gender ||
+      !dateOfBirth ||
+      !address ||
+      !citizenshipNumber ||
+      !citizenshipDate
+    ) {
+      toast.warning("Xin hãy điền đầy đủ thông tin");
+      return;
+    }
+    e.preventDefault();
+    if (isSkipOTP) {
+      setStep(3);
+    } else setStep(2);
+  };
+
   return (
     <>
       <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">
@@ -374,39 +425,45 @@ export default function Register() {
                           type="text"
                           labelText="Họ và tên"
                           name="fullName"
-                          value={result.fullName}
+                          value={fullName}
                           style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // handleChange={handleUserInput}
-                          disabled={true}
+                          handleChange={handleUserInput}
+                          // disabled={true}
                         />
                         <FormRow
                           type="text"
                           labelText="Giới tính"
                           name="gender"
-                          value={result.gender}
+                          value={gender}
                           style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // handleChange={handleUserInput}
-                          disabled={true}
+                          handleChange={handleUserInput}
+                          // disabled={true}
                         />
                       </div>
                       <div className="grid grid-cols-2 gap-5 py-2">
                         <FormRow
-                          type="text"
+                          type="date"
                           labelText="Ngày sinh"
                           name="dateOfBirth"
-                          value={result.dateOfBirth}
+                          value={
+                            dateOfBirth === ""
+                              ? dateOfBirth
+                              : moment(dateOfBirth, "DDMMYYYY").format(
+                                  "YYYY-MM-DD"
+                                )
+                          }
                           style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // handleChange={handleUserInput}
-                          disabled={true}
+                          handleChange={handleUserInput}
+                          // disabled={true}
                         />
                         <FormRow
                           type="text"
                           labelText="Địa chỉ"
                           name="address"
-                          value={result.address}
+                          value={address}
                           style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // handleChange={handleUserInput}
-                          disabled={true}
+                          handleChange={handleUserInput}
+                          // disabled={true}
                         />
                       </div>
 
@@ -415,20 +472,35 @@ export default function Register() {
                           type="text"
                           labelText="Số CCCD"
                           name="citizenshipNumber"
-                          value={result.citizenshipNumber}
+                          value={citizenshipNumber}
                           style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // handleChange={handleUserInput}
-                          disabled={true}
+                          handleChange={handleUserInput}
+                          // disabled={true}
                         />
                         <FormRow
-                          type="text"
+                          type="date"
                           labelText="Ngày đăng ký CCCD"
                           name="citizenshipDate"
-                          value={result.citizenshipDate}
+                          value={
+                            citizenshipDate === ""
+                              ? citizenshipDate
+                              : moment(citizenshipDate, "DDMMYYYY").format(
+                                  "YYYY-MM-DD"
+                                )
+                          }
                           style="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // handleChange={handleUserInput}
-                          disabled={true}
+                          handleChange={handleUserInput}
+                          // disabled={true}
                         />
+                      </div>
+
+                      <div className="flex float-right">
+                        <button
+                          className="rounded-lg bg-emerald-400 hover:bg-emerald-500 px-3 py-2 mt-10"
+                          onClick={nextStep}
+                        >
+                          Tiếp theo
+                        </button>
                       </div>
                     </div>
                   </>

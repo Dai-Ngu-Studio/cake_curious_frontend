@@ -169,13 +169,17 @@ export default function StoreCardTable() {
                                 return (
                                   a.getDate() +
                                   " Tháng " +
-                                  a.getMonth() +
+                                  (a.getMonth() + 1) +
                                   ", " +
                                   a.getFullYear() +
                                   " lúc " +
-                                  a.getHours() +
+                                  (a.getHours() < 10
+                                    ? "0" + a.getHours()
+                                    : a.getHours()) +
                                   ":" +
-                                  a.getMinutes()
+                                  (a.getMinutes() < 10
+                                    ? "0" + a.getMinutes()
+                                    : a.getMinutes())
                                 );
                               } else return "Không có dữ liệu";
                             })()}

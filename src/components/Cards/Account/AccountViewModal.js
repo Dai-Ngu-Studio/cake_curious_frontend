@@ -41,7 +41,9 @@ export default function AccountViewModal({ id }) {
           <div className="flex items-center gap-5 my-3">
             <div className="w-20 text-right">Tên đầy đủ</div>
             <div className="w-96 p-2 rounded-md border-gray-300 border">
-              {account.fullName || <div className="text-gray-500">Unknown</div>}
+              {account.fullName || (
+                <div className="text-gray-500">Không có dữ liệu</div>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-5">
@@ -63,17 +65,47 @@ export default function AccountViewModal({ id }) {
           <div className="flex items-center gap-5">
             <div className="w-20 text-right">Ngày tạo tài khoản </div>
             <div className="w-96 p-2 rounded-md border-gray-300 border">
-              {account.createdDate || (
-                <div className="text-gray-500">Không có dữ liệu</div>
-              )}
+              {(() => {
+                if (account.createdDate) {
+                  let a = new Date(account.createdDate + "Z");
+                  return (
+                    a.getDate() +
+                    " Tháng " +
+                    (a.getMonth() + 1) +
+                    ", " +
+                    a.getFullYear() +
+                    " lúc " +
+                    (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
+                    ":" +
+                    (a.getMinutes() < 10
+                      ? "0" + a.getMinutes()
+                      : a.getMinutes())
+                  );
+                } else return "Không có dữ liệu";
+              })()}
             </div>
           </div>
           <div className="flex items-center gap-5 my-3">
             <div className="w-20 text-right">Ngày sinh </div>
             <div className="w-96 p-2 rounded-md border-gray-300 border">
-              {account.dateOfBirth || (
-                <div className="text-gray-500">Không có dữ liệu</div>
-              )}
+              {(() => {
+                if (account.dateOfBirth) {
+                  let a = new Date(account.dateOfBirth);
+                  return (
+                    a.getDate() +
+                    " Tháng " +
+                    (a.getMonth() + 1) +
+                    ", " +
+                    a.getFullYear() +
+                    " lúc " +
+                    (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
+                    ":" +
+                    (a.getMinutes() < 10
+                      ? "0" + a.getMinutes()
+                      : a.getMinutes())
+                  );
+                } else return "Không có dữ liệu";
+              })()}
             </div>
           </div>
           <div className="flex items-center gap-5">
@@ -98,7 +130,9 @@ export default function AccountViewModal({ id }) {
                 Nguyên nhân hủy kích hoạt gần đây nhất
               </div>
               <div className="w-96 p-2 rounded-md border-red-600 border">
-                {reason.reason || <div className="text-gray-500">Unknown</div>}
+                {reason.reason || (
+                  <div className="text-gray-500">Không có dữ liệu</div>
+                )}
               </div>
             </div>
           )}
