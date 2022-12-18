@@ -30,12 +30,13 @@ export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   }
 };
 
-export const loginGoogleThunk = async (thunkAPI) => {
+export const loginGoogleThunk = async (_, thunkAPI) => {
   try {
     const googleAuth = new GoogleAuthProvider();
     const authGoogle = await signInWithPopup(auth, googleAuth);
     return authGoogle.user.toJSON();
   } catch (error) {
+    // console.log(error.payload.email);
     return thunkAPI.rejectWithValue(error);
   }
 };

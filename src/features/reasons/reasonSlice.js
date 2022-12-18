@@ -4,6 +4,7 @@ import {
   addReasonThunk,
   getReasonThunk,
   getReasonForItemThunk,
+  getReasonByEmailThunk,
 } from "./reasonThunk";
 
 const initialState = {
@@ -19,6 +20,11 @@ export const getReasonForItem = createAsyncThunk(
   "reason/getReasonForItem",
   getReasonForItemThunk
 );
+export const getReasonByEmail = createAsyncThunk(
+  "reason/getReasonByEmail",
+  getReasonByEmailThunk
+);
+
 const reasonSlice = createSlice({
   name: "reason",
   initialState,
@@ -59,6 +65,18 @@ const reasonSlice = createSlice({
       state.reason = payload;
     },
     [getReasonForItem.rejected]: (state, { payload }) => {
+      state.isDoneLoadingReason = false;
+      toast.error(payload);
+    },
+    [getReasonByEmail.pending]: (state) => {
+      state.isDoneLoadingReason = false;
+    },
+    [getReasonByEmail.fulfilled]: (state, { payload }) => {
+      state.isDoneLoadingReason = true;
+      state.reason = payload;
+      toast.warning("Tài khoản của bạn đã bị vô hiệu hóa");
+    },
+    [getReasonByEmail.rejected]: (state, { payload }) => {
       state.isDoneLoadingReason = false;
       toast.error(payload);
     },

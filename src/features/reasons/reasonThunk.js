@@ -1,4 +1,6 @@
+import axios from "axios";
 import customFetch, { checkForUnauthorizedResponse } from "../../utils/axios";
+import { clearAllUsersState } from "../users/userSlice";
 
 export const addReasonThunk = async (reason, thunkAPI) => {
   try {
@@ -27,5 +29,17 @@ export const getReasonForItemThunk = async ({ itemId }, thunkAPI) => {
     return resp.data;
   } catch (error) {
     return checkForUnauthorizedResponse(error, thunkAPI);
+  }
+};
+export const getReasonByEmailThunk = async ({ email }, thunkAPI) => {
+  try {
+    const resp = await customFetch.post(
+      `/api/deactivate-reasons/by-email`,
+      email
+    );
+    thunkAPI.dispatch(clearAllUsersState());
+    return resp.data;
+  } catch (error) {
+    // return checkForUnauthorizedResponse(error, thunkAPI);
   }
 };

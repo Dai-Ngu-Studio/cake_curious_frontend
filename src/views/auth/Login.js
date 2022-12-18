@@ -13,10 +13,27 @@ import {
   loginGoogle,
   loginUser,
 } from "../../features/users/userSlice";
+import { auth } from "../../utils/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import {
+  getReasonByEmail,
+  handleReasonChange,
+} from "../../features/reasons/reasonSlice";
+import ReasonModal from "../../components/Cards/Report/ReasonModal";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 export default function Login() {
-  const { token, email, password, isUserLoading, user, isDoneGettingUser } =
-    useSelector((store) => store.user);
+  const {
+    token,
+    email,
+    password,
+    isUserLoading,
+    user,
+    isDoneGettingUser,
+    error,
+  } = useSelector((store) => store.user);
+  const { reason, isDoneLoadingReason } = useSelector((store) => store.reason);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,6 +54,33 @@ export default function Login() {
     e.preventDefault();
     dispatch(loginGoogle());
   };
+
+  useEffect(() => {
+    if (error === "auth/user-disabled") {
+      dispatch(getReasonByEmail({ email: { email } }));
+    }
+  }, [error]);
+  useEffect(() => {
+    if (isDoneLoadingReason) {
+      ShowModal();
+      dispatch(
+        handleReasonChange({
+          name: "isDoneLoadingReason",
+          value: false,
+        })
+      );
+    }
+  }, [isDoneLoadingReason]);
+
+  async function ShowModal() {
+    const MySwal = withReactContent(Swal);
+    await MySwal.fire({
+      title: "Thông tin chi tiết",
+      html: <ReasonModal reason={reason} />,
+      showConfirmButton: false,
+      showCloseButton: true,
+    });
+  }
 
   useEffect(() => {
     if (token && !user) {
