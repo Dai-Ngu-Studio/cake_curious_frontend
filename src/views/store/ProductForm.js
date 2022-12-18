@@ -130,8 +130,24 @@ export const ProductForm = () => {
 
   const handleProductSubmit = (e) => {
     e.preventDefault();
-    if (!name || !quantity || !price) {
+    if (!name || !quantity.toString() || !price.toString()) {
       toast.warning("Xin hãy điền đầy đủ thông tin");
+      return;
+    }
+    if (parseInt(quantity) < 0) {
+      toast.warning("Số lượng sản phẩm không được dưới 0");
+      return;
+    }
+    if (parseInt(price) < 1000) {
+      toast.warning("Giá sản phẩm không được dưới 1000");
+      return;
+    }
+    if (quantity % 1 !== 0) {
+      toast.warning("Không được nhập số thập phân cho số lượng sản phẩm");
+      return;
+    }
+    if (price % 1 !== 0) {
+      toast.warning("Không được nhập số thập phân cho giá sản phẩm");
       return;
     }
     if (photoUrl === "") {

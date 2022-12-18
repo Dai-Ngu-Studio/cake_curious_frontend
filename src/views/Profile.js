@@ -99,36 +99,39 @@ export default function Profile() {
     }
   }, [isDoneGettingImage]);
 
-  // unlink phone number
-  const UnlinkPhone = async (e) => {
+  // Gọi hàm này để gửi mã OTP
+  const SendOtp = async (e) => {
     e.preventDefault();
+    if (profilePhoneNumber.length !== 11) {
+      // bên firebase cần sđt phải có mã quốc gia (+84)
+      // nên lúc update sđt mới thì nhớ nhập cả +84 vô
+      toast.warning("Yêu cầu số điện thoại là 11 chữ số");
+      return;
+    }
     try {
-      const resp = await unlink(firebaseUser, provider);
-      if (typeof resp.providerData[1] === "undefined") {
-        const appVerifier = new RecaptchaVerifier(
-          "recaptcha-container",
-          {
-            size: "invisible",
-          },
-          auth
+      const appVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+        },
+        auth
+      );
+      setVerifier(appVerifier);
+      try {
+        const result = await signInWithPhoneNumber(
+          auth,
+          profilePhoneNumber,
+          appVerifier
         );
-        setVerifier(appVerifier);
-        try {
-          const result = await signInWithPhoneNumber(
-            auth,
-            profilePhoneNumber,
-            appVerifier
+        setVerificationId(result.verificationId);
+        setIsVerifying(true);
+      } catch (error) {
+        if (error.code === "auth/too-many-requests") {
+          toast.warning(
+            "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
           );
-          setVerificationId(result.verificationId);
-          setIsVerifying(true);
-        } catch (error) {
-          if (error.code === "auth/too-many-requests") {
-            toast.warning(
-              "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
-            );
-          }
-          removeCaptchaFromLocalStorage();
         }
+        removeCaptchaFromLocalStorage();
       }
     } catch (error) {
       console.log(error);
@@ -139,31 +142,41 @@ export default function Profile() {
       }
     }
   };
-  const ValidateOtp = async (e) => {
+
+  // Sau khi mã OTP được gửi về
+  const UnlinkPhoneAndValidateOtp = async (e) => {
     e.preventDefault();
     if (OTP.length === 6) {
       const phoneCredential = PhoneAuthProvider.credential(verificationId, OTP);
-      try {
-        const resp = await linkWithCredential(
-          auth.currentUser,
-          phoneCredential
-        );
-        setProvider(resp.providerId);
-      } catch (error) {
-        if (error.code === "auth/provider-already-linked") {
-          toast.warning("Tài khoản bạn đăng nhập đã có số điện thoại");
-        } else if (error.code === "auth/invalid-verification-code") {
-          toast.warning("Mã OTP không hợp lệ");
-        } else if (
-          error.code === "auth/account-exists-with-different-credential"
-        ) {
-          toast.warning(
-            "Số điện thoại này đang được dùng ở 1 cửa hàng khác. Vui lòng nhập số khác hoặc kiểm tra lại"
-          );
-        } else if (error.code === "auth/code-expired") {
-          toast.warning("Mã OTP hết hạn");
+      // xác nhận sđt thành công
+      if (phoneCredential.providerId === "phone") {
+        const resp = await unlink(firebaseUser, provider);
+        // unlink thành công
+        if (typeof resp.providerData[1] === "undefined") {
+          // link sđt mới
+          try {
+            const resp = await linkWithCredential(
+              auth.currentUser,
+              phoneCredential
+            );
+            setProvider(resp.providerId);
+          } catch (error) {
+            if (error.code === "auth/provider-already-linked") {
+              toast.warning("Tài khoản bạn đăng nhập đã có số điện thoại");
+            } else if (error.code === "auth/invalid-verification-code") {
+              toast.warning("Mã OTP không hợp lệ");
+            } else if (
+              error.code === "auth/account-exists-with-different-credential"
+            ) {
+              toast.warning(
+                "Số điện thoại này đang được dùng ở 1 cửa hàng khác. Vui lòng nhập số khác hoặc kiểm tra lại"
+              );
+            } else if (error.code === "auth/code-expired") {
+              toast.warning("Mã OTP hết hạn");
+            }
+            removeCaptchaFromLocalStorage();
+          }
         }
-        removeCaptchaFromLocalStorage();
       }
     }
   };
@@ -178,6 +191,31 @@ export default function Profile() {
           },
         })
       );
+    }
+  };
+
+  // gửi lại OTP
+  const handleResendOTP = async (e) => {
+    e.preventDefault();
+    if (profilePhoneNumber.length !== 11) {
+      toast.warning("Yêu cầu số điện thoại là 11 chữ số");
+      return;
+    }
+    try {
+      const result = await signInWithPhoneNumber(
+        auth,
+        profilePhoneNumber,
+        verifier
+      );
+      setVerificationId(result.verificationId);
+      setIsVerifying(true);
+    } catch (error) {
+      if (error.code === "auth/too-many-requests") {
+        toast.error(
+          "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
+        );
+      }
+      removeCaptchaFromLocalStorage();
     }
   };
 
