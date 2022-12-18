@@ -54,7 +54,8 @@ const reasonSlice = createSlice({
       state.reason = payload;
     },
     [getReason.rejected]: (state, { payload }) => {
-      state.isDoneLoadingReason = false;
+      state.isDoneLoadingReason = true;
+      state.reason = null;
       toast.error(payload);
     },
     [getReasonForItem.pending]: (state) => {
@@ -77,7 +78,7 @@ const reasonSlice = createSlice({
       toast.warning("Tài khoản của bạn đã bị vô hiệu hóa");
     },
     [getReasonByEmail.rejected]: (state, { payload }) => {
-      state.isDoneLoadingReason = false;
+      state.isDoneLoadingReason = true;
       toast.error(payload);
     },
   },

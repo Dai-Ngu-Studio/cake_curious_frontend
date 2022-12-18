@@ -124,7 +124,7 @@ export default function AccountViewModal({ id }) {
               )}
             </div>
           </div>
-          {reason.reason && (
+          {reason?.reason && (
             <div className="flex items-center gap-5">
               <div className="w-20 text-right">
                 Nguyên nhân hủy kích hoạt gần đây nhất
