@@ -22,7 +22,7 @@ export default function Staff() {
         {/* <HeaderStats /> */}
         <div className="px-4 md:px-10 mx-auto w-full">
           <Outlet />
-          {!isDashboardLoading && <FooterAdmin />}
+          {/* {!isDashboardLoading && <FooterAdmin />} */}
         </div>
       </div>
     </div>

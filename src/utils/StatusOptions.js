@@ -23,7 +23,7 @@ export const ProductTypeOptions = [
     value: 0,
   },
   {
-    name: "Dụng cụ nhà bếp",
+    name: "Dụng cụ nấu",
     value: 1,
   },
 ];

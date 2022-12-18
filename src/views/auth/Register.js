@@ -19,6 +19,7 @@ import {
   getUser,
   handleUserChange,
   updateUserRole,
+  validateUserCitizenshipNumber,
 } from "../../features/users/userSlice";
 import { auth } from "../../utils/firebase";
 import { removeCaptchaFromLocalStorage } from "../../utils/localStorage";
@@ -27,7 +28,7 @@ import Swal from "sweetalert2";
 import OtpInput from "react-otp-input-2";
 
 export default function Register() {
-  const { user, token, isUserRoleDoneUpdating } = useSelector(
+  const { user, token, isUserRoleDoneUpdating, status } = useSelector(
     (store) => store.user
   );
 
@@ -133,12 +134,21 @@ export default function Register() {
     }
   }, [user]);
   useEffect(() => {
+    if (citizenshipNumber !== "") {
+      dispatch(validateUserCitizenshipNumber({ cccd: citizenshipNumber }));
+    }
+  }, [citizenshipNumber]);
+
+  useEffect(() => {
     dispatch(handleAccountChange({ name: "OTP", value: code }));
   }, [code]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (verifyPhoneNumber.length < 12) {
+    if (
+      verifyPhoneNumber.substring(verifyPhoneNumber.indexOf("+") + 1).length !==
+      11
+    ) {
       toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
@@ -200,7 +210,10 @@ export default function Register() {
   // dùng để gọi gửi lại OTP
   const handleResendOTP = async (e) => {
     e.preventDefault();
-    if (verifyPhoneNumber.length < 12) {
+    if (
+      verifyPhoneNumber.substring(verifyPhoneNumber.indexOf("+") + 1).length !==
+      11
+    ) {
       toast.warning("Yêu cầu số điện thoại là 11 chữ số");
       return;
     }
@@ -238,8 +251,6 @@ export default function Register() {
   };
   useEffect(() => {
     if (isDoneGettingImage) {
-      console.log(dateOfBirth);
-      console.log(citizenshipDate);
       dispatch(
         updateUserRole({
           request: {
@@ -356,6 +367,7 @@ export default function Register() {
     }
   };
   const nextStep = (e) => {
+    e.preventDefault();
     if (
       !fullName ||
       !gender ||
@@ -367,12 +379,19 @@ export default function Register() {
       toast.warning("Xin hãy điền đầy đủ thông tin");
       return;
     }
-    e.preventDefault();
+    if (citizenshipNumber.length < 9 || citizenshipNumber.length >= 13) {
+      toast.warning("Số cccd/cmnd phải từ 9 - 12 số");
+      return;
+    }
+    if (status === 409) {
+      toast.warning("Số cccd/cmnd này đã được sử dụng.");
+      dispatch(handleUserChange({ name: "status", value: "" }));
+      return;
+    }
     if (isSkipOTP) {
       setStep(3);
     } else setStep(2);
   };
-
   return (
     <>
       <div className="min-w-screen min-h-screen bg-gray-900 flex items-center justify-center px-5 py-5">

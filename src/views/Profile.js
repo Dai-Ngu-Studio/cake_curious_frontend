@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Footer from "../components/Footers/Footer";
-import userTemp from "../assets/img/user-sidebar-temp.png";
+import userTemp from "../assets/img/user.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
@@ -99,36 +99,39 @@ export default function Profile() {
     }
   }, [isDoneGettingImage]);
 
-  // unlink phone number
-  const UnlinkPhone = async (e) => {
+  // Gọi hàm này để gửi mã OTP
+  const SendOtp = async (e) => {
     e.preventDefault();
+    if (profilePhoneNumber.length !== 11) {
+      // bên firebase cần sđt phải có mã quốc gia (+84)
+      // nên lúc update sđt mới thì nhớ nhập cả +84 vô
+      toast.warning("Yêu cầu số điện thoại là 11 chữ số");
+      return;
+    }
     try {
-      const resp = await unlink(firebaseUser, provider);
-      if (typeof resp.providerData[1] === "undefined") {
-        const appVerifier = new RecaptchaVerifier(
-          "recaptcha-container",
-          {
-            size: "invisible",
-          },
-          auth
+      const appVerifier = new RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "invisible",
+        },
+        auth
+      );
+      setVerifier(appVerifier);
+      try {
+        const result = await signInWithPhoneNumber(
+          auth,
+          profilePhoneNumber,
+          appVerifier
         );
-        setVerifier(appVerifier);
-        try {
-          const result = await signInWithPhoneNumber(
-            auth,
-            profilePhoneNumber,
-            appVerifier
+        setVerificationId(result.verificationId);
+        setIsVerifying(true);
+      } catch (error) {
+        if (error.code === "auth/too-many-requests") {
+          toast.warning(
+            "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
           );
-          setVerificationId(result.verificationId);
-          setIsVerifying(true);
-        } catch (error) {
-          if (error.code === "auth/too-many-requests") {
-            toast.warning(
-              "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
-            );
-          }
-          removeCaptchaFromLocalStorage();
         }
+        removeCaptchaFromLocalStorage();
       }
     } catch (error) {
       console.log(error);
@@ -139,31 +142,41 @@ export default function Profile() {
       }
     }
   };
-  const ValidateOtp = async (e) => {
+
+  // Sau khi mã OTP được gửi về
+  const UnlinkPhoneAndValidateOtp = async (e) => {
     e.preventDefault();
     if (OTP.length === 6) {
       const phoneCredential = PhoneAuthProvider.credential(verificationId, OTP);
-      try {
-        const resp = await linkWithCredential(
-          auth.currentUser,
-          phoneCredential
-        );
-        setProvider(resp.providerId);
-      } catch (error) {
-        if (error.code === "auth/provider-already-linked") {
-          toast.warning("Tài khoản bạn đăng nhập đã có số điện thoại");
-        } else if (error.code === "auth/invalid-verification-code") {
-          toast.warning("Mã OTP không hợp lệ");
-        } else if (
-          error.code === "auth/account-exists-with-different-credential"
-        ) {
-          toast.warning(
-            "Số điện thoại này đang được dùng ở 1 cửa hàng khác. Vui lòng nhập số khác hoặc kiểm tra lại"
-          );
-        } else if (error.code === "auth/code-expired") {
-          toast.warning("Mã OTP hết hạn");
+      // xác nhận sđt thành công
+      if (phoneCredential.providerId === "phone") {
+        const resp = await unlink(firebaseUser, provider);
+        // unlink thành công
+        if (typeof resp.providerData[1] === "undefined") {
+          // link sđt mới
+          try {
+            const resp = await linkWithCredential(
+              auth.currentUser,
+              phoneCredential
+            );
+            setProvider(resp.providerId);
+          } catch (error) {
+            if (error.code === "auth/provider-already-linked") {
+              toast.warning("Tài khoản bạn đăng nhập đã có số điện thoại");
+            } else if (error.code === "auth/invalid-verification-code") {
+              toast.warning("Mã OTP không hợp lệ");
+            } else if (
+              error.code === "auth/account-exists-with-different-credential"
+            ) {
+              toast.warning(
+                "Số điện thoại này đang được dùng ở 1 cửa hàng khác. Vui lòng nhập số khác hoặc kiểm tra lại"
+              );
+            } else if (error.code === "auth/code-expired") {
+              toast.warning("Mã OTP hết hạn");
+            }
+            removeCaptchaFromLocalStorage();
+          }
         }
-        removeCaptchaFromLocalStorage();
       }
     }
   };
@@ -178,6 +191,31 @@ export default function Profile() {
           },
         })
       );
+    }
+  };
+
+  // gửi lại OTP
+  const handleResendOTP = async (e) => {
+    e.preventDefault();
+    if (profilePhoneNumber.length !== 11) {
+      toast.warning("Yêu cầu số điện thoại là 11 chữ số");
+      return;
+    }
+    try {
+      const result = await signInWithPhoneNumber(
+        auth,
+        profilePhoneNumber,
+        verifier
+      );
+      setVerificationId(result.verificationId);
+      setIsVerifying(true);
+    } catch (error) {
+      if (error.code === "auth/too-many-requests") {
+        toast.error(
+          "Bạn đã yêu cầu OTP quá nhiều lần. Xin hãy thử lại lần sau"
+        );
+      }
+      removeCaptchaFromLocalStorage();
     }
   };
 
@@ -270,134 +308,98 @@ export default function Profile() {
                       />
                     </div>
                   </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                    <div className="py-6 px-3 mt-32 sm:mt-0">
-                      {/* <button
-                        className="bg-lightBlue-500 active:bg-lightBlue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                      >
-                        Save
-                      </button> */}
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                    <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                      {/* <div className="mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          22
-                        </span>
-                        <span className="text-sm text-blueGray-400">
-                          Friends
-                        </span>
-                      </div>
-                      <div className="mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          10
-                        </span>
-                        <span className="text-sm text-blueGray-400">
-                          Photos
-                        </span>
-                      </div>
-                      <div className="lg:mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          89
-                        </span>
-                        <span className="text-sm text-blueGray-400">
-                          Comments
-                        </span>
-                      </div> */}
-                    </div>
-                  </div>
                 </div>
                 <div id="recaptcha-container"></div>
-                <div className="text-center mt-12">
-                  {/* <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">
-                    {user.fullName}
-                  </h3> */}
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={fullName || ""}
-                      name="fullName"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={displayName || ""}
-                      name="displayName"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={gender || ""}
-                      name="gender"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={profilePhoneNumber || ""}
-                      name="profilePhoneNumber"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={address || ""}
-                      name="address"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="date"
-                      value={citizenshipDate || ""}
-                      name="citizenshipDate"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={citizenshipNumber || ""}
-                      name="citizenshipNumber"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="date"
-                      value={dateOfBirth || ""}
-                      name="dateOfBirth"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="mb-2 text-blueGray-600 mt-10">
-                    <i className="fa-sharp fa-solid fa-user mr-2 text-lg text-blueGray-400"></i>
-                    Chức danh -{" "}
-                    {(() => {
-                      if (priorityRole === 0) {
-                        return "Quản trị viên";
-                      } else if (priorityRole === 1) {
-                        return "Nhân viên";
-                      } else if (priorityRole === 2) {
-                        return "Chủ cửa hàng";
-                      }
-                    })()}
+                <div className="flex justify-center">
+                  <div className=" p-5 mt-10">
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Tên đầy đủ</div>
+                      <input
+                        type="text"
+                        value={fullName || ""}
+                        name="fullName"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Tên hiển thị</div>
+                      <input
+                        type="text"
+                        value={displayName || ""}
+                        name="displayName"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Giới tính</div>
+                      <input
+                        type="text"
+                        value={gender || ""}
+                        name="gender"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Ngày sinh</div>
+                      <input
+                        type="date"
+                        value={dateOfBirth || ""}
+                        name="dateOfBirth"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Số điện thoại</div>
+                      <input
+                        type="text"
+                        value={profilePhoneNumber || ""}
+                        name="profilePhoneNumber"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Địa chỉ</div>
+                      <input
+                        type="text"
+                        value={address || ""}
+                        name="address"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">
+                        Ngày đăng ký CMND/CCCD
+                      </div>
+                      <input
+                        type="date"
+                        value={citizenshipDate || ""}
+                        name="citizenshipDate"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Số CMND/CCCD</div>
+                      <input
+                        type="text"
+                        value={citizenshipNumber || ""}
+                        name="citizenshipNumber"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+
+                    <div className="mb-2 text-blueGray-600 mt-10">
+                      <i className="fa-sharp fa-solid fa-user mr-2 text-lg text-blueGray-400"></i>
+                      Chức danh -{" "}
+                      {(() => {
+                        if (priorityRole === 0) {
+                          return "Quản trị viên";
+                        } else if (priorityRole === 1) {
+                          return "Nhân viên";
+                        } else if (priorityRole === 2) {
+                          return "Chủ cửa hàng";
+                        }
+                      })()}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -205,13 +205,13 @@ export default function StoreCardTable() {
                               {store.status === 0 ? (
                                 <StatusCard
                                   text="Hoạt động"
-                                  backgroundColor="bg-green-200"
+                                  backgroundColor="bg-green-50"
                                   dotColor="bg-green-600"
                                 />
                               ) : (
                                 <StatusCard
                                   text="Dừng hoạt động"
-                                  backgroundColor="bg-gray-200"
+                                  backgroundColor="bg-gray-50"
                                   dotColor="bg-gray-600"
                                 />
                               )}

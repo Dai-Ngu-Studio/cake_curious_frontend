@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 // import NotificationDropdown from "../Dropdowns/NotificationDropdown";
 import UserDropdown from "../Dropdowns/UserDropdown";
 import logoText from "../../assets/img/cake-curious-logo-text-line.png";
-import userTemp from "../../assets/img/user-sidebar-temp.png";
+import userTemp from "../../assets/img/user.png";
 import { useSelector } from "react-redux";
 export default function Sidebar({ props }) {
   const { user } = useSelector((store) => store.user);
@@ -72,7 +72,7 @@ export default function Sidebar({ props }) {
                 <img
                   src={user?.photoUrl || userTemp}
                   referrerPolicy="no-referrer"
-                  className="w-full"
+                  className="w-32 h-32"
                 />
               </div>
             </div>

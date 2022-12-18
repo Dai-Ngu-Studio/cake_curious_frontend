@@ -12,7 +12,7 @@ import {
 import Loading from "../../utils/Loading";
 import { Link } from "react-router-dom";
 import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
-
+import StatusCard from "./StatusCard";
 export default function ProductCardTable() {
   const { products, isProductLoading, page, search, filter, sort } =
     useSelector((store) => store.product);
@@ -70,7 +70,7 @@ export default function ProductCardTable() {
                     Số lượng
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="flex items-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                     onClick={filterProduct}
                   >
                     <div>Giá cả</div>
@@ -112,9 +112,19 @@ export default function ProductCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {product.status === 0
-                              ? "Đang hoạt động"
-                              : "Dừng hoạt động"}
+                            {product.status === 0 ? (
+                              <StatusCard
+                                text="Đang hoạt động"
+                                backgroundColor="bg-green-50"
+                                dotColor="bg-green-600"
+                              />
+                            ) : (
+                              <StatusCard
+                                text="Dừng hoạt động"
+                                backgroundColor="bg-gray-50"
+                                dotColor="bg-gray-600"
+                              />
+                            )}
                           </span>
                         </div>
                       </td>
