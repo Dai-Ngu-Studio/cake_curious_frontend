@@ -141,7 +141,8 @@ const CardChatSidebar = () => {
             {
               displayName: user.store?.name,
               photoUrl: user.store?.photoUrl,
-              uid: user.store?.id,
+              shopId: user.store?.id,
+              uid: user?.id,
             },
             {
               displayName: account.displayName,
