@@ -27,6 +27,7 @@ const OrderForm = () => {
     processedDate,
     completedDate,
     isOrderDoneUpdating,
+    code,
   } = useSelector((store) => store.order);
   const dispatch = useDispatch();
   const { totalOrderDetailPages, page } = useSelector(
@@ -99,82 +100,115 @@ const OrderForm = () => {
 
   return (
     <div className="relative bg-gray-100 md:pt-32 pb-32 pt-12">
-      <div className="px-4 md:px-10 mx-auto w-full">
+      <div className="4/5 bg-white shadow-lg">
+        <div className="w-full h-0.5 bg-indigo-500"></div>
+        <div className="flex justify-between p-4">
+          <div>
+            <h6 className="font-bold">
+              Ngày đặt đơn hàng :{" "}
+              <span className="text-sm font-medium">
+                {(() => {
+                  if (orderDate) {
+                    let a = new Date(orderDate + "Z");
+                    return (
+                      a.getDate() +
+                      " Tháng " +
+                      (a.getMonth() + 1) +
+                      ", " +
+                      a.getFullYear() +
+                      " lúc " +
+                      (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
+                      ":" +
+                      (a.getMinutes() < 10
+                        ? "0" + a.getMinutes()
+                        : a.getMinutes())
+                    );
+                  } else return "Không có dữ liệu";
+                })()}
+              </span>
+            </h6>{" "}
+            <h6 className="font-bold">
+              Ngày xử lý đơn hàng :{" "}
+              <span className="text-sm font-medium">
+                {(() => {
+                  if (processedDate) {
+                    let a = new Date(processedDate + "Z");
+                    return (
+                      a.getDate() +
+                      " Tháng " +
+                      (a.getMonth() + 1) +
+                      ", " +
+                      a.getFullYear() +
+                      " lúc " +
+                      (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
+                      ":" +
+                      (a.getMinutes() < 10
+                        ? "0" + a.getMinutes()
+                        : a.getMinutes())
+                    );
+                  } else return "Không có dữ liệu";
+                })()}
+              </span>
+            </h6>{" "}
+            <h6 className="font-bold">
+              Ngày hoàn thành đơn hàng :{" "}
+              <span className="text-sm font-medium">
+                {(() => {
+                  if (completedDate) {
+                    let a = new Date(completedDate + "Z");
+                    return (
+                      a.getDate() +
+                      " Tháng " +
+                      (a.getMonth() + 1) +
+                      ", " +
+                      a.getFullYear() +
+                      " lúc " +
+                      (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
+                      ":" +
+                      (a.getMinutes() < 10
+                        ? "0" + a.getMinutes()
+                        : a.getMinutes())
+                    );
+                  } else return "Không có dữ liệu";
+                })()}
+              </span>
+            </h6>
+            <h6 className="font-bold">
+              Mã đơn : <span className="text-sm font-medium"> {code}</span>
+            </h6>
+          </div>
+          <div className="w-40">
+            <address className="text-sm">
+              <span className="font-bold"> Người đặt : </span>
+              {user?.displayName}
+            </address>
+          </div>
+          <div className="w-40">
+            <address className="text-sm">
+              <span className="font-bold">Giao tới :</span>
+              {address}
+            </address>
+          </div>
+          <div></div>
+        </div>
+        <div className="flex justify-center p-4">
+          <div className="border-b border-gray-200 shadow w-2/3">
+            <OrderDetailCardTable
+              orderId={editOrderId}
+              total={total}
+              discountedTotal={discountedTotal}
+            />
+            {totalOrderDetailPages > 1 && (
+              <CardPaging
+                totalPages={totalOrderDetailPages}
+                page={page}
+                handleChangePage={changeOrderDetailPage}
+              />
+            )}
+          </div>
+        </div>
         <div>
-          <div>
-            <label>Tên người đặt đơn: </label>
-            {user?.displayName}
-          </div>
-          <div>
-            <label>Địa chỉ đơn: </label>
-            {address}
-          </div>
-          <div>
-            <label>Ngày đặt đơn hàng: </label>
-            {(() => {
-              if (orderDate) {
-                let a = new Date(orderDate + "Z");
-                return (
-                  a.getDate() +
-                  " Tháng " +
-                  (a.getMonth() + 1) +
-                  ", " +
-                  a.getFullYear() +
-                  " lúc " +
-                  (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
-                  ":" +
-                  (a.getMinutes() < 10 ? "0" + a.getMinutes() : a.getMinutes())
-                );
-              } else return "Không có dữ liệu";
-            })()}
-          </div>
-          <div>
-            <label>Ngày xử lý đơn hàng: </label>
-            {(() => {
-              if (processedDate) {
-                let a = new Date(processedDate + "Z");
-                return (
-                  a.getDate() +
-                  " Tháng " +
-                  (a.getMonth() + 1) +
-                  ", " +
-                  a.getFullYear() +
-                  " lúc " +
-                  (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
-                  ":" +
-                  (a.getMinutes() < 10 ? "0" + a.getMinutes() : a.getMinutes())
-                );
-              } else return "Không có dữ liệu";
-            })()}
-          </div>
-          <div>
-            <label>Ngày hoàn thành đơn hàng: </label>
-            {(() => {
-              if (completedDate) {
-                let a = new Date(completedDate + "Z");
-                return (
-                  a.getDate() +
-                  " Tháng " +
-                  (a.getMonth() + 1) +
-                  ", " +
-                  a.getFullYear() +
-                  " lúc " +
-                  (a.getHours() < 10 ? "0" + a.getHours() : a.getHours()) +
-                  ":" +
-                  (a.getMinutes() < 10 ? "0" + a.getMinutes() : a.getMinutes())
-                );
-              } else return "Không có dữ liệu";
-            })()}
-          </div>
-          <div>
-            <label>Tổng giá tiền: </label>
-            {total}
-          </div>
-          <div>
-            <label>Tổng giá tiền sau giảm giá: </label>
-            {discountedTotal ? discountedTotal : "Chưa có dữ liệu"}
-          </div>
-          <form>
+          <form className="flex justify-between p-4">
             <FormRowSelect
               name="status"
               labelText="Trạng thái"
@@ -190,8 +224,8 @@ const OrderForm = () => {
               onClick={handleOrderSubmit}
               className={
                 isOrderProcessing
-                  ? "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
-                  : "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  ? "text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                  : "text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               }
             >
               {isOrderProcessing ? (
@@ -219,16 +253,8 @@ const OrderForm = () => {
               )}
             </button>
           </form>
-          <hr className="my-4 md:min-w-full" />
-          <OrderDetailCardTable orderId={editOrderId} />
-          {totalOrderDetailPages > 1 && (
-            <CardPaging
-              totalPages={totalOrderDetailPages}
-              page={page}
-              handleChangePage={changeOrderDetailPage}
-            />
-          )}
         </div>
+        <div className="w-full h-0.5 bg-indigo-500"></div>
       </div>
     </div>
   );

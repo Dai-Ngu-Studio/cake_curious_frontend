@@ -26,6 +26,7 @@ const initialState = {
   address: "",
   user: {},
   orderDetails: [],
+  code: "",
 };
 
 export const getAllOrders = createAsyncThunk(
@@ -71,6 +72,8 @@ const orderSlice = createSlice({
       state.isOrderLoading = true;
     },
     [getSingleOrder.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      state.code = payload.code;
       state.isOrderLoading = false;
       state.status = payload.status;
       state.orderDate = payload.orderDate;
