@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Footer from "../components/Footers/Footer";
-import userTemp from "../assets/img/user-sidebar-temp.png";
+import userTemp from "../assets/img/user.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
@@ -308,134 +308,98 @@ export default function Profile() {
                       />
                     </div>
                   </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
-                    <div className="py-6 px-3 mt-32 sm:mt-0">
-                      {/* <button
-                        className="bg-lightBlue-500 active:bg-lightBlue-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none sm:mr-2 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                      >
-                        Save
-                      </button> */}
-                    </div>
-                  </div>
-                  <div className="w-full lg:w-4/12 px-4 lg:order-1">
-                    <div className="flex justify-center py-4 lg:pt-4 pt-8">
-                      {/* <div className="mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          22
-                        </span>
-                        <span className="text-sm text-blueGray-400">
-                          Friends
-                        </span>
-                      </div>
-                      <div className="mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          10
-                        </span>
-                        <span className="text-sm text-blueGray-400">
-                          Photos
-                        </span>
-                      </div>
-                      <div className="lg:mr-4 p-3 text-center">
-                        <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                          89
-                        </span>
-                        <span className="text-sm text-blueGray-400">
-                          Comments
-                        </span>
-                      </div> */}
-                    </div>
-                  </div>
                 </div>
                 <div id="recaptcha-container"></div>
-                <div className="text-center mt-12">
-                  {/* <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">
-                    {user.fullName}
-                  </h3> */}
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={fullName || ""}
-                      name="fullName"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={displayName || ""}
-                      name="displayName"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={gender || ""}
-                      name="gender"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={profilePhoneNumber || ""}
-                      name="profilePhoneNumber"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={address || ""}
-                      name="address"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="date"
-                      value={citizenshipDate || ""}
-                      name="citizenshipDate"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="text"
-                      value={citizenshipNumber || ""}
-                      name="citizenshipNumber"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                    <i className="fa-solid fa-envelope mr-2 text-lg text-blueGray-400"></i>
-                    <input
-                      type="date"
-                      value={dateOfBirth || ""}
-                      name="dateOfBirth"
-                      onChange={handleUserInput}
-                    />
-                  </div>
-                  <div className="mb-2 text-blueGray-600 mt-10">
-                    <i className="fa-sharp fa-solid fa-user mr-2 text-lg text-blueGray-400"></i>
-                    Chức danh -{" "}
-                    {(() => {
-                      if (priorityRole === 0) {
-                        return "Quản trị viên";
-                      } else if (priorityRole === 1) {
-                        return "Nhân viên";
-                      } else if (priorityRole === 2) {
-                        return "Chủ cửa hàng";
-                      }
-                    })()}
+                <div className="flex justify-center">
+                  <div className=" p-5 mt-10">
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Tên đầy đủ</div>
+                      <input
+                        type="text"
+                        value={fullName || ""}
+                        name="fullName"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Tên hiển thị</div>
+                      <input
+                        type="text"
+                        value={displayName || ""}
+                        name="displayName"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Giới tính</div>
+                      <input
+                        type="text"
+                        value={gender || ""}
+                        name="gender"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Ngày sinh</div>
+                      <input
+                        type="date"
+                        value={dateOfBirth || ""}
+                        name="dateOfBirth"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Số điện thoại</div>
+                      <input
+                        type="text"
+                        value={profilePhoneNumber || ""}
+                        name="profilePhoneNumber"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Địa chỉ</div>
+                      <input
+                        type="text"
+                        value={address || ""}
+                        name="address"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">
+                        Ngày đăng ký CMND/CCCD
+                      </div>
+                      <input
+                        type="date"
+                        value={citizenshipDate || ""}
+                        name="citizenshipDate"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+                    <div className="flex items-center text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
+                      <div className="w-32 text-right mr-2">Số CMND/CCCD</div>
+                      <input
+                        type="text"
+                        value={citizenshipNumber || ""}
+                        name="citizenshipNumber"
+                        onChange={handleUserInput}
+                      />
+                    </div>
+
+                    <div className="mb-2 text-blueGray-600 mt-10">
+                      <i className="fa-sharp fa-solid fa-user mr-2 text-lg text-blueGray-400"></i>
+                      Chức danh -{" "}
+                      {(() => {
+                        if (priorityRole === 0) {
+                          return "Quản trị viên";
+                        } else if (priorityRole === 1) {
+                          return "Nhân viên";
+                        } else if (priorityRole === 2) {
+                          return "Chủ cửa hàng";
+                        }
+                      })()}
+                    </div>
                   </div>
                 </div>
               </div>
