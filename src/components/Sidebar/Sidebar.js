@@ -98,6 +98,15 @@ export default function Sidebar({ props }) {
                   </NavLink>
                 </li>
               ))}
+              <li className="items-center justify-center pt-40">
+                <a
+                  className="text-xs uppercase py-3 font-bold flex justify-center bg-orange-500 hover:text-emerald-600 hover:bg-white m-1 rounded-lg text-white "
+                  href="/community-standards.html"
+                >
+                  {" "}
+                  Tiêu chuẩn cộng đồng
+                </a>
+              </li>
             </ul>
             {/* Divider */}
           </div>
