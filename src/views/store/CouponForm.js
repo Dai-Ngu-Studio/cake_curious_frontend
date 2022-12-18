@@ -53,12 +53,16 @@ export const CouponForm = () => {
 
   const handleCouponSubmit = (e) => {
     e.preventDefault();
-    if (!name || !code || !discount || !maxUses || !expiryDate) {
+    if (!name || !code || !discount || !maxUses.toString() || !expiryDate) {
       toast.warning("Xin hãy điền đầy đủ thông tin");
       return;
     }
     if (parseInt(maxUses) < 0) {
       toast.warning("Tổng số lần sử dụng không được dưới 0");
+      return;
+    }
+    if (maxUses % 1 !== 0) {
+      toast.warning("Không được nhập số thập phân cho tổng số lần dùng");
       return;
     }
     if (parseInt(discount) < 0) {
@@ -74,7 +78,10 @@ export const CouponForm = () => {
     if (!isCouponEditing) {
       // tạo mới phiếu giảm giá
       if (
-        moment(expiryDate).format("DD-MM-YYYY") <= moment().format("DD-MM-YYYY")
+        moment(expiryDate) <=
+        moment(
+          moment().month() + 1 + "-" + moment().date() + "-" + moment().year()
+        )
       ) {
         toast.warning(
           "Ngày hết hạn sử dụng không được trong hôm nay hoặc trước ngày hôm nay"
@@ -84,9 +91,14 @@ export const CouponForm = () => {
     } else {
       // update phiếu giảm giá
       if (
-        moment(expiryDate).format("DD-MM-YYYY") < moment().format("DD-MM-YYYY")
+        moment(expiryDate) <=
+        moment(
+          moment().month() + 1 + "-" + moment().date() + "-" + moment().year()
+        )
       ) {
-        toast.warning("Ngày hết hạn sử dụng không được trước ngày hôm nay");
+        toast.warning(
+          "Ngày hết hạn sử dụng không được trong hôm nay hoặc trước ngày hôm nay"
+        );
         return;
       }
     }
