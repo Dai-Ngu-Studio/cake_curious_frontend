@@ -38,9 +38,9 @@ export default function ProductCardTable() {
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+            <div className="relative w-full max-w-full flex-grow flex-1">
               <Link
-                className="font-semibold text-lg text-blueGray-700"
+                className="flex items-center p-2 w-fit text-green-500 border border-green-600 hover:bg-green-600 hover:text-white rounded-md cursor-pointer"
                 to="/store/product-form"
               >
                 Tạo mới sản phẩm
