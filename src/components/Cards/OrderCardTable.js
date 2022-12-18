@@ -57,7 +57,7 @@ export const OrderCardTable = () => {
                     Địa chỉ đơn hàng
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="flex items-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                     onClick={filterOrder}
                   >
                     <div>Ngày đặt đơn hàng</div>

@@ -12,7 +12,7 @@ import {
   handleCouponChange,
 } from "../../features/coupons/couponSlice";
 import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
-
+import StatusCard from "./StatusCard";
 export default function CouponCardTable() {
   const { coupons, isCouponLoading, page, search, filter, sort } = useSelector(
     (store) => store.coupon
@@ -69,7 +69,7 @@ export default function CouponCardTable() {
                     Tên
                   </th>
                   <th
-                    className="flex items-center px-6 align-middle text-xs uppercase font-semibold text-left cursor-pointer"
+                    className="flex items-center px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                     onClick={filterCoupon}
                   >
                     <div>Ngày hết hạn</div>
@@ -129,9 +129,19 @@ export default function CouponCardTable() {
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-base whitespace-nowrap p-4">
                         <div className="flex items-center">
                           <span className="mr-2">
-                            {coupon.status === 0
-                              ? "Đang hoạt động"
-                              : "Dừng hoạt động"}
+                            {coupon.status === 0 ? (
+                              <StatusCard
+                                text="Đang hoạt động"
+                                backgroundColor="bg-green-50"
+                                dotColor="bg-green-600"
+                              />
+                            ) : (
+                              <StatusCard
+                                text="Dừng hoạt động"
+                                backgroundColor="bg-gray-50"
+                                dotColor="bg-gray-600"
+                              />
+                            )}
                           </span>
                         </div>
                       </td>
