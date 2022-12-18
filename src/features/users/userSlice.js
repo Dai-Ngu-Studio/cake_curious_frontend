@@ -15,6 +15,7 @@ import {
   loginGoogleThunk,
   loginUserThunk,
   updateUserRoleThunk,
+  validateUserCitizenshipNumberThunk,
 } from "./userThunk";
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
   email: "",
   password: "",
   error: "",
+  status: "",
   user: getUserFromLocalStorage(),
   token: getTokenFromLocalStorage(),
 };
@@ -38,6 +40,10 @@ export const clearStore = createAsyncThunk("user/clearStore", clearStoreThunk);
 export const loginGoogle = createAsyncThunk(
   "user/loginGoogle",
   loginGoogleThunk
+);
+export const validateUserCitizenshipNumber = createAsyncThunk(
+  "user/validateUserCitizenshipNumber",
+  validateUserCitizenshipNumberThunk
 );
 
 const userSlice = createSlice({
@@ -68,6 +74,7 @@ const userSlice = createSlice({
       state.error = "";
       state.email = "";
       state.password = "";
+      state.status = "";
     },
     clearUserLoginValues: (state) => {
       return { ...state, email: "", password: "" };
@@ -124,6 +131,15 @@ const userSlice = createSlice({
     [updateUserRole.rejected]: (state, { payload }) => {
       state.isUserRoleDoneUpdating = false;
       toast.error(payload);
+    },
+    [validateUserCitizenshipNumber.pending]: (state) => {
+      // state.isUserRoleDoneUpdating = false;
+    },
+    [validateUserCitizenshipNumber.fulfilled]: (state, { payload }) => {
+      state.status = payload;
+    },
+    [validateUserCitizenshipNumber.rejected]: (state, { payload }) => {
+      state.status = payload.response.status;
     },
     [clearStore.rejected]: () => {
       toast.error("Có lỗi xảy ra...");

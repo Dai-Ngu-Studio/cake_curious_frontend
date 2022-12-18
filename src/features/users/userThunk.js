@@ -65,6 +65,19 @@ export const getUserThunk = async (_, thunkAPI) => {
   }
 };
 
+export const validateUserCitizenshipNumberThunk = async (
+  { cccd },
+  thunkAPI
+) => {
+  try {
+    const validate = await customFetch.get(`/api/users/cccd/${cccd}`);
+    return validate.status;
+  } catch (error) {
+    // console.log(error);
+    return thunkAPI.rejectWithValue(error);
+  }
+};
+
 export const clearStoreThunk = async (message, thunkAPI) => {
   try {
     auth.signOut();
