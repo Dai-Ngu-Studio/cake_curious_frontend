@@ -20,6 +20,7 @@ import { clearImageValues } from "../images/imageSlice";
 import { clearAllProductCategoriesState } from "../product-categories/productCategorySlice";
 import { clearAllOrdersState } from "../orders/orderSlice";
 import { clearAllOrderDetailsState } from "../order-details/orderDetailSlice";
+import { clearAllReasonStates } from "../reasons/reasonSlice";
 
 export const loginUserThunk = async ({ email, password }, thunkAPI) => {
   try {
@@ -95,6 +96,7 @@ export const clearStoreThunk = async (message, thunkAPI) => {
     thunkAPI.dispatch(clearImageValues());
     thunkAPI.dispatch(clearAllOrdersState());
     thunkAPI.dispatch(clearAllOrderDetailsState());
+    thunkAPI.dispatch(clearAllReasonStates());
     return Promise.resolve();
   } catch (error) {
     return Promise.reject();

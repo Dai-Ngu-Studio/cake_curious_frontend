@@ -16,6 +16,7 @@ import {
 import { auth } from "../../utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import {
+  clearAllReasonStates,
   getReasonByEmail,
   handleReasonChange,
 } from "../../features/reasons/reasonSlice";
@@ -45,7 +46,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      toast.warning("Please fill out all fields");
+      toast.warning("Xin hãy điền đầy đủ thông tin");
       return;
     }
     dispatch(loginUser({ email: email, password: password }));
@@ -69,6 +70,7 @@ export default function Login() {
           value: false,
         })
       );
+      dispatch(clearAllReasonStates());
     }
   }, [isDoneLoadingReason]);
 
