@@ -13,7 +13,7 @@ export const OrderStatus = [
   },
   {
     id: 3,
-    name: "Đang xử lý",
+    name: "Đã xử lý",
   },
 ];
 
